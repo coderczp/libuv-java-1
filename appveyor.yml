@@ -35,7 +35,7 @@ build_script:
   - cmd: cd %APPVEYOR_BUILD_FOLDER% && mvn -DskipTests -q package
 
 test_script:
-  - cmd: cd $APPVEYOR_BUILD_FOLDER && mvn surefire-report:report
+  - cmd: cd %APPVEYOR_BUILD_FOLDER% && mvn surefire-report:report
   - sh: cd $APPVEYOR_BUILD_FOLDER && mvn surefire-report:report
 
 after_test:
