@@ -34,7 +34,7 @@
 #include "com_oracle_libuv_handles_StreamHandle.h"
 
 #ifndef ULONG
-#define ULONG unsigned long ulong
+#define ULONG unsigned long
 #endif
 
 jstring StreamCallbacks::_IPV4 = NULL;

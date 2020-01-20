@@ -33,3 +33,8 @@ libuv.dll
 /src/src/main/resources/META-INF/libuv-java.dll
 /src/test/java/com/oracle/libuv/Main.java
 /src/main/resources/META-INF/libuv-java.so
+/src/main/resources/META-INF/uv-java.dll
+/src/main/resources/META-INF/uv-java.exp
+/src/main/resources/META-INF/uv-java.ilk
+/src/main/resources/META-INF/uv-java.lib
+/src/main/resources/META-INF/uv-java.pdb
