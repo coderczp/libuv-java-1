@@ -61,20 +61,21 @@ public final class LibUV {
         if (loaded) {
             return true;
         }
-        Path libFile;
         ClassLoader cl = LibUV.class.getClassLoader();
         String name = WINDOWS ? "uv-java.dll" : "libuv-java.so";
-        try (InputStream is = cl.getResourceAsStream("META-INF/" + name)) {
-            libFile = tmpdir.resolve("libuv-java-" + version).resolve(name);
-            if (!exists(libFile.getParent())) {
-                createDirectory(libFile.getParent());
+        Path libFile = tmpdir.resolve("libuv-java-" + version).resolve(name);
+        if ( ! exists(libFile) ) {
+            try (InputStream is = cl.getResourceAsStream("META-INF/" + name)) {
+                if (!exists(libFile.getParent())) {
+                    createDirectory(libFile.getParent());
+                }
+                if (!exists(libFile)) {
+                    createFile(libFile);
+                }
+                copy(is, libFile, REPLACE_EXISTING);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-            if (!exists(libFile)) {
-                createFile(libFile);
-            }
-            copy(is, libFile, REPLACE_EXISTING);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
         load(libFile.toString());
         loaded = true;
