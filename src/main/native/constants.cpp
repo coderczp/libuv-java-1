@@ -127,6 +127,13 @@
 
 #endif  /* __POSIX__ */
 
+#ifndef SIGUNUSED
+#define SIGUNUSED   31
+#endif
+#ifndef S_IFWHT
+#define S_IFWHT 0160000
+#endif
+
 /*
  * Class:     com_oracle_libuv_Constants
  * Method:    _getFieldValues
@@ -187,11 +194,7 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_Constants__1get_1field_1values
   values[46] = SIGPIPE;
   values[47] = SIGALRM;
   values[48] = SIGTERM;
-#if defined(__sun)
-  values[49] = 0; // undefined on solaris
-#else
   values[49] = SIGSTKFLT;
-#endif
   values[50] = SIGCHLD;
   values[51] = SIGCONT;
   values[52] = SIGSTOP;
@@ -208,11 +211,7 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_Constants__1get_1field_1values
   values[63] = SIGPOLL;
   values[64] = SIGPWR;
   values[65] = SIGSYS;
-#if defined(__sun)
-  values[66] = 0; // undefined on solaris
-#else
   values[66] = SIGUNUSED;
-#endif
 
   env->ReleaseIntArrayElements(array, values, 0);
 }

@@ -28,3 +28,8 @@ test*.txt
 build/
 .settings/
 libuv.dll
+/src/src/main/resources/META-INF/libuv-java.exp
+/src/src/main/resources/META-INF/libuv-java.lib
+/src/src/main/resources/META-INF/libuv-java.dll
+/src/test/java/com/oracle/libuv/Main.java
+/src/main/resources/META-INF/libuv-java.so

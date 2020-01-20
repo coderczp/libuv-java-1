@@ -25,15 +25,64 @@
 
 package com.oracle.libuv;
 
+import static java.lang.System.getProperty;
+import static java.lang.System.load;
+import static java.nio.file.Files.copy;
+import static java.nio.file.Files.createDirectory;
+import static java.nio.file.Files.createFile;
+import static java.nio.file.Files.exists;
+import static java.nio.file.Paths.get;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import static java.util.Locale.ENGLISH;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Path;
 import java.util.Objects;
 
 public final class LibUV {
 
+    private static boolean loaded;
+
+    private static final String version = "1.0.0";
+
+    private static final String OS_NAME = getProperty("os.name").toLowerCase(ENGLISH);
+
+    // temporary directory location
+    private static final Path tmpdir = get(getProperty("java.io.tmpdir")).toAbsolutePath();
+
+    private static final boolean WINDOWS = OS_NAME.startsWith("windows");
+
     static {
-        System.load("C:\\libuv-java\\src\\main\\build\\Release\\libuv-java.dll");
+        loadJni();
+    }
+
+    public static synchronized boolean loadJni() {
+        if (loaded) {
+            return true;
+        }
+        Path libFile;
+        ClassLoader cl = LibUV.class.getClassLoader();
+        String name = WINDOWS ? "libuv-java.dll" : "libuv-java.so";
+        try (InputStream is = cl.getResourceAsStream("META-INF/" + name)) {
+            libFile = tmpdir.resolve("libuv-java-" + version).resolve(name);
+            if (!exists(libFile.getParent())) {
+                createDirectory(libFile.getParent());
+            }
+            if (!exists(libFile)) {
+                createFile(libFile);
+            }
+            copy(is, libFile, REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        load(libFile.toString());
+        loaded = true;
+        return true;
     }
 
     private LibUV() {
+        // no op
     }
 
     // misc
