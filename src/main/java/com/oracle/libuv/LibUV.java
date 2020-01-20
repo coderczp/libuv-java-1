@@ -63,7 +63,7 @@ public final class LibUV {
         }
         Path libFile;
         ClassLoader cl = LibUV.class.getClassLoader();
-        String name = WINDOWS ? "libuv-java.dll" : "libuv-java.so";
+        String name = WINDOWS ? "uv-java.dll" : "libuv-java.so";
         try (InputStream is = cl.getResourceAsStream("META-INF/" + name)) {
             libFile = tmpdir.resolve("libuv-java-" + version).resolve(name);
             if (!exists(libFile.getParent())) {
