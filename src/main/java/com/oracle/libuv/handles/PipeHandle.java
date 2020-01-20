@@ -27,8 +27,6 @@ package com.oracle.libuv.handles;
 
 import java.util.Objects;
 
-import com.oracle.libuv.LibUVPermission;
-
 public class PipeHandle extends StreamHandle {
 
     protected PipeHandle(final LoopHandle loop,
@@ -43,25 +41,21 @@ public class PipeHandle extends StreamHandle {
     }
 
     public int open(final int fd) {
-        LibUVPermission.checkPermission(LibUVPermission.PIPE_OPEN);
         return _open(pointer, fd);
     }
 
     public int bind(final String name) {
         Objects.requireNonNull(name);
-        LibUVPermission.checkPermission(LibUVPermission.PIPE_BIND);
         return _bind(pointer, name);
     }
 
     @Override
     public int accept(final StreamHandle client) {
-        LibUVPermission.checkPermission(LibUVPermission.PIPE_ACCEPT);
         return super.accept(client);
     }
 
     public void connect(final String name) {
         Objects.requireNonNull(name);
-        LibUVPermission.checkPermission(LibUVPermission.PIPE_CONNECT);
         _connect(pointer, name, loop.getContext());
     }
 

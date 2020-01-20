@@ -49,33 +49,27 @@ public final class LibUV {
     // process
 
     public static String exePath() {
-        LibUVPermission.checkPermission(LibUVPermission.PROCESS_EXE_PATH);
         return _exe_path();
     }
 
     public static String cwd() {
-        LibUVPermission.checkPermission(LibUVPermission.PROCESS_CWD);
         return _cwd();
     }
 
     public static void chdir(final String dir) {
-        LibUVPermission.checkPermission(LibUVPermission.PROCESS_CHDIR);
         _chdir(dir);
     }
 
     public static String getTitle() {
-        LibUVPermission.checkPermission(LibUVPermission.PROCESS_GET_TITLE);
         return _getTitle();
     }
 
     public static void setTitle(final String value) {
         Objects.requireNonNull(value);
-        LibUVPermission.checkPermission(LibUVPermission.PROCESS_SET_TITLE);
         _setTitle(value);
     }
 
     public static int kill(final int pid, final int signal) {
-        LibUVPermission.checkPermission(LibUVPermission.PROCESS_KILL);
         return _kill(pid, signal);
     }
 

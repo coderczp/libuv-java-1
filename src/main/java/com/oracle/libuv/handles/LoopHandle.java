@@ -27,13 +27,11 @@ package com.oracle.libuv.handles;
 
 import java.io.Closeable;
 
-import com.oracle.libuv.LibUVPermission;
 import com.oracle.libuv.NativeException;
-
 import com.oracle.libuv.cb.CallbackExceptionHandler;
-import com.oracle.libuv.cb.ContextProvider;
 import com.oracle.libuv.cb.CallbackHandler;
 import com.oracle.libuv.cb.CallbackHandlerFactory;
+import com.oracle.libuv.cb.ContextProvider;
 
 public class LoopHandle implements Closeable {
 
@@ -67,9 +65,7 @@ public class LoopHandle implements Closeable {
     }
 
     private static synchronized void newLoop() {
-        LibUVPermission.checkHandle();
         createdLoopCount += 1;
-        LibUVPermission.checkNewLoop(createdLoopCount);
     }
 
     public LoopHandle(final CallbackExceptionHandler exceptionHandler,

@@ -28,8 +28,6 @@ package com.oracle.libuv.handles;
 import java.io.Closeable;
 import java.util.Objects;
 
-import com.oracle.libuv.LibUVPermission;
-
 public abstract class Handle implements Closeable {
 
     protected final long pointer;
@@ -37,7 +35,6 @@ public abstract class Handle implements Closeable {
 
     protected Handle(final long pointer, final LoopHandle loop) {
         Objects.requireNonNull(loop);
-        LibUVPermission.checkHandle();
         assert pointer != 0;
         this.pointer = pointer;
         this.loop = loop;

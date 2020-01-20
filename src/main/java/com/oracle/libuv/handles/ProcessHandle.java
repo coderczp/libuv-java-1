@@ -30,7 +30,6 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Objects;
 
-import com.oracle.libuv.LibUVPermission;
 import com.oracle.libuv.cb.ProcessCloseCallback;
 import com.oracle.libuv.cb.ProcessExitCallback;
 
@@ -146,8 +145,6 @@ public class ProcessHandle extends Handle {
         if (flags.contains(ProcessFlags.DETACHED)) {
             processFlags |= ProcessFlags.DETACHED.value;
         }
-
-        LibUVPermission.checkSpawn(arguments[0]);
 
         return _spawn(pointer,
                 arguments[0],
