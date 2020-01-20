@@ -24,3 +24,7 @@ atlassian-ide-plugin.xml
 *.vcxproj.filters
 
 test*.txt
+/target/
+build/
+.settings/
+libuv.dll

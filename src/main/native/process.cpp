@@ -78,9 +78,10 @@ JNIEXPORT jstring JNICALL Java_com_oracle_libuv_LibUV__1cwd
   char buf[PATH_MAX + 1];
 #endif
 
-  uv_err_t r = uv_cwd(buf, ARRAY_SIZE(buf) - 1);
-  if (r.code != UV_OK) {
-    ThrowException(env, r.code, "uv_cwd");
+  size_t size = ARRAY_SIZE(buf) - 1;
+  int r = uv_cwd(buf, &size);
+  if (r) {
+    ThrowException(env, r, "uv_cwd");
     return NULL;
   }
   buf[ARRAY_SIZE(buf) - 1] = '\0';
@@ -96,9 +97,9 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_LibUV__1chdir
   (JNIEnv *env, jclass cls, jstring arg) {
 
   const char* dir = env->GetStringUTFChars(arg, 0);
-  uv_err_t r = uv_chdir(dir);
-  if (r.code != UV_OK) {
-    ThrowException(env, r.code, "uv_chdir", NULL, dir);
+  int r = uv_chdir(dir);
+  if (r) {
+    ThrowException(env, r, "uv_chdir", NULL, dir);
   }
   env->ReleaseStringUTFChars(arg, dir);
 }
@@ -143,10 +144,9 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_LibUV__1setTitle
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_LibUV__1kill
   (JNIEnv *env, jclass cls, jint pid, jint signal) {
 
-  uv_err_t err = uv_kill(pid, signal);
-  if (err.code != UV_OK) {
-    errno = err.code;
-    return -1;
+  int err = uv_kill(pid, signal);
+  if (err) {
+    return err;
   }
 
   return 0;
@@ -161,9 +161,9 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_LibUV__1rss
   (JNIEnv *env, jclass cls) {
 
   size_t rss;
-  uv_err_t err = uv_resident_set_memory(&rss);
-  if (err.code != UV_OK) {
-    ThrowException(env, err.code, "uv_resident_set_memory", NULL, NULL);
+  int err = uv_resident_set_memory(&rss);
+  if (err) {
+    ThrowException(env, err, "uv_resident_set_memory", NULL, NULL);
   }
   return static_cast<jint>(rss);
 }

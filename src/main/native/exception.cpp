@@ -34,17 +34,11 @@
 #include "com_oracle_libuv_NativeException.h"
 
 const char* get_uv_errno_string(int errorno) {
-  uv_err_t err;
-  memset(&err, 0, sizeof err);
-  err.code = (uv_err_code)errorno;
-  return uv_err_name(err);
+  return uv_err_name(errorno);
 }
 
 const char* get_uv_errno_message(int errorno) {
-  uv_err_t err;
-  memset(&err, 0, sizeof err);
-  err.code = (uv_err_code)errorno;
-  return uv_strerror(err);
+  return uv_strerror(errorno);
 }
 
 static inline jstring utf(JNIEnv* env, const std::string& s) {

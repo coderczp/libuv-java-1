@@ -25,8 +25,6 @@
 
 package com.oracle.libuv.handles;
 
-import com.oracle.libuv.Files;
-
 public interface HandleFactory {
 
     HandleFactory initialize(final LoopHandle loop);
@@ -35,42 +33,12 @@ public interface HandleFactory {
 
     AsyncHandle newAsyncHandle();
 
-    CheckHandle newCheckHandle();
-
-    IdleHandle newIdleHandle();
-
     PipeHandle newPipeHandle(boolean ipc);
 
     PipeHandle newPipeHandle(long pointer,
                              boolean ipc);
 
-    PollHandle newPollHandle(int fd);
-
-    PollHandle newPollHandle(long socket);
-
     ProcessHandle newProcessHandle();
 
-    SignalHandle newSignalHandle();
-
-    TCPHandle newTCPHandle();
-
-    TCPHandle newTCPHandle(long pointer);
-
-    TCPHandle openTCPHandle(long socket);
-
     TimerHandle newTimerHandle();
-
-    TTYHandle newTTYHandle(int fd, boolean readable);
-
-    UDPHandle newUDPHandle();
-
-    UDPHandle newUDPHandle(long pointer);
-
-    UDPHandle openUDPHandle(long socket);
-
-    FileEventHandle newFileEventHandle();
-
-    FilePollHandle newFilePollHandle();
-
-    Files newFiles();
 }

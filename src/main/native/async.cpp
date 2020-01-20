@@ -88,11 +88,11 @@ void AsyncCallbacks::on_send(int status) {
       status);
 }
 
-static void _send_cb(uv_async_t* handle, int status) {
+static void _send_cb(uv_async_t* handle) {
   assert(handle);
   assert(handle->data);
   AsyncCallbacks* cb = reinterpret_cast<AsyncCallbacks*>(handle->data);
-  cb->on_send(status);
+  cb->on_send(0);
 }
 
 static void _close_cb(uv_handle_t* handle) {
@@ -116,7 +116,7 @@ JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_AsyncHandle__1new
   uv_async_t* async = new uv_async_t();
   int r = uv_async_init(lp, async, _send_cb);
   if (r) {
-    ThrowException(env, async->loop, "uv_async_init");
+    ThrowException(env, r, "uv_async_init");
   } else {
     async->data = new AsyncCallbacks();
   }
@@ -161,7 +161,7 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_AsyncHandle__1send
   uv_async_t* handle = reinterpret_cast<uv_async_t*>(async);
   int r = uv_async_send(handle);
   if (r) {
-    ThrowException(env, handle->loop, "uv_async_send");
+    ThrowException(env, r, "uv_async_send");
   }
   return r;
 }

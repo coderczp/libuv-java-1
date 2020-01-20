@@ -27,19 +27,14 @@ package com.oracle.libuv.handles;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
-import java.util.Deque;
 import java.util.Objects;
 
-import com.oracle.libuv.StringUtils;
 import com.oracle.libuv.cb.StreamCloseCallback;
 import com.oracle.libuv.cb.StreamConnectCallback;
 import com.oracle.libuv.cb.StreamConnectionCallback;
-import com.oracle.libuv.cb.StreamRead2Callback;
 import com.oracle.libuv.cb.StreamReadCallback;
 import com.oracle.libuv.cb.StreamShutdownCallback;
 import com.oracle.libuv.cb.StreamWriteCallback;
-
-import jdk.nashorn.internal.runtime.ConsString;
 
 class StreamHandle extends Handle {
 
@@ -47,7 +42,6 @@ class StreamHandle extends Handle {
     protected boolean readStarted;
 
     protected StreamReadCallback onRead = null;
-    protected StreamRead2Callback onRead2 = null;
     protected StreamWriteCallback onWrite = null;
     protected StreamConnectCallback onConnect = null;
     protected StreamConnectionCallback onConnection = null;
@@ -60,10 +54,6 @@ class StreamHandle extends Handle {
 
     public void setReadCallback(final StreamReadCallback callback) {
         onRead = callback;
-    }
-
-    public void setRead2Callback(final StreamRead2Callback callback) {
-        onRead2 = callback;
     }
 
     public void setWriteCallback(final StreamWriteCallback callback) {
@@ -93,24 +83,9 @@ class StreamHandle extends Handle {
         readStarted = true;
     }
 
-    public void read2Start() {
-        if (!readStarted) {
-            _read2_start(pointer);
-        }
-        readStarted = true;
-    }
-
     public void readStop() {
         _read_stop(pointer);
         readStarted = false;
-    }
-
-    public int write2(final String str, final StreamHandle handle) {
-        return _write2(str, handle);
-    }
-
-    public int write2(final String str, final UDPHandle handle) {
-        return _write2(str, handle);
     }
 
     private int _write2(final String str, final Handle handle) {
@@ -123,38 +98,6 @@ class StreamHandle extends Handle {
             throw new RuntimeException(e); // "utf-8" is always supported
         }
         return _write2(pointer, ByteBuffer.wrap(data), data, 0, data.length, handle.pointer, loop.getContext());
-    }
-
-    public int write(final ConsString cs) {
-        try {
-            return write(cs, "utf-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e); // "utf-8" is always supported
-        }
-    }
-
-    @SuppressWarnings("deprecation")
-    public int write(final ConsString cs, final String encoding) throws UnsupportedEncodingException {
-        if (StringUtils.consStringHasLeftRight()) {
-            final Deque<String> parts = StringUtils.parts(cs);
-            if (parts.size() == 1) {
-                return write(parts.pollFirst(), encoding);
-            }
-            final String[] fragments = parts.toArray(new String[parts.size()]);
-            final byte[][] buffers = new byte[fragments.length][];
-            for (int i = 0; i < fragments.length; i++) {
-                if (StringUtils.hasMultiByte(fragments[i], encoding)) {
-                    buffers[i] = fragments[i].getBytes(encoding);
-                } else {
-                    buffers[i] = new byte[fragments[i].length()];
-                    // use deprecated (but fast) method to get lower bytes of str chars
-                    fragments[i].getBytes(0, buffers[i].length, buffers[i], 0);
-                }
-            }
-            return _writev(pointer, buffers, buffers.length, loop.getContext());
-        } else {
-            return write(cs.toString(), encoding); // write after flatten
-        }
     }
 
     public int write(final String str) {
@@ -243,12 +186,6 @@ class StreamHandle extends Handle {
         }
     }
 
-    protected void callRead2(final ByteBuffer data, long handle, int type) {
-        if (onRead2 != null) {
-            loop.getCallbackHandler().handleStreamRead2Callback(onRead2, data, handle, type);
-        }
-    }
-
     protected void callWrite(final int status, final Exception error, final Object context) {
         if (onWrite != null) {
             loop.getCallbackHandler(context).handleStreamWriteCallback(onWrite, status, error);
@@ -284,8 +221,6 @@ class StreamHandle extends Handle {
     private native void _initialize(final long ptr);
 
     private native void _read_start(final long ptr);
-
-    private native void _read2_start(final long ptr);
 
     private native void _read_stop(final long ptr);
 

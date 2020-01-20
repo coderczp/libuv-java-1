@@ -1,160 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<project name="libuv" default="build" basedir=".">
-
-    <property file="${user.home}/.avatar-js.properties"/>
-    <import file="${avatar-js.home}/common.xml"/>
-
-    <target name="setup" depends="init, copy-source-files"/>
-
-    <target name="build" depends="setup, jar"/>
-
-    <target name="init" depends="common-init">
-        <property name="product.name" value="libuv-java"/>
-        <property name="build.type" value="Debug"/>
-        <property name="src.java.dir" location="src/main/java"/>
-        <property name="test.java.dir" location="src/test/java"/>
-        <property name="javac.debug" value="true"/>
-        <property name="javac.debuglevel" value="lines"/>
-        <path id="javac.classpath.id"/>
-        <path id="javac.test.classpath.id"/>
-        <mkdir dir="test-reports"/>
-    </target>
-
-    <target name="javah" depends="compile">
-        <javah destdir="${native.build.dir}" classpath="${classes.dir}">
-            <class name="com.oracle.libuv.Constants"/>
-            <class name="com.oracle.libuv.LibUV"/>
-            <class name="com.oracle.libuv.Files"/>
-            <class name="com.oracle.libuv.NativeException"/>
-            <class name="com.oracle.libuv.handles.AsyncHandle"/>
-            <class name="com.oracle.libuv.handles.CheckHandle"/>
-            <class name="com.oracle.libuv.handles.FileEventHandle"/>
-            <class name="com.oracle.libuv.handles.FilePollHandle"/>
-            <class name="com.oracle.libuv.handles.Handle"/>
-            <class name="com.oracle.libuv.handles.IdleHandle"/>
-            <class name="com.oracle.libuv.handles.LoopHandle"/>
-            <class name="com.oracle.libuv.handles.PipeHandle"/>
-            <class name="com.oracle.libuv.handles.PollHandle"/>
-            <class name="com.oracle.libuv.handles.ProcessHandle"/>
-            <class name="com.oracle.libuv.handles.SignalHandle"/>
-            <class name="com.oracle.libuv.handles.StreamHandle"/>
-            <class name="com.oracle.libuv.handles.TCPHandle"/>
-            <class name="com.oracle.libuv.handles.TimerHandle"/>
-            <class name="com.oracle.libuv.handles.TTYHandle"/>
-            <class name="com.oracle.libuv.handles.UDPHandle"/>
-        </javah>
-    </target>
-
-    <target name="copy-source-files">
-        <property name="native.build.dir" value="${basedir}/out/${build.type}/obj.target/${product.name}/"/>
-        <copy todir="${native.build.dir}">
-            <fileset dir="${source.home}/deps/uv" includes="**/*.c"/>
-            <fileset dir="${source.home}/deps/uv" includes="**/*.h"/>
-        </copy>
-    </target>
-
-    <target name="configure-unix" depends="config-gyp" if="isUnix">
-        <exec executable="python" dir="." failonerror="true">
-            <arg value="${source.home}/tools/gyp/gyp_main.py"/>
-            <arg value="--depth=."/>
-            <arg value="--format=make"/>
-            <arg value="-Dlibrary=shared_library"/>
-            <arg value="-Dtarget=${build.type}"/>
-            <arg value="${product.name}.gyp"/>
-            <arg value="-Dtarget_arch=x64"/>
-            <arg value="${source.home}/deps/uv/uv.gyp"/>
-            <arg value="-I${source.home}/deps/uv/common.gypi"/>
-            <arg value="-Iconfig.gypi"/>
-        </exec>
-    </target>
-
-    <target name="configure-mac" depends="config-gyp" if="isMacOSX">
-        <exec executable="python" dir="." failonerror="true">
-            <arg value="${source.home}/tools/gyp/gyp_main.py"/>
-            <arg value="--depth=."/>
-            <arg value="--format=make"/>
-            <arg value="-Dlibrary=shared_library"/>
-            <arg value="-Dtarget=${build.type}"/>
-            <arg value="${product.name}.gyp"/>
-            <arg value="-Dtarget_arch=x64"/>
-            <arg value="${source.home}/deps/uv/uv.gyp"/>
-            <arg value="-I${source.home}/deps/uv/common.gypi"/>
-            <arg value="-Iconfig.gypi"/>
-            <arg value="-Dlibrary=static_library"/>
-        </exec>
-    </target>
-
-    <target name="configure-windows" depends="config-gyp" if="isWindows">
-        <exec executable="python" dir="." failonerror="true">
-            <arg value="${source.home}/tools/gyp/gyp_main.py"/>
-            <arg value="--depth=."/>
-            <arg value="-Dlibrary=shared_library"/>
-            <arg value="-Dtarget=${build.type}"/>
-            <arg value="${product.name}.gyp"/>
-            <arg value="-Dtarget_arch=x64"/>
-            <arg value="${source.home}/deps/uv/uv.gyp"/>
-            <arg value="-I${source.home}/deps/uv/common.gypi"/>
-            <arg value="-Iconfig.gypi"/>
-            <arg value="--depth=${source.home}/deps/uv"/>
-        </exec>
-    </target>
-
-    <target name="make-solaris" if="isSolaris" unless="product.lib.uptodate">
-        <exec executable="gmake" failonerror="true">
-            <arg value="builddir_name=out"/>
-            <arg value="libuv-java"/>
-        </exec>
-    </target>
-
-    <target name="jar" depends="setup, compile, make, shlib-linux, shlib-solaris, shlib-macos, shlib-windows">
-        <property name="product.jar" value="${dist.dir}/${product.name}.jar"/>
-        <jar basedir="${classes.dir}" destfile="${product.jar}"/>
-    </target>
-
-    <macrodef name="test-runner">
-        <attribute name="tests" default=""/>
-        <element name="args" optional="true"/>
-        <sequential>
-            <java fork="true" failonerror="true" classname="com.oracle.libuv.runner.TestRunner">
-                <classpath path="${classes.dir}"/>
-                <classpath path="${test.classes.dir}"/>
-                <classpath path="${testng.jar}"/>
-                <jvmarg value="-Xverify:all"/>
-                <jvmarg value="-Xcheck:jni"/>
-                <jvmarg value="-Xmx1g"/>
-                <jvmarg value="-Xms1g"/>
-                <jvmarg value="-ea"/>
-                <sysproperty key="java.library.path" value="${dist.dir}"/>
-                <args/>
-                <arg value="@{tests}"/>
-            </java>
-        </sequential>
-    </macrodef>
-
-    <target name="test" depends="compile-tests, permission-test, single-test, all-tests"/>
-
-    <!-- use 'ant -Dtest=fooTest test' to run that single test -->
-    <target name="single-test" depends="compile-tests" if="test">
-        <test-runner>
-            <args>
-                <sysproperty key="test" value="${test}"/>
-            </args>
-        </test-runner>
-    </target>
-
-    <!-- do not run all tests if a single test was specified -->
-    <target name="all-tests" depends="compile-tests" unless="test">
-        <fileset id="test.list.id" dir="${test.java.dir}" includes="**/*Test.java" excludes="**/PermissionTest.java"/>
-        <property name="test.list" refid="test.list.id"/>
-        <test-runner tests="${test.list}"/>
-    </target>
-
-    <!-- do not run permission test if running a single test -->
-    <target name="permission-test" depends="compile-tests" unless="test">
-        <fileset id="permission.test.id" dir="${test.java.dir}" includes="**/PermissionTest.java"/>
-        <property name="permission.test" refid="permission.test.id"/>
-        <test-runner tests="${permission.test}"/>
-    </target>
-
+<project name="libuv" default="javah" basedir=".">
+  <target name="javah">
+    <javah destdir="src/main/native" classpath="target/classes">
+      <class name="com.oracle.libuv.Constants"/>
+      <class name="com.oracle.libuv.LibUV"/>
+      <class name="com.oracle.libuv.NativeException"/>
+      <class name="com.oracle.libuv.handles.AsyncHandle"/>
+      <class name="com.oracle.libuv.handles.Handle"/>
+      <class name="com.oracle.libuv.handles.LoopHandle"/>
+      <class name="com.oracle.libuv.handles.PipeHandle"/>
+      <class name="com.oracle.libuv.handles.ProcessHandle"/>
+      <class name="com.oracle.libuv.handles.StreamHandle"/>
+      <class name="com.oracle.libuv.handles.TimerHandle"/>
+      </javah>
+  </target>
 </project>

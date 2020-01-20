@@ -128,14 +128,13 @@ static void _close_cb(uv_handle_t* handle) {
   delete handle;
 }
 
-static void _exit_cb(uv_process_t* process, int exit_status, int term_signal) {
+static void _exit_cb(uv_process_t* process, int64_t exit_status, int term_signal) {
   assert(process);
   uv_process_t* handle = reinterpret_cast<uv_process_t*>(process);
   assert(handle->data);
   ProcessCallbacks* cb = reinterpret_cast<ProcessCallbacks*>(handle->data);
   if (exit_status < 0) {
-    int error_code = uv_last_error(handle->loop).code;
-    cb->on_exit(exit_status, term_signal, error_code);
+    cb->on_exit(exit_status, term_signal, (int) exit_status);
   } else {
     cb->on_exit(exit_status, term_signal);
   }
@@ -201,7 +200,7 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1close
  * Signature: (JLjava/lang/String;[Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;I[I[J[III)I
  */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1spawn
-  (JNIEnv *env, jobject that, jlong process, jstring program, jobjectArray args, jobjectArray environ,
+  (JNIEnv *env, jobject that, jlong process, jstring program, jobjectArray args, jobjectArray environArgs,
     jstring dir, jint process_flags, jintArray stdio_flags, jlongArray streams, jintArray fds, jint uid, jint gid) {
 
   assert(process);
@@ -220,7 +219,7 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1spawn
 
   if (uid != -1) {
     if (uid & ~((uv_uid_t) ~0)) {
-        ThrowException(env, handle->loop, "uv_spawn", "uid is out of range");
+        ThrowException(env, -1, "uv_spawn", "uid is out of range");
     } else {
         options.flags |= UV_PROCESS_SETUID;
         options.uid = (uv_uid_t) uid;
@@ -229,7 +228,7 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1spawn
 
   if (gid != -1) {
     if (gid & ~((uv_gid_t) ~0)) {
-      ThrowException(env, handle->loop, "uv_spawn", "gid is out of range");
+      ThrowException(env, -1, "uv_spawn", "gid is out of range");
     } else {
       options.flags |= UV_PROCESS_SETGID;
       options.gid = (uv_gid_t) gid;
@@ -276,11 +275,11 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1spawn
   }
 
   jsize env_len = 0;
-  if (environ) {
-    env_len = env->GetArrayLength(environ);
+  if (environArgs) {
+    env_len = env->GetArrayLength(environArgs);
     options.env = new char*[env_len + 1];
     for (int i=0; i < env_len; i++) {
-      jstring element = (jstring) env->GetObjectArrayElement(environ, i);
+      jstring element = (jstring) env->GetObjectArrayElement(environArgs, i);
       options.env[i] = (char*) env->GetStringUTFChars(element, 0);
     }
     options.env[env_len] = NULL;
@@ -294,9 +293,9 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1spawn
     options.flags |= UV_PROCESS_DETACHED;
   }
 
-  int r = uv_spawn(handle->loop, handle, options);
+  int r = uv_spawn(handle->loop, handle, &options);
   if (r) {
-    ThrowException(env, handle->loop, "uv_spawn", program_chars);
+    ThrowException(env, r, "uv_spawn", program_chars);
   } else {
     r = handle->pid;
   }
@@ -328,10 +327,10 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1spawn
   }
 
   for (int i=0; i < env_len; i++) {
-    jstring element = (jstring) env->GetObjectArrayElement(environ, i);
+    jstring element = (jstring) env->GetObjectArrayElement(environArgs, i);
     env->ReleaseStringUTFChars(element, options.env[i]);
   }
-  if (environ) {
+  if (environArgs) {
     delete[] options.env;
   }
 
@@ -350,7 +349,7 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1kill
   uv_process_t* handle = reinterpret_cast<uv_process_t*>(ptr);
   int r = uv_process_kill(handle, signal);
   if (r) {
-    ThrowException(env, handle->loop, "uv_process_kill", "error killing process");
+    ThrowException(env, r, "uv_process_kill", "error killing process");
   }
   return r;
 }

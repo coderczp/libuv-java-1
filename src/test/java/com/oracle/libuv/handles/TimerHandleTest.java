@@ -41,6 +41,7 @@ public class TimerHandleTest extends TestBase {
     private static final int TIMES = 100;
 
     @Test
+    @SuppressWarnings("static-access")
     public void testNow() throws Throwable {
         final HandleFactory handleFactory = newFactory();
         final LoopHandle loop = handleFactory.getLoopHandle();
@@ -93,6 +94,7 @@ public class TimerHandleTest extends TestBase {
     }
 
     @Test
+    @SuppressWarnings("resource")
     public void testRepeat() throws Throwable {
         final AtomicBoolean gotCallback = new AtomicBoolean(false);
         final AtomicBoolean gotClose = new AtomicBoolean(false);

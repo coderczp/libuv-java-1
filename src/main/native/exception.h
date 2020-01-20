@@ -71,21 +71,21 @@ inline jthrowable NewException(JNIEnv* env, int errorno) {
 inline void ThrowException(JNIEnv* env, int errorno, const char *syscall, const char *msg, const char *path) {
   env->Throw(NewException(env, errorno, syscall, msg, path));
 }
-
+/*
 inline void ThrowException(JNIEnv* env, int errorno, const char *syscall) {
   ThrowException(env, errorno, syscall, NULL, NULL);
-}
+}*/
 
 inline void ThrowException(JNIEnv* env, int errorno, const char *syscall, const char *msg) {
   ThrowException(env, errorno, syscall, msg, NULL);
 }
 
-inline void ThrowException(JNIEnv* env, uv_loop_t* loop, const char *syscall) {
-  ThrowException(env, uv_last_error(loop).code, syscall, NULL, NULL);
+inline void ThrowException(JNIEnv* env, int err, const char *syscall) {
+  ThrowException(env, err, syscall, NULL, NULL);
 }
-
-inline void ThrowException(JNIEnv* env, uv_loop_t* loop, const char *syscall, const char *msg) {
-  ThrowException(env, uv_last_error(loop).code, syscall, msg, NULL);
+/*
+inline void ThrowException(JNIEnv* env, int err, const char *syscall, const char *msg) {
+  ThrowException(env, err, syscall, msg, NULL);
 }
-
+*/
 #endif // _libuv_java_throw_h_

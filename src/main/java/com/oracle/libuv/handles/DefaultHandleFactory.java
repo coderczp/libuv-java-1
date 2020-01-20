@@ -25,8 +25,6 @@
 
 package com.oracle.libuv.handles;
 
-import com.oracle.libuv.Files;
-
 public class DefaultHandleFactory implements HandleFactory {
 
     private LoopHandle loop;
@@ -54,18 +52,6 @@ public class DefaultHandleFactory implements HandleFactory {
     }
 
     @Override
-    public CheckHandle newCheckHandle() {
-        assert loop != null;
-        return new CheckHandle(loop);
-    }
-
-    @Override
-    public IdleHandle newIdleHandle() {
-        assert loop != null;
-        return new IdleHandle(loop);
-    }
-
-    @Override
     public PipeHandle newPipeHandle(final boolean ipc) {
         assert loop != null;
         return new PipeHandle(loop, ipc);
@@ -79,99 +65,14 @@ public class DefaultHandleFactory implements HandleFactory {
     }
 
     @Override
-    public PollHandle newPollHandle(final int fd) {
-        assert loop != null;
-        return new PollHandle(loop, fd);
-    }
-
-    @Override
-    public PollHandle newPollHandle(final long socket) {
-        assert loop != null;
-        return new PollHandle(loop, socket);
-    }
-
-    @Override
     public ProcessHandle newProcessHandle() {
         assert loop != null;
         return new ProcessHandle(loop);
     }
 
     @Override
-    public SignalHandle newSignalHandle() {
-        assert loop != null;
-        return new SignalHandle(loop);
-    }
-
-    @Override
-    public TCPHandle newTCPHandle() {
-        assert loop != null;
-        return new TCPHandle(loop);
-    }
-
-    @Override
-    public TCPHandle newTCPHandle(final long pointer) {
-        assert loop != null;
-        return new TCPHandle(loop, pointer, true);
-    }
-
-    @Override
-    public TCPHandle openTCPHandle(final long socket) {
-        assert loop != null;
-        return new TCPHandle(loop, socket);
-    }
-
-    @Override
     public TimerHandle newTimerHandle() {
         assert loop != null;
         return new TimerHandle(loop);
-    }
-
-    @Override
-    public TTYHandle newTTYHandle(final int fd,
-                                  final boolean readable) {
-        assert loop != null;
-        return new TTYHandle(loop, fd, readable);
-    }
-
-    @Override
-    public UDPHandle newUDPHandle() {
-        assert loop != null;
-        return new UDPHandle(loop);
-    }
-
-    @Override
-    public UDPHandle newUDPHandle(final long pointer) {
-        assert loop != null;
-        return new UDPHandle(loop, pointer, true);
-    }
-
-    @Override
-    public UDPHandle openUDPHandle(final long socket) {
-        assert loop != null;
-        return new UDPHandle(loop, socket);
-    }
-
-    @Override
-    public FileEventHandle newFileEventHandle() {
-        assert loop != null;
-        return new FileEventHandle(loop);
-    }
-
-    @Override
-    public FilePollHandle newFilePollHandle() {
-        assert loop != null;
-        return new FilePollHandle(loop);
-    }
-
-    @Override
-    public Files newFiles() {
-        assert loop != null;
-        return new FilesWrapper(loop);
-    }
-
-    private static class FilesWrapper extends Files {
-        FilesWrapper(final LoopHandle loop) {
-            super(loop);
-        }
     }
 }
