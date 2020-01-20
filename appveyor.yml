@@ -10,13 +10,6 @@ platform: x64
 
 stack: jdk 11
 
-cache:
-  - vcpkg -> appveyor.yml
-  - /home/appveyor/.m2 -> pom.xml
-  - C:\tools\vcpkg\installed -> appveyor.yml
-  - C:\tools\vcpkg\packages -> appveyor.yml
-  - C:\Users\appveyor\.m2 -> pom.xml
-
 build_script:
   - sh: |
         if [ ! -d "/home/appveyor/projects/libuv-java/vcpkg" ]; then
@@ -36,8 +29,8 @@ build_script:
   - cmd: cd %APPVEYOR_BUILD_FOLDER% && mvn -DskipTests -q package
 
 test_script:
-  - cmd: cd %APPVEYOR_BUILD_FOLDER% && mvn surefire-report:report
-  - sh: cd $APPVEYOR_BUILD_FOLDER && mvn surefire-report:report
+  - cmd: cd %APPVEYOR_BUILD_FOLDER% && mvn -q surefire-report:report
+  - sh: cd $APPVEYOR_BUILD_FOLDER && mvn -q surefire-report:report
 
 after_test:
   - ps: |
