@@ -1,5 +1,6 @@
 # libuv-java
 
-[![AppVeyor](https://img.shields.io/appveyor/ci/WebFolder/libuv-java-build.svg?label=Windows-GNU/Linux)](https://ci.appveyor.com/project/WebFolder/libuv-java-build)
+[![AppVeyor](https://img.shields.io/appveyor/ci/WebFolder/libuv-java.svg?label=Windows-GNU/Linux)](https://ci.appveyor.com/project/WebFolder/libuv-java)
 
-imported from git://java.net/avatar-js~libuv-java at 2015-05-06
+# Changelog
+- Updated libuv version from 0.10.x to 1.x
