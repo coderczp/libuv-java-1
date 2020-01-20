@@ -31,7 +31,7 @@ build_script:
   - cmd: vcpkg.exe install libuv:x64-windows-static
   - cmd: cd %APPVEYOR_BUILD_FOLDER%/src/main
   - cmd: java -version
-  - cmd: mvn -DskipTests -q package
+  - cmd: cd $APPVEYOR_BUILD_FOLDER && mvn -DskipTests -q package
 
 test_script:
   - cmd: cd $APPVEYOR_BUILD_FOLDER && mvn surefire-report:report
