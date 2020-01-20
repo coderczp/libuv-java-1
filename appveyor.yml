@@ -1,0 +1,49 @@
+version: 1.0.'{build}'
+
+image:
+ - ubuntu1804
+ - Visual Studio 2017
+
+configuration: Release
+
+platform: x64
+
+stack: jdk 11
+
+cache:
+  - vcpkg -> appveyor.yml
+  - /home/appveyor/.m2 -> pom.xml
+  - C:\tools\vcpkg\installed -> appveyor.yml
+  - C:\tools\vcpkg\packages -> appveyor.yml
+  - C:\Users\appveyor\.m2 -> pom.xml
+
+build_script:
+  - sh: |
+        if [ ! -d "/home/appveyor/projects/libuv-java/vcpkg" ]; then
+          git clone https://github.com/Microsoft/vcpkg.git
+          CC=gcc-8 CXX=g++-8 ./vcpkg/bootstrap-vcpkg.sh
+          ./vcpkg/vcpkg integrate install
+          ./vcpkg/vcpkg install libuv:x64-linux
+        fi
+  - sh: cd $APPVEYOR_BUILD_FOLDER/src/main && ./build.sh
+  - sh: java -version
+  - sh: cd $APPVEYOR_BUILD_FOLDER && mvn -DskipTests -q package
+  - cmd: vcpkg.exe install libuv:x64-windows-static
+  - cmd: cd %APPVEYOR_BUILD_FOLDER%/src/main
+  - cmd: java -version
+  - cmd: mvn -DskipTests -q package
+
+test_script:
+  - cmd: cd $APPVEYOR_BUILD_FOLDER && mvn surefire-report:report
+  - sh: cd $APPVEYOR_BUILD_FOLDER && mvn surefire-report:report
+
+after_test:
+  - ps: |
+        $wc = New-Object 'System.Net.WebClient'
+        Get-ChildItem . -Name -Recurse 'TEST-*.xml'  |
+        Foreach-Object {
+            $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $_))
+        }
+artifacts:
+  - path: target/libuv-java-1.0.0.jar
+    name: libuv-java library

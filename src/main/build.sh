@@ -1,6 +1,6 @@
 mkdir -p build
 cd build
-cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
+cmake .. -DCMAKE_TOOLCHAIN_FILE=/home/appveyor/projects/libuv-java/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-linux
 make
 strip libuv-java.so
 mkdir -p ../resources/META-INF
