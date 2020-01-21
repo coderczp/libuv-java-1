@@ -1,6 +1,6 @@
 mkdir -p build
 cd build
-cmake .. -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT_LNX/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-linux
+cmake .. -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-linux
 make
 strip libuv-java.so
 mkdir -p ../resources/META-INF

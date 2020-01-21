@@ -10,27 +10,19 @@ platform: x64
 
 stack: jdk 11
 
-cache:
-  - vcpkg -> appveyor.yml
-  - /home/appveyor/.m2 -> pom.xml
-  - C:\tools\vcpkg\installed -> appveyor.yml
-  - C:\tools\vcpkg\packages -> appveyor.yml
-  - C:\Users\appveyor\.m2 -> pom.xml
-
 environment:
-  VCPKG_ROOT_LNX: /usr/local/share/VCPKG_ROOT
+  VCPKG_ROOT: /usr/local/share/vcpkg
   VCPKG_ROOT: C:\tools\vcpkg
 
 build_script:
   - sh: |
-        if [ ! -d "/home/appveyor/projects/libuv-java/vcpkg" ]; then
-          cd $VCPKG_ROOT_LNX
-          git clone https://github.com/Microsoft/vcpkg.git
-          CC=gcc-8 CXX=g++-8 ./vcpkg/bootstrap-vcpkg.sh
-          ./vcpkg/vcpkg integrate install
-          cp -f $APPVEYOR_BUILD_FOLDER/vcpkg/libuv/* $VCPKG_ROOT_LNX/ports/libuv
-          ./vcpkg/vcpkg install libuv:x64-linux
-        fi
+         mdkir -p $VCPKG_ROOT
+         cd $VCPKG_ROOT
+         git clone https://github.com/Microsoft/vcpkg.git
+         CC=gcc-8 CXX=g++-8 ./vcpkg/bootstrap-vcpkg.sh
+         ./vcpkg/vcpkg integrate install
+         cp -f $APPVEYOR_BUILD_FOLDER/vcpkg/libuv/* $VCPKG_ROOT_LNX/ports/libuv
+         ./vcpkg/vcpkg install libuv:x64-linux
   - sh: cd $APPVEYOR_BUILD_FOLDER/src/main && ./build.sh
   - sh: java -version
   - sh: cd $APPVEYOR_BUILD_FOLDER && mvn -DskipTests -q package
