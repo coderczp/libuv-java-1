@@ -8,7 +8,7 @@ configuration: Release
 
 platform: x64
 
-stack: jdk 11
+stack: jdk 8
 
 for:
  -
