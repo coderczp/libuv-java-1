@@ -82,12 +82,6 @@ public class TimerHandle extends Handle {
         closed = true;
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        close();
-        super.finalize();
-    }
-
     private void callback(final int type, final int status) {
         switch (type) {
             case 1: if (onTimerFired != null) {loop.getCallbackHandler().handleTimerCallback(onTimerFired, status);} break;

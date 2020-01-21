@@ -58,12 +58,6 @@ public class AsyncHandle extends Handle {
         }
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        close();
-        super.finalize();
-    }
-
     private void callSend(final int status) {
         if (onSend != null) {loop.getCallbackHandler().handleAsyncCallback(onSend, status);}
     }

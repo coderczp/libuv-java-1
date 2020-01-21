@@ -174,12 +174,6 @@ class StreamHandle extends Handle {
         _initialize(pointer);
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        close();
-        super.finalize();
-    }
-
     protected void callRead(final ByteBuffer data) {
         if (onRead != null) {
             loop.getCallbackHandler().handleStreamReadCallback(onRead, data);

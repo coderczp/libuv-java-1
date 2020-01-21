@@ -170,12 +170,6 @@ public class ProcessHandle extends Handle {
         return _kill(pointer, signal);
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        close();
-        super.finalize();
-    }
-
     private void callClose() {
         if (onClose != null) {
             loop.getCallbackHandler().handleProcessCloseCallback(onClose);

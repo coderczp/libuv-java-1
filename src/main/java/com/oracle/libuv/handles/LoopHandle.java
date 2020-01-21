@@ -167,13 +167,6 @@ public class LoopHandle implements Closeable {
         return pointer;
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        close();
-        destroy();
-        super.finalize();
-    }
-
     private void throwPendingException() throws Throwable {
         if (pendingException != null) {
             final Throwable pex = pendingException;

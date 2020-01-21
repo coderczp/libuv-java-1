@@ -36,14 +36,16 @@ for:
 build_script:
   - sh: |
          cd $APPVEYOR_BUILD_FOLDER
-         mkdir tools
-         cd tools
-         git clone https://github.com/Microsoft/vcpkg.git
-         cd vcpkg
-         ./bootstrap-vcpkg.sh
-         ./vcpkg integrate install
-         cp -f $APPVEYOR_BUILD_FOLDER/vcpkg/libuv/* $VCPKG_ROOT/ports/libuv
-         ./vcpkg install libuv:x64-linux
+         if [ ! -d "/home/appveyor/projects/libuv-java/tools/vcpkg" ]; then
+           mkdir tools
+           cd tools
+           git clone https://github.com/Microsoft/vcpkg.git
+           cd vcpkg
+           ./bootstrap-vcpkg.sh
+           ./vcpkg integrate install
+           cp -f $APPVEYOR_BUILD_FOLDER/vcpkg/libuv/* $VCPKG_ROOT/ports/libuv
+           ./vcpkg install libuv:x64-linux
+         fi
          cd $APPVEYOR_BUILD_FOLDER/src/main
          ./build.sh
          java -version
