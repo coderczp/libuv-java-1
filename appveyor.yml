@@ -17,6 +17,8 @@ for:
       - image: ubuntu1804
   environment:
     VCPKG_ROOT: /usr/local/share/vcpkg
+    CC: gcc-8
+    CXX: g++-8
  -
   matrix:
     only:
@@ -26,16 +28,17 @@ for:
 
 build_script:
   - sh: |
-         mdkir -p $VCPKG_ROOT
-         cd $VCPKG_ROOT
+         cd $VCPKG_ROOT/..
          git clone https://github.com/Microsoft/vcpkg.git
-         CC=gcc-8 CXX=g++-8 ./vcpkg/bootstrap-vcpkg.sh
-         ./vcpkg/vcpkg integrate install
-         cp -f $APPVEYOR_BUILD_FOLDER/vcpkg/libuv/* $VCPKG_ROOT_LNX/ports/libuv
-         ./vcpkg/vcpkg install libuv:x64-linux
-  - sh: cd $APPVEYOR_BUILD_FOLDER/src/main && ./build.sh
-  - sh: java -version
-  - sh: cd $APPVEYOR_BUILD_FOLDER && mvn -DskipTests -q package
+         $VCPKG_ROOT/bootstrap-vcpkg.sh
+         $VCPKG_ROOT/vcpkg integrate install
+         cp -f $APPVEYOR_BUILD_FOLDER/vcpkg/libuv/* $VCPKG_ROOT/ports/libuv
+         $VCPKG_ROOT/vcpkg install libuv:x64-linux
+         cd $APPVEYOR_BUILD_FOLDER/src/main
+         ./build.sh
+         java -version
+         cd $APPVEYOR_BUILD_FOLDER
+         mvn -DskipTests -q package
   - cmd: copy /Y %APPVEYOR_BUILD_FOLDER%\vcpkg\libuv %VCPKG_ROOT%\ports\libuv
   - cmd: vcpkg.exe install libuv:x64-windows-static
   - cmd: cd %APPVEYOR_BUILD_FOLDER%\src\main && build.bat
