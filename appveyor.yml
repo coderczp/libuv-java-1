@@ -15,7 +15,7 @@ for:
   matrix:
     only:
       - image: ubuntu1804
-  environment:
+  environment:    
     VCPKG_ROOT: /usr/local/share/vcpkg
     CC: gcc-8
     CXX: g++-8
@@ -28,13 +28,13 @@ for:
 
 build_script:
   - sh: |
-         rm -rf $VCPKG_ROOT
-         cd $VCPKG_ROOT/..
+         mkdir -p /usr/local/share
+         cd /usr/local/share
          git clone https://github.com/Microsoft/vcpkg.git
-         $VCPKG_ROOT/bootstrap-vcpkg.sh
-         $VCPKG_ROOT/vcpkg integrate install
+         ./bootstrap-vcpkg.sh
+         ./vcpkg integrate install
          cp -f $APPVEYOR_BUILD_FOLDER/vcpkg/libuv/* $VCPKG_ROOT/ports/libuv
-         $VCPKG_ROOT/vcpkg install libuv:x64-linux
+         ./vcpkg install libuv:x64-linux
          cd $APPVEYOR_BUILD_FOLDER/src/main
          ./build.sh
          java -version
