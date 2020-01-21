@@ -29,7 +29,6 @@ for:
 build_script:
   - sh: |
          cd $APPVEYOR_BUILD_FOLDER
-         git clone https://github.com/Microsoft/vcpkg.git
          cd vcpkg
          ./bootstrap-vcpkg.sh
          ./vcpkg integrate install
