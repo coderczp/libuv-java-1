@@ -16,7 +16,7 @@ for:
     only:
       - image: ubuntu1804
   environment:    
-    VCPKG_ROOT: /home/appveyor/projects/libuv-java/vcpkg
+    VCPKG_ROOT: /home/appveyor/projects/libuv-java/tools/vcpkg
     CC: gcc-8
     CXX: g++-8
  -
@@ -28,14 +28,10 @@ for:
 
 build_script:
   - sh: |
-         ls -l
          cd $APPVEYOR_BUILD_FOLDER
-         echo 'current dir:'
-         echo $APPVEYOR_BUILD_FOLDER         
-         echo 'cloning vcpkg...'
-         ls -l
+         mkdir tools
+         cd tools
          git clone https://github.com/Microsoft/vcpkg.git
-         ls -l
          cd vcpkg
          ./bootstrap-vcpkg.sh
          ./vcpkg integrate install
