@@ -28,6 +28,7 @@ for:
 
 build_script:
   - sh: |
+         rm -rf $VCPKG_ROOT
          cd $VCPKG_ROOT/..
          git clone https://github.com/Microsoft/vcpkg.git
          $VCPKG_ROOT/bootstrap-vcpkg.sh
