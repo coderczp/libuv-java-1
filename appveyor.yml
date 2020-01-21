@@ -19,12 +19,19 @@ for:
     VCPKG_ROOT: /home/appveyor/projects/libuv-java/tools/vcpkg
     CC: gcc-8
     CXX: g++-8
+  cache:
+    - /home/appveyor/projects/libuv-java/tools/vcpkg -> vcpkg/libuv/portfile.cmake
+    - /home/appveyor/.m2 -> pom.xml
  -
   matrix:
     only:
       - image: Visual Studio 2017
   environment:
     VCPKG_ROOT: C:\tools\vcpkg
+  cache:
+    - C:\tools\vcpkg\installed -> vcpkg/libuv/portfile.cmake
+    - C:\tools\vcpkg\packages -> vcpkg/libuv/portfile.cmake
+    - C:\Users\appveyor\.m2 -> pom.xml
 
 build_script:
   - sh: |
