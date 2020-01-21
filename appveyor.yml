@@ -28,6 +28,7 @@ for:
 
 build_script:
   - sh: |
+         echo $APPVEYOR_BUILD_FOLDER
          mkdir -p /usr/local/share
          cd /usr/local/share
          git clone https://github.com/Microsoft/vcpkg.git
