@@ -10,9 +10,21 @@ platform: x64
 
 stack: jdk 11
 
-environment:
-  VCPKG_ROOT: /usr/local/share/vcpkg
-  VCPKG_ROOT: C:\tools\vcpkg
+for:
+-
+  matrix:
+    only:
+      - image: ubuntu1804
+  environment:
+    VCPKG_ROOT: /usr/local/share/vcpkg
+
+for:
+-
+  matrix:
+    only:
+      - image: Visual Studio 2017
+  environment:
+    VCPKG_ROOT: C:\tools\vcpkg
 
 build_script:
   - sh: |
