@@ -244,18 +244,24 @@ JNIEXPORT jobject JNICALL Java_com_oracle_libuv_handles_UDPHandle__1address
 /*
  * Class:     com_oracle_libuv_handles_UDPHandle
  * Method:    _bind
- * Signature: (JILjava/lang/String;)I
+ * Signature: (JILjava/lang/String;Z)I
  */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_UDPHandle__1bind
-  (JNIEnv *env, jobject that, jlong udp, jint port, jstring host) {
+  (JNIEnv *env, jobject that, jlong udp, jint port, jstring host, jboolean ipv6) {
 
   assert(udp);
   uv_udp_t* handle = reinterpret_cast<uv_udp_t*>(udp);
   const char* h = env->GetStringUTFChars(host, 0);
-  sockaddr_in addr;
-  uv_ip4_addr(h, port, &addr);
+  sockaddr_in addrv4;
+  sockaddr_in6 addrv6;
+  if (ipv6 == JNI_TRUE) {
+	  uv_ip6_addr(h, port, &addrv6);
+  } else {
+	  uv_ip4_addr(h, port, &addrv4);
+  }
   unsigned flags = 0;
-  int r = uv_udp_bind(handle, (const struct sockaddr*) &addr, flags);
+  const sockaddr* addr = (ipv6 == JNI_TRUE) ? (const struct sockaddr*) &addrv6 : (const struct sockaddr*) &addrv4;
+  int r = uv_udp_bind(handle, addr, flags);
   if (r) {
     ThrowException(env, r, "uv_udp_bind", h);
   }
@@ -266,16 +272,22 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_UDPHandle__1bind
 /*
  * Class:     com_oracle_libuv_handles_UDPHandle
  * Method:    _send
- * Signature: (JLjava/nio/ByteBuffer;[BIIILjava/lang/String;)I
+ * Signature: (JLjava/nio/ByteBuffer;[BIIILjava/lang/String;Ljava/lang/Object;Z)I
  */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_UDPHandle__1send
-  (JNIEnv *env, jobject that, jlong udp, jobject buffer, jbyteArray data, jint offset, jint length, jint port, jstring host, jobject context) {
+  (JNIEnv *env, jobject that, jlong udp, jobject buffer, jbyteArray data, jint offset, jint length, jint port, jstring host, jobject context, jboolean ipv6) {
 
   assert(udp);
   uv_udp_t* handle = reinterpret_cast<uv_udp_t*>(udp);
   const char* h = env->GetStringUTFChars(host, 0);
-  sockaddr_in addr;
-  uv_ip4_addr(h, port, &addr);
+  sockaddr_in addrv4;
+  sockaddr_in6 addrv6;
+  if (ipv6 == JNI_TRUE) {
+	  uv_ip6_addr(h, port, &addrv6);
+  } else {
+	  uv_ip4_addr(h, port, &addrv4);
+  }
+  const sockaddr* addr = (ipv6 == JNI_TRUE) ? (const struct sockaddr*) &addrv6 : (const struct sockaddr*) &addrv4;
   uv_udp_send_t* req = new uv_udp_send_t();
   req->handle = handle;
   ContextHolder* req_data = NULL;
@@ -288,7 +300,7 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_UDPHandle__1send
     buf.len = length;
     req_data = new ContextHolder(env, context);
     req->data = req_data;
-    r = uv_udp_send(req, handle, &buf, 1, (const struct sockaddr*) &addr, _send_cb);
+    r = uv_udp_send(req, handle, &buf, 1, addr, _send_cb);
     env->ReleasePrimitiveArrayCritical(data, base, 0);
   } else {
     jbyte* base = (jbyte*) env->GetDirectBufferAddress(buffer);
@@ -297,7 +309,7 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_UDPHandle__1send
     buf.len = length;
     req_data = new ContextHolder(env, buffer, context);
     req->data = req_data;
-    r = uv_udp_send(req, handle, &buf, 1, (const struct sockaddr *) &addr, _send_cb);
+    r = uv_udp_send(req, handle, &buf, 1, addr, _send_cb);
   }
   if (r) {
     delete req_data;

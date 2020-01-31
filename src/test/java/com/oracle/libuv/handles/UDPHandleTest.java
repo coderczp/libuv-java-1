@@ -43,11 +43,12 @@ import com.oracle.libuv.cb.UDPSendCallback;
 public class UDPHandleTest extends TestBase {
 
     private static final String HOST = "127.0.0.1";
+    private static final String HOST6 = "::1";
+
     private static final int PORT = 34567;
     private static final int TIMES = 10;
 
-    @Test
-    public void testConnection() throws Throwable {
+    public void testConnection(boolean ipv6) throws Throwable {
         final AtomicInteger clientSendCount = new AtomicInteger(0);
         final AtomicInteger serverRecvCount = new AtomicInteger(0);
 
@@ -84,11 +85,12 @@ public class UDPHandleTest extends TestBase {
             }
         });
 
-        server.bind(PORT, HOST);
+        server.bind(PORT, ipv6 ? HOST6 : HOST, ipv6);
         server.recvStart();
 
         for (int i=0; i < TIMES; i++) {
-            client.send("PING." + i, PORT, HOST);
+        	System.out.println("sending");
+            client.send("PING." + i, PORT, ipv6 ? HOST6 : HOST, ipv6);
         }
 
         final long start = System.currentTimeMillis();
@@ -103,8 +105,19 @@ public class UDPHandleTest extends TestBase {
         Assert.assertEquals(serverRecvCount.get(), TIMES);
     }
 
+    @Test
+    public void testConnectionIpv4() throws Throwable {
+    	testConnection(false);
+    }
+
+    @Test
+    public void testConnectionIpv6() throws Throwable {
+    	testConnection(true);
+    }
+
     public static void main(final String[] args) throws Throwable {
         final UDPHandleTest test = new UDPHandleTest();
-        test.testConnection();
+        test.testConnectionIpv4();
+        test.testConnectionIpv6();
     }
 }

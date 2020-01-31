@@ -99,14 +99,15 @@ public class UDPHandle extends Handle {
         return _address(pointer);
     }
 
-    public int bind(final int port, final String address) {
+    public int bind(final int port, final String address, boolean ipv6) {
         Objects.requireNonNull(address);
-        return _bind(pointer, port, address);
+        return _bind(pointer, port, address, ipv6);
     }
 
     public int send(final String str,
                     final int port,
-                    final String host) {
+                    final String host,
+                    final boolean ipv6) {
         Objects.requireNonNull(str);
         Objects.requireNonNull(host);
         final byte[] data;
@@ -115,40 +116,43 @@ public class UDPHandle extends Handle {
         } catch (final UnsupportedEncodingException e) {
             throw new RuntimeException(e); // "utf-8" is always supported
         }
-        return send(ByteBuffer.wrap(data), 0, data.length, port, host);
+        return send(ByteBuffer.wrap(data), 0, data.length, port, host, ipv6);
     }
 
     public int send(final String str,
                     final String encoding,
                     final int port,
-                    final String host) throws UnsupportedEncodingException {
+                    final String host,
+                    final boolean ipv6) throws UnsupportedEncodingException {
         Objects.requireNonNull(str);
         Objects.requireNonNull(encoding);
         Objects.requireNonNull(host);
         final byte[] data = str.getBytes(encoding);
-        return send(ByteBuffer.wrap(data), 0, data.length, port, host);
+        return send(ByteBuffer.wrap(data), 0, data.length, port, host, ipv6);
     }
 
     public int send(final ByteBuffer buffer,
                     final int port,
-                    final String host) {
+                    final String host,
+                    final boolean ipv6) {
         Objects.requireNonNull(buffer);
         Objects.requireNonNull(host);
         return buffer.hasArray() ?
-                _send(pointer, buffer, buffer.array(), 0, buffer.capacity(), port, host, loop.getContext()) :
-                _send(pointer, buffer, null, 0, buffer.capacity(), port, host, loop.getContext());
+                _send(pointer, buffer, buffer.array(), 0, buffer.capacity(), port, host, loop.getContext(), ipv6) :
+                _send(pointer, buffer, null, 0, buffer.capacity(), port, host, loop.getContext(), ipv6);
     }
 
     public int send(final ByteBuffer buffer,
                     final int offset,
                     final int length,
                     final int port,
-                    final String host) {
+                    final String host,
+                    final boolean ipv6) {
         Objects.requireNonNull(buffer);
         Objects.requireNonNull(host);
         return buffer.hasArray() ?
-                _send(pointer, buffer, buffer.array(), offset, length, port, host, loop.getContext()) :
-                _send(pointer, buffer, null, offset, length, port, host, loop.getContext());
+                _send(pointer, buffer, buffer.array(), offset, length, port, host, loop.getContext(), ipv6) :
+                _send(pointer, buffer, null, offset, length, port, host, loop.getContext(), ipv6);
     }
 
 
@@ -214,7 +218,8 @@ public class UDPHandle extends Handle {
 
     private native int _bind(final long ptr,
                              final int port,
-                             final String host);
+                             final String host,
+                             final boolean ipv6);
 
     private native int _send(final long ptr,
                              final ByteBuffer buffer,
@@ -223,7 +228,8 @@ public class UDPHandle extends Handle {
                              final int length,
                              final int port,
                              final String host,
-                             final Object context);
+                             final Object context,
+                             final boolean ipv6);
 
     private native int _recv_start(final long ptr);
 
