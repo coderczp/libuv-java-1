@@ -48,8 +48,8 @@ public:
 
   void initialize(JNIEnv* env, jobject instance);
 
-  void on_exit(int status, int signal);
-  void on_exit(int status, int signal, int error_code);
+  void on_exit(int64_t status, int signal);
+  void on_exit(int64_t status, int signal, int error_code);
   void on_close();
 };
 
@@ -87,7 +87,7 @@ ProcessCallbacks::~ProcessCallbacks() {
   _env->DeleteGlobalRef(_instance);
 }
 
-void ProcessCallbacks::on_exit(int status, int signal) {
+void ProcessCallbacks::on_exit(int64_t status, int signal) {
   assert(_env);
 
   _env->CallVoidMethod(
@@ -98,7 +98,7 @@ void ProcessCallbacks::on_exit(int status, int signal) {
       NULL);
 }
 
-void ProcessCallbacks::on_exit(int status, int signal, int error_code) {
+void ProcessCallbacks::on_exit(int64_t status, int signal, int error_code) {
   assert(_env);
   assert(status < 0);
 

@@ -37,7 +37,6 @@
 # define ARRAY_SIZE(a) (sizeof((a)) / sizeof((a)[0]))
 #endif
 
-extern "C" void uv__set_process_title(const char* title);
 
 /*
  * Class:     com_oracle_libuv_LibUV
@@ -104,8 +103,6 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_LibUV__1chdir
   env->ReleaseStringUTFChars(arg, dir);
 }
 
-static char* process_title = NULL; // last set value
-
 /*
  * Class:     com_oracle_libuv_LibUV
  * Method:    _getTitle
@@ -113,8 +110,9 @@ static char* process_title = NULL; // last set value
  */
 JNIEXPORT jstring JNICALL Java_com_oracle_libuv_LibUV__1getTitle
   (JNIEnv *env, jclass cls) {
-
-  return env->NewStringUTF(process_title ? process_title : "");
+  char process_title[4096];
+  int r = uv_get_process_title(process_title, 4096);
+  return env->NewStringUTF(r == 0 ? process_title : "");
 }
 
 /*
@@ -124,15 +122,8 @@ JNIEXPORT jstring JNICALL Java_com_oracle_libuv_LibUV__1getTitle
  */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_LibUV__1setTitle
   (JNIEnv *env, jclass cls, jstring title) {
-
   const char* t = env->GetStringUTFChars(title, JNI_FALSE);
-  if (process_title) {
-    free(process_title);
-  }
-  process_title = strdup(t);
-#ifdef __POSIX__
-  uv__set_process_title(process_title);
-#endif // __POSIX__
+  uv_set_process_title(t);
   env->ReleaseStringUTFChars(title, t);
 }
 

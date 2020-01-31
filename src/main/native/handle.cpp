@@ -61,7 +61,12 @@ const char* handle_to_string(const uv_handle_t* handle) {
     const size_t size = strlen(type) + 16;
     char* buffer = new char[size];
     memset(buffer, 0, size);
-    sprintf(buffer, "%s.%lx", type, reinterpret_cast<unsigned long>(handle));
+#ifdef _MSC_VER
+#pragma warning(disable: 4311 4302)
+	sprintf_s(buffer, size, "%s.%lx", type, reinterpret_cast<unsigned long>(handle));
+#else
+	sprintf(buffer, "%s.%lx", type, reinterpret_cast<unsigned long>(handle));
+#endif
     return buffer;
 }
 
