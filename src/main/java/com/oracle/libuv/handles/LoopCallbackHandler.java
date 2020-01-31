@@ -27,6 +27,7 @@ package com.oracle.libuv.handles;
 
 import java.nio.ByteBuffer;
 
+import com.oracle.libuv.Address;
 import com.oracle.libuv.cb.AsyncCallback;
 import com.oracle.libuv.cb.CallbackExceptionHandler;
 import com.oracle.libuv.cb.CallbackHandler;
@@ -39,6 +40,9 @@ import com.oracle.libuv.cb.StreamReadCallback;
 import com.oracle.libuv.cb.StreamShutdownCallback;
 import com.oracle.libuv.cb.StreamWriteCallback;
 import com.oracle.libuv.cb.TimerCallback;
+import com.oracle.libuv.cb.UDPCloseCallback;
+import com.oracle.libuv.cb.UDPRecvCallback;
+import com.oracle.libuv.cb.UDPSendCallback;
 
 public final class LoopCallbackHandler implements CallbackHandler {
 
@@ -133,6 +137,33 @@ public final class LoopCallbackHandler implements CallbackHandler {
     public void handleTimerCallback(final TimerCallback cb, final int status) {
         try {
             cb.onTimer(status);
+        } catch (final Exception ex) {
+            exceptionHandler.handle(ex);
+        }
+    }
+
+    @Override
+    public void handleUDPRecvCallback(final UDPRecvCallback cb, final int nread, final ByteBuffer data, final Address address) {
+        try {
+            cb.onRecv(nread, data, address);
+        } catch (final Exception ex) {
+            exceptionHandler.handle(ex);
+        }
+    }
+
+    @Override
+    public void handleUDPSendCallback(final UDPSendCallback cb, final int status, final Exception error) {
+        try {
+            cb.onSend(status, error);
+        } catch (final Exception ex) {
+            exceptionHandler.handle(ex);
+        }
+    }
+
+    @Override
+    public void handleUDPCloseCallback(final UDPCloseCallback cb) {
+        try {
+            cb.onClose();
         } catch (final Exception ex) {
             exceptionHandler.handle(ex);
         }

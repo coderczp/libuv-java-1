@@ -12,6 +12,7 @@
       <class name="com.oracle.libuv.handles.ProcessHandle"/>
       <class name="com.oracle.libuv.handles.StreamHandle"/>
       <class name="com.oracle.libuv.handles.TimerHandle"/>
-      </javah>
+      <class name="com.oracle.libuv.handles.UDPHandle"/>
+    </javah>
   </target>
 </project>

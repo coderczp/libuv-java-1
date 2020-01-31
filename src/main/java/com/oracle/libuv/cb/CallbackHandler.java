@@ -27,6 +27,8 @@ package com.oracle.libuv.cb;
 
 import java.nio.ByteBuffer;
 
+import com.oracle.libuv.Address;
+
 public interface CallbackHandler {
     public void handleAsyncCallback(AsyncCallback cb, int status);
     public void handleStreamReadCallback(StreamReadCallback cb, ByteBuffer data);
@@ -38,4 +40,7 @@ public interface CallbackHandler {
     public void handleProcessCloseCallback(ProcessCloseCallback cb);
     public void handleProcessExitCallback(ProcessExitCallback cb, int status, int signal, Exception error);
     public void handleTimerCallback(TimerCallback cb, int status);
+    public void handleUDPRecvCallback(UDPRecvCallback cb, int nread, ByteBuffer data, Address address);
+    public void handleUDPSendCallback(UDPSendCallback cb, int status, Exception error);
+    public void handleUDPCloseCallback(UDPCloseCallback cb);
 }

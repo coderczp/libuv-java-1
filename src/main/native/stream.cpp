@@ -191,6 +191,38 @@ void StreamCallbacks::on_close() {
       _call_close_callback_mid);
 }
 
+// used in tcp.cpp and udp.cpp
+jobject StreamCallbacks::_address_to_js(JNIEnv* env, const sockaddr* addr) {
+	char ip[INET6_ADDRSTRLEN];
+	const sockaddr_in *a4;
+	const sockaddr_in6 *a6;
+	int port;
+
+	assert(addr);
+	switch (addr->sa_family) {
+	case AF_INET6:
+		a6 = reinterpret_cast<const sockaddr_in6*>(addr);
+		uv_inet_ntop(AF_INET6, &a6->sin6_addr, ip, sizeof ip);
+		port = ntohs(a6->sin6_port);
+		return env->NewObject(_address_cid,
+			_address_init_mid,
+			env->NewStringUTF(ip),
+			port,
+			_IPV6);
+
+	case AF_INET:
+		a4 = reinterpret_cast<const sockaddr_in*>(addr);
+		uv_inet_ntop(AF_INET, &a4->sin_addr, ip, sizeof ip);
+		port = ntohs(a4->sin_port);
+		return env->NewObject(_address_cid,
+			_address_init_mid,
+			env->NewStringUTF(ip),
+			port,
+			_IPV4);
+	}
+	return NULL;
+}
+
 static void _alloc_cb(uv_handle_t* handle, size_t suggested_size, uv_buf_t* buf) {
 	buf->base = (char*)malloc(suggested_size);
 	buf->len = (ULONG)suggested_size;

@@ -41,4 +41,10 @@ public interface HandleFactory {
     ProcessHandle newProcessHandle();
 
     TimerHandle newTimerHandle();
+
+    UDPHandle newUDPHandle();
+
+    UDPHandle newUDPHandle(long pointer);
+
+    UDPHandle openUDPHandle(long socket);
 }

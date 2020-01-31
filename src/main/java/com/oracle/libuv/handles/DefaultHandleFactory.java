@@ -75,4 +75,22 @@ public class DefaultHandleFactory implements HandleFactory {
         assert loop != null;
         return new TimerHandle(loop);
     }
+
+    @Override
+    public UDPHandle newUDPHandle() {
+        assert loop != null;
+        return new UDPHandle(loop);
+    }
+
+    @Override
+    public UDPHandle newUDPHandle(final long pointer) {
+        assert loop != null;
+        return new UDPHandle(loop, pointer, true);
+    }
+
+    @Override
+    public UDPHandle openUDPHandle(final long socket) {
+        assert loop != null;
+        return new UDPHandle(loop, socket);
+    }
 }
