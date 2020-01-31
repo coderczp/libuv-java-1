@@ -33,6 +33,8 @@ public interface HandleFactory {
 
     AsyncHandle newAsyncHandle();
 
+    CheckHandle newCheckHandle();
+
     PipeHandle newPipeHandle(boolean ipc);
 
     PipeHandle newPipeHandle(long pointer,

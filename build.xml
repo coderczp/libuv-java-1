@@ -14,6 +14,7 @@
       <class name="com.oracle.libuv.handles.TimerHandle" />
       <class name="com.oracle.libuv.handles.UDPHandle" />
       <class name="com.oracle.libuv.handles.TCPHandle" />
+      <class name="com.oracle.libuv.handles.CheckHandle" />
     </javah>
   </target>
 </project>

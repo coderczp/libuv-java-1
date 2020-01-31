@@ -31,6 +31,7 @@ import com.oracle.libuv.Address;
 import com.oracle.libuv.cb.AsyncCallback;
 import com.oracle.libuv.cb.CallbackExceptionHandler;
 import com.oracle.libuv.cb.CallbackHandler;
+import com.oracle.libuv.cb.CheckCallback;
 import com.oracle.libuv.cb.ProcessCloseCallback;
 import com.oracle.libuv.cb.ProcessExitCallback;
 import com.oracle.libuv.cb.StreamCloseCallback;
@@ -56,6 +57,15 @@ public final class LoopCallbackHandler implements CallbackHandler {
     public void handleAsyncCallback(final AsyncCallback cb, final int status) {
         try {
             cb.onSend(status);
+        } catch (final Exception ex) {
+            exceptionHandler.handle(ex);
+        }
+    }
+
+    @Override
+    public void handleCheckCallback(final CheckCallback cb, final int status) {
+        try {
+            cb.onCheck(status);
         } catch (final Exception ex) {
             exceptionHandler.handle(ex);
         }
