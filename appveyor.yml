@@ -52,7 +52,8 @@ build_script:
          cd $APPVEYOR_BUILD_FOLDER
          mvn -DskipTests -q package
   - cmd: copy /Y %APPVEYOR_BUILD_FOLDER%\vcpkg\libuv %VCPKG_ROOT%\ports\libuv
-  - cmd: vcpkg.exe install libuv:x64-windows-static
+  - cmd: copy /Y %APPVEYOR_BUILD_FOLDER%\vcpkg\triplets %VCPKG_ROOT%\triplets
+  - cmd: vcpkg.exe install libuv:x64-windows-dynamic-crt
   - cmd: cd %APPVEYOR_BUILD_FOLDER%\src\main && build.bat
   - cmd: java -version
   - cmd: cd %APPVEYOR_BUILD_FOLDER% && mvn -DskipTests -q package
