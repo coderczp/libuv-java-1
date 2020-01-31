@@ -31,8 +31,6 @@ import com.oracle.libuv.Address;
 
 public class TCPHandle extends StreamHandle {
 
-    private int bindPort = 0;
-
     protected TCPHandle(final LoopHandle loop) {
         super(_new(loop.pointer()), loop);
     }
@@ -47,7 +45,6 @@ public class TCPHandle extends StreamHandle {
 
     public int bind(final String address, final int port, boolean ipv6) {
         Objects.requireNonNull(address);
-        bindPort = port;
         return _bind(pointer, address, port, ipv6);
     }
 
@@ -85,8 +82,7 @@ public class TCPHandle extends StreamHandle {
         return _no_delay(pointer, enable ? 1 : 0);
     }
 
-    public int setKeepAlive(final boolean enable,
-                            final int delay) {
+    public int setKeepAlive(final boolean enable, final int delay) {
         return _keep_alive(pointer, enable ? 1 : 0, delay);
     }
 
@@ -100,7 +96,8 @@ public class TCPHandle extends StreamHandle {
 
     private native int _bind(final long ptr, final String address, final int port, final boolean ipv6);
 
-    private native int _connect(final long ptr, final String address, final int port, final Object context, final boolean ipv6);
+    private native int _connect(final long ptr, final String address, final int port, final Object context,
+            final boolean ipv6);
 
     private native int _open(final long ptr, final long socket);
 

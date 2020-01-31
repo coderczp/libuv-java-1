@@ -28,12 +28,12 @@ package com.oracle.libuv;
 public class Address {
 
     private final String ip;
+
     private final int port;
+
     private final String family;
 
-    public Address(final String ip,
-                   final int port,
-                   final String family) {
+    public Address(final String ip, final int port, final String family) {
         this.ip = ip;
         this.port = port;
         this.family = family;
@@ -53,8 +53,6 @@ public class Address {
 
     @Override
     public String toString() {
-        return "{ip: " + ip +
-                ", port: " + port +
-                ", family: " + family + "}";
+        return "Address [ip=" + ip + ", port=" + port + ", family=" + family + "]";
     }
 }

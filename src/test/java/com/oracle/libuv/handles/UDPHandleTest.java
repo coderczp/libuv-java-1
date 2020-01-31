@@ -63,9 +63,9 @@ public class UDPHandleTest extends TestBase {
         server.setRecvCallback(new UDPRecvCallback() {
             @Override
             public void onRecv(int nread, ByteBuffer data, Address address) throws Exception {
-            	byte[] b = new byte[data.remaining()];
-            	data.get(b);
-            	Assert.assertTrue(new String(b, StandardCharsets.UTF_8).contains("PING"));
+                byte[] b = new byte[data.remaining()];
+                data.get(b);
+                Assert.assertTrue(new String(b, StandardCharsets.UTF_8).contains("PING"));
                 if (serverRecvCount.incrementAndGet() < TIMES) {
                 } else {
                     server.close();
@@ -88,8 +88,8 @@ public class UDPHandleTest extends TestBase {
         server.bind(PORT, ipv6 ? HOST6 : HOST, ipv6);
         server.recvStart();
 
-        for (int i=0; i < TIMES; i++) {
-        	System.out.println("sending");
+        for (int i = 0; i < TIMES; i++) {
+            System.out.println("sending");
             client.send("PING." + i, PORT, ipv6 ? HOST6 : HOST, ipv6);
         }
 
@@ -107,12 +107,12 @@ public class UDPHandleTest extends TestBase {
 
     @Test
     public void testConnectionIpv4() throws Throwable {
-    	testConnection(false);
+        testConnection(false);
     }
 
     @Test
     public void testConnectionIpv6() throws Throwable {
-    	testConnection(true);
+        testConnection(true);
     }
 
     public static void main(final String[] args) throws Throwable {

@@ -47,10 +47,10 @@ public class LoopHandleTest extends TestBase {
         Assert.assertNotNull(handles);
         Assert.assertEquals(handles.length, 0);
 
-        final AsyncHandle async= handleFactory.newAsyncHandle();
-        final PipeHandle pipe= handleFactory.newPipeHandle(false);
-        final TCPHandle tcp= handleFactory.newTCPHandle();
-        final UDPHandle udp= handleFactory.newUDPHandle();
+        final AsyncHandle async = handleFactory.newAsyncHandle();
+        final PipeHandle pipe = handleFactory.newPipeHandle(false);
+        final TCPHandle tcp = handleFactory.newTCPHandle();
+        final UDPHandle udp = handleFactory.newUDPHandle();
 
         System.out.println(async);
         System.out.println(pipe);

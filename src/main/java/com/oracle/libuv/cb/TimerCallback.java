@@ -28,5 +28,4 @@ package com.oracle.libuv.cb;
 public interface TimerCallback {
 
     public void onTimer(int status) throws Exception;
-
 }

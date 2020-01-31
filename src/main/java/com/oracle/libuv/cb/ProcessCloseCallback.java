@@ -28,5 +28,4 @@ package com.oracle.libuv.cb;
 public interface ProcessCloseCallback {
 
     public void onClose() throws Exception;
-
 }

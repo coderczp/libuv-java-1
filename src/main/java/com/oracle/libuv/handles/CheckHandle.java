@@ -31,8 +31,9 @@ public class CheckHandle extends Handle {
 
     private boolean closed;
 
-    private CheckCallback onCheck = null;
-    private CheckCallback onClose = null;
+    private CheckCallback onCheck;
+
+    private CheckCallback onClose;
 
     static {
         _static_initialize();
@@ -74,9 +75,18 @@ public class CheckHandle extends Handle {
 
     private void callback(final int type, final int status) {
         switch (type) {
-            case 1: if (onCheck != null) {loop.getCallbackHandler().handleCheckCallback(onCheck, status);} break;
-            case 2: if (onClose != null) {loop.getCallbackHandler().handleCheckCallback(onClose, status);} break;
-            default: assert false : "unsupported callback type " + type;
+        case 1:
+            if (onCheck != null) {
+                loop.getCallbackHandler().handleCheckCallback(onCheck, status);
+            }
+            break;
+        case 2:
+            if (onClose != null) {
+                loop.getCallbackHandler().handleCheckCallback(onClose, status);
+            }
+            break;
+        default:
+            assert false : "unsupported callback type " + type;
         }
     }
 
@@ -91,5 +101,4 @@ public class CheckHandle extends Handle {
     private native int _stop(final long ptr);
 
     private native void _close(final long ptr);
-
 }

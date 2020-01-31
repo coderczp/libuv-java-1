@@ -64,7 +64,7 @@ public final class LibUV {
         ClassLoader cl = LibUV.class.getClassLoader();
         String name = WINDOWS ? "uv-java.dll" : "libuv-java.so";
         Path libFile = tmpdir.resolve("libuv-java-" + version).resolve(name);
-        if ( ! exists(libFile) ) {
+        if (!exists(libFile)) {
             try (InputStream is = cl.getResourceAsStream("META-INF/" + name)) {
                 if (!exists(libFile.getParent())) {
                     createDirectory(libFile.getParent());
@@ -191,5 +191,4 @@ public final class LibUV {
     // dns
 
     private static native boolean _isIPv6(String ip);
-
 }

@@ -90,7 +90,7 @@ public class TCPHandleTest extends TestBase {
                 if (data == null) {
                     peer.close();
                 } else {
-                    final Object[] args = {data};
+                    final Object[] args = { data };
                     serverLoggingCallback.log(args);
                     if (serverRecvCount.get() == TIMES) {
                         peer.close();
@@ -115,7 +115,7 @@ public class TCPHandleTest extends TestBase {
                 if (data == null) {
                     client.close();
                 } else {
-                    final Object[] args = {data};
+                    final Object[] args = { data };
                     clientLoggingCallback.log(args);
                     if (clientRecvCount.get() == TIMES) {
                         client.close();
@@ -161,12 +161,12 @@ public class TCPHandleTest extends TestBase {
 
     @Test
     public void testConnectionIpv4() throws Throwable {
-    	testConnection(false);
+        testConnection(false);
     }
 
     @Test
     public void testConnectionIpv6() throws Throwable {
-    	testConnection(true);
+        testConnection(true);
     }
 
     public static void main(final String[] args) throws Throwable {

@@ -39,8 +39,7 @@ public interface HandleFactory {
 
     PipeHandle newPipeHandle(boolean ipc);
 
-    PipeHandle newPipeHandle(long pointer,
-                             boolean ipc);
+    PipeHandle newPipeHandle(long pointer, boolean ipc);
 
     ProcessHandle newProcessHandle();
 

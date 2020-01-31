@@ -39,14 +39,20 @@ import com.oracle.libuv.cb.StreamWriteCallback;
 class StreamHandle extends Handle {
 
     protected boolean closed;
+
     protected boolean readStarted;
 
-    protected StreamReadCallback onRead = null;
-    protected StreamWriteCallback onWrite = null;
-    protected StreamConnectCallback onConnect = null;
-    protected StreamConnectionCallback onConnection = null;
-    protected StreamCloseCallback onClose = null;
-    protected StreamShutdownCallback onShutdown = null;
+    protected StreamReadCallback onRead;
+
+    protected StreamWriteCallback onWrite;
+
+    protected StreamConnectCallback onConnect;
+    
+    protected StreamConnectionCallback onConnection;
+
+    protected StreamCloseCallback onClose;
+
+    protected StreamShutdownCallback onShutdown;
 
     static {
         _static_initialize();
@@ -126,9 +132,8 @@ class StreamHandle extends Handle {
 
     public int write(final ByteBuffer buffer, final int offset, final int length) {
         Objects.requireNonNull(buffer);
-        return buffer.hasArray() ?
-                _write(pointer, buffer, buffer.array(), offset, length, loop.getContext()) :
-                _write(pointer, buffer, null, offset, length, loop.getContext());
+        return buffer.hasArray() ? _write(pointer, buffer, buffer.array(), offset, length, loop.getContext())
+                : _write(pointer, buffer, null, offset, length, loop.getContext());
     }
 
     public int write(final ByteBuffer buffer) {
@@ -222,25 +227,13 @@ class StreamHandle extends Handle {
 
     private native boolean _writable(final long ptr);
 
-    private native int _write(final long ptr,
-                              final ByteBuffer buffer,
-                              final byte[] data,
-                              final int offset,
-                              final int length,
-                              final Object context);
+    private native int _write(final long ptr, final ByteBuffer buffer, final byte[] data, final int offset,
+            final int length, final Object context);
 
-    private native int _writev(final long ptr,
-                               final byte[][] buffers,
-                               final int bufcount,
-                               final Object context);
+    private native int _writev(final long ptr, final byte[][] buffers, final int bufcount, final Object context);
 
-    private native int _write2(final long ptr,
-                               final ByteBuffer buffer,
-                               final byte[] data,
-                               final int offset,
-                               final int length,
-                               final long handlePointer,
-                               final Object context);
+    private native int _write2(final long ptr, final ByteBuffer buffer, final byte[] data, final int offset,
+            final int length, final long handlePointer, final Object context);
 
     private native long _write_queue_size(final long ptr);
 
@@ -251,5 +244,4 @@ class StreamHandle extends Handle {
     private native int _listen(final long ptr, final int backlog);
 
     private native int _accept(final long ptr, final long client);
-
 }

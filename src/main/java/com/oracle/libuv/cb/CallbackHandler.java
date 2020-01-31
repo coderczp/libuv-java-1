@@ -31,18 +31,32 @@ import com.oracle.libuv.Address;
 
 public interface CallbackHandler {
     public void handleAsyncCallback(AsyncCallback cb, int status);
+
     public void handleCheckCallback(CheckCallback cb, int status);
+
     public void handleIdleCallback(IdleCallback cb, int status);
+
     public void handleStreamReadCallback(StreamReadCallback cb, ByteBuffer data);
+
     public void handleStreamWriteCallback(StreamWriteCallback cb, int status, Exception error);
+
     public void handleStreamConnectCallback(StreamConnectCallback cb, int status, Exception error);
+
     public void handleStreamConnectionCallback(StreamConnectionCallback cb, int status, Exception error);
+
     public void handleStreamCloseCallback(StreamCloseCallback cb);
+
     public void handleStreamShutdownCallback(StreamShutdownCallback cb, int status, Exception error);
+
     public void handleProcessCloseCallback(ProcessCloseCallback cb);
+
     public void handleProcessExitCallback(ProcessExitCallback cb, int status, int signal, Exception error);
+
     public void handleTimerCallback(TimerCallback cb, int status);
+
     public void handleUDPRecvCallback(UDPRecvCallback cb, int nread, ByteBuffer data, Address address);
+
     public void handleUDPSendCallback(UDPSendCallback cb, int status, Exception error);
+
     public void handleUDPCloseCallback(UDPCloseCallback cb);
 }

@@ -28,5 +28,4 @@ package com.oracle.libuv.cb;
 public interface StreamConnectionCallback {
 
     public void onConnection(int status, Exception error) throws Exception;
-
 }

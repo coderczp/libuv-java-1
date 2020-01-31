@@ -100,7 +100,8 @@ public final class LoopCallbackHandler implements CallbackHandler {
     }
 
     @Override
-    public void handleStreamConnectionCallback(final StreamConnectionCallback cb, final int status, final Exception error) {
+    public void handleStreamConnectionCallback(final StreamConnectionCallback cb, final int status,
+            final Exception error) {
         try {
             cb.onConnection(status, error);
         } catch (final Exception ex) {
@@ -154,7 +155,8 @@ public final class LoopCallbackHandler implements CallbackHandler {
     }
 
     @Override
-    public void handleUDPRecvCallback(final UDPRecvCallback cb, final int nread, final ByteBuffer data, final Address address) {
+    public void handleUDPRecvCallback(final UDPRecvCallback cb, final int nread, final ByteBuffer data,
+            final Address address) {
         try {
             cb.onRecv(nread, data, address);
         } catch (final Exception ex) {

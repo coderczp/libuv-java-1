@@ -38,11 +38,7 @@ public class ProcessHandle extends Handle {
     public enum ProcessFlags {
 
         // must be equal to values in uv.h
-        NONE(0),
-        SETUID(1 << 0),
-        SETGID(1 << 1),
-        WINDOWS_VERBATIM_ARGUMENTS(1 << 2),
-        DETACHED(1 << 3),
+        NONE(0), SETUID(1 << 0), SETGID(1 << 1), WINDOWS_VERBATIM_ARGUMENTS(1 << 2), DETACHED(1 << 3),
         WINDOWS_HIDE(1 << 4);
 
         final int value;
@@ -58,8 +54,9 @@ public class ProcessHandle extends Handle {
         _static_initialize();
     }
 
-    private ProcessCloseCallback onClose = null;
-    private ProcessExitCallback onExit = null;
+    private ProcessCloseCallback onClose;
+
+    private ProcessExitCallback onExit;
 
     protected ProcessHandle(final LoopHandle loop) {
         super(_new(loop.pointer()), loop);
@@ -75,14 +72,8 @@ public class ProcessHandle extends Handle {
         onExit = callback;
     }
 
-    public int spawn(final String program,
-                     final String[] args,
-                     final String[] env,
-                     final String dir,
-                     final EnumSet<ProcessFlags> flags,
-                     final StdioOptions[] stdio,
-                     final int uid,
-                     final int gid) {
+    public int spawn(final String program, final String[] args, final String[] env, final String dir,
+            final EnumSet<ProcessFlags> flags, final StdioOptions[] stdio, final int uid, final int gid) {
         Objects.requireNonNull(program);
         Objects.requireNonNull(args);
         assert args.length > 0;
@@ -94,25 +85,25 @@ public class ProcessHandle extends Handle {
         int end = 0;
 
         for (int i = 0; i < cmdChars.length; i++) {
-            switch(cmdChars[i]) {
-                case '\"': {
-                    if (inQuote) {
-                        // Closing quote
-                        inQuote = false;
-                    } else {
-                        // Opening quote
-                        inQuote = true;
-                    }
-                    break;
+            switch (cmdChars[i]) {
+            case '\"': {
+                if (inQuote) {
+                    // Closing quote
+                    inQuote = false;
+                } else {
+                    // Opening quote
+                    inQuote = true;
                 }
-                case ' ': {
-                    if (!inQuote) {
-                        javaArgs.add(args[0].substring(start, end));
-                        start = ++end;
-                        continue;
-                    }
-                    break;
+                break;
+            }
+            case ' ': {
+                if (!inQuote) {
+                    javaArgs.add(args[0].substring(start, end));
+                    start = ++end;
+                    continue;
                 }
+                break;
+            }
             }
             end++;
         }
@@ -146,16 +137,7 @@ public class ProcessHandle extends Handle {
             processFlags |= ProcessFlags.DETACHED.value;
         }
 
-        return _spawn(pointer,
-                arguments[0],
-                arguments,
-                env,
-                dir,
-                processFlags,
-                stdioFlags,
-                streamPointers,
-                fds,
-                uid,
+        return _spawn(pointer, arguments[0], arguments, env, dir, processFlags, stdioFlags, streamPointers, fds, uid,
                 gid);
     }
 
@@ -188,20 +170,11 @@ public class ProcessHandle extends Handle {
 
     private native void _initialize(final long ptr);
 
-    private native int _spawn(final long ptr,
-                              final String program,
-                              final String[] args,
-                              final String[] env,
-                              final String dir,
-                              final int flags,
-                              final int[] stdioFlags,
-                              final long[] streams,
-                              final int[] fds,
-                              final int uid,
-                              final int gid);
+    private native int _spawn(final long ptr, final String program, final String[] args, final String[] env,
+            final String dir, final int flags, final int[] stdioFlags, final long[] streams, final int[] fds,
+            final int uid, final int gid);
 
     private native void _close(final long ptr);
 
     private native int _kill(final long ptr, final int signal);
-
 }

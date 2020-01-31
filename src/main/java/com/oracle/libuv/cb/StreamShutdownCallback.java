@@ -28,5 +28,4 @@ package com.oracle.libuv.cb;
 public interface StreamShutdownCallback {
 
     public void onShutdown(int status, Exception error) throws Exception;
-
 }

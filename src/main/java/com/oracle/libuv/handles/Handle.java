@@ -72,5 +72,4 @@ public abstract class Handle implements Closeable {
     private native void _unref(final long ptr);
 
     private native boolean _closing(final long ptr);
-
 }

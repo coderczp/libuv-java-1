@@ -83,7 +83,7 @@ public class PipeHandleTest extends TestBase {
                 if (data == null) {
                     peer.close();
                 } else {
-                    final Object[] args = {data};
+                    final Object[] args = { data };
                     serverLoggingCallback.log(args);
                     if (serverSendCount.get() < TIMES) {
                         peer.write("PING " + serverSendCount.incrementAndGet());
@@ -127,7 +127,7 @@ public class PipeHandleTest extends TestBase {
                 if (data == null) {
                     client.close();
                 } else {
-                    final Object[] args = {data};
+                    final Object[] args = { data };
                     clientLoggingCallback.log(args);
                     if (clientSendCount.incrementAndGet() < TIMES) {
                         client.write("PONG " + clientSendCount.get());

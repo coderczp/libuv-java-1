@@ -29,14 +29,11 @@ import java.util.Objects;
 
 public class PipeHandle extends StreamHandle {
 
-    protected PipeHandle(final LoopHandle loop,
-                         final boolean ipc) {
+    protected PipeHandle(final LoopHandle loop, final boolean ipc) {
         super(_new(loop.pointer(), ipc), loop);
     }
 
-    protected PipeHandle(final LoopHandle loop,
-                         final long pointer,
-                         final boolean ipc) {
+    protected PipeHandle(final LoopHandle loop, final long pointer, final boolean ipc) {
         super(pointer, loop);
     }
 
@@ -66,5 +63,4 @@ public class PipeHandle extends StreamHandle {
     private native int _bind(final long ptr, final String name);
 
     private native void _connect(final long ptr, final String name, final Object context);
-
 }

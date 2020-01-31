@@ -35,7 +35,9 @@ public class DefaultHandleFactory implements HandleFactory {
 
     @Override
     public HandleFactory initialize(final LoopHandle loop) {
-        if (this.loop != null) throw new IllegalStateException("already initialized");
+        if (this.loop != null) {
+            throw new IllegalStateException("already initialized");
+        }
         this.loop = loop;
         return this;
     }
@@ -70,8 +72,7 @@ public class DefaultHandleFactory implements HandleFactory {
     }
 
     @Override
-    public PipeHandle newPipeHandle(final long pointer,
-                                    final boolean ipc) {
+    public PipeHandle newPipeHandle(final long pointer, final boolean ipc) {
         assert loop != null;
         return new PipeHandle(loop, pointer, ipc);
     }

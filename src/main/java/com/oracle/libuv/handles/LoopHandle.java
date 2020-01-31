@@ -53,9 +53,7 @@ public class LoopHandle implements Closeable {
     private enum RunMode {
 
         // must be equal to uv_run_mode values in uv.h
-        DEFAULT(0),
-        ONCE(1),
-        NOWAIT(2);
+        DEFAULT(0), ONCE(1), NOWAIT(2);
 
         final int value;
 
@@ -68,9 +66,8 @@ public class LoopHandle implements Closeable {
         createdLoopCount += 1;
     }
 
-    public LoopHandle(final CallbackExceptionHandler exceptionHandler,
-                      final CallbackHandlerFactory callbackHandler,
-                      final ContextProvider contextProvider) {
+    public LoopHandle(final CallbackExceptionHandler exceptionHandler, final CallbackHandlerFactory callbackHandler,
+            final ContextProvider contextProvider) {
         newLoop();
         this.pointer = _new();
         assert pointer != 0;

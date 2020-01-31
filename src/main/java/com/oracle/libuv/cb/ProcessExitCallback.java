@@ -25,8 +25,11 @@
 
 package com.oracle.libuv.cb;
 
+/**
+ * This callback indicate the exit status and the signal that caused the process
+ * to terminate, if any.
+ */
 public interface ProcessExitCallback {
 
     public void onExit(int status, int signal, Exception error) throws Exception;
-
 }

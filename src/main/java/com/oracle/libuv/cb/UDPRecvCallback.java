@@ -32,5 +32,4 @@ import com.oracle.libuv.Address;
 public interface UDPRecvCallback {
 
     public void onRecv(int nread, ByteBuffer data, Address address) throws Exception;
-
 }

@@ -27,5 +27,6 @@ package com.oracle.libuv.cb;
 
 public interface CallbackHandlerFactory {
     public CallbackHandler newCallbackHandler(Object context);
+
     public CallbackHandler newCallbackHandler();
 }

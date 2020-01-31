@@ -30,5 +30,4 @@ import java.nio.ByteBuffer;
 public interface StreamReadCallback {
 
     public void onRead(ByteBuffer data) throws Exception;
-
 }

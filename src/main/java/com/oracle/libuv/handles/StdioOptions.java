@@ -28,10 +28,7 @@ package com.oracle.libuv.handles;
 public final class StdioOptions {
 
     public enum StdioType {
-        IGNORE(0x00),
-        CREATE_PIPE(0x01),
-        INHERIT_FD(0x02),
-        INHERIT_STREAM(0x04);
+        IGNORE(0x00), CREATE_PIPE(0x01), INHERIT_FD(0x02), INHERIT_STREAM(0x04);
 
         final int value;
 
@@ -41,7 +38,9 @@ public final class StdioOptions {
     }
 
     private final StdioType type;
+
     private final StreamHandle stream;
+
     private final int fd;
 
     public StdioOptions(final StdioType type, final StreamHandle stream, final int fd) {
@@ -68,4 +67,3 @@ public final class StdioOptions {
         return this.fd;
     }
 }
-

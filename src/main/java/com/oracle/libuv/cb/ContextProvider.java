@@ -28,5 +28,4 @@ package com.oracle.libuv.cb;
 public interface ContextProvider {
 
     public Object getContext();
-
 }

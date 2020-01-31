@@ -31,8 +31,9 @@ public class IdleHandle extends Handle {
 
     private boolean closed;
 
-    private IdleCallback onIdle = null;
-    private IdleCallback onClose = null;
+    private IdleCallback onIdle;
+
+    private IdleCallback onClose;
 
     static {
         _static_initialize();
@@ -74,9 +75,18 @@ public class IdleHandle extends Handle {
 
     private void callback(final int type, final int status) {
         switch (type) {
-            case 1: if (onIdle != null) {loop.getCallbackHandler().handleIdleCallback(onIdle, status);} break;
-            case 2: if (onClose != null) {loop.getCallbackHandler().handleIdleCallback(onClose, status);} break;
-            default: assert false : "unsupported callback type " + type;
+        case 1:
+            if (onIdle != null) {
+                loop.getCallbackHandler().handleIdleCallback(onIdle, status);
+            }
+            break;
+        case 2:
+            if (onClose != null) {
+                loop.getCallbackHandler().handleIdleCallback(onClose, status);
+            }
+            break;
+        default:
+            assert false : "unsupported callback type " + type;
         }
     }
 
@@ -91,5 +101,4 @@ public class IdleHandle extends Handle {
     private native int _stop(final long ptr);
 
     private native void _close(final long ptr);
-
 }

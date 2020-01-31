@@ -107,7 +107,10 @@ public class AsyncHandleTest extends TestBase {
                 }
             }
         };
-        Holder(int id) {this.id = id;}
+
+        Holder(int id) {
+            this.id = id;
+        }
     }
 
     @Test
@@ -116,7 +119,7 @@ public class AsyncHandleTest extends TestBase {
         final ScheduledExecutorService timer = new ScheduledThreadPoolExecutor(1);
 
         final Holder[] holders = new Holder[CONCURRENCY];
-        for (int i=0; i < holders.length; i++) {
+        for (int i = 0; i < holders.length; i++) {
             final Holder holder = holders[i] = new Holder(i);
             holder.thread.start();
             synchronized (holder.loop) {
@@ -134,7 +137,7 @@ public class AsyncHandleTest extends TestBase {
             }, (int) (Math.random() * 1000), TimeUnit.MILLISECONDS);
         }
 
-        for (int i=0; i < holders.length; i++) {
+        for (int i = 0; i < holders.length; i++) {
             final Holder holder = holders[i];
             holder.thread.join();
             if (holder.errors[0] != null) {

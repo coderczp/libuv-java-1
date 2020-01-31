@@ -31,8 +31,9 @@ public class TimerHandle extends Handle {
 
     private boolean closed;
 
-    private TimerCallback onTimerFired = null;
-    private TimerCallback onClose = null;
+    private TimerCallback onTimerFired;
+
+    private TimerCallback onClose;
 
     static {
         _static_initialize();
@@ -84,9 +85,18 @@ public class TimerHandle extends Handle {
 
     private void callback(final int type, final int status) {
         switch (type) {
-            case 1: if (onTimerFired != null) {loop.getCallbackHandler().handleTimerCallback(onTimerFired, status);} break;
-            case 2: if (onClose != null) {loop.getCallbackHandler().handleTimerCallback(onClose, status);} break;
-            default: assert false : "unsupported callback type " + type;
+        case 1:
+            if (onTimerFired != null) {
+                loop.getCallbackHandler().handleTimerCallback(onTimerFired, status);
+            }
+            break;
+        case 2:
+            if (onClose != null) {
+                loop.getCallbackHandler().handleTimerCallback(onClose, status);
+            }
+            break;
+        default:
+            assert false : "unsupported callback type " + type;
         }
     }
 
@@ -109,5 +119,4 @@ public class TimerHandle extends Handle {
     private native int _stop(final long ptr);
 
     private native void _close(final long ptr);
-
 }

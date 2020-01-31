@@ -28,5 +28,4 @@ package com.oracle.libuv.cb;
 public interface UDPSendCallback {
 
     public void onSend(int status, Exception error) throws Exception;
-
 }
