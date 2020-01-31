@@ -58,6 +58,12 @@ public class DefaultHandleFactory implements HandleFactory {
     }
 
     @Override
+    public IdleHandle newIdleHandle() {
+        assert loop != null;
+        return new IdleHandle(loop);
+    }
+
+    @Override
     public PipeHandle newPipeHandle(final boolean ipc) {
         assert loop != null;
         return new PipeHandle(loop, ipc);

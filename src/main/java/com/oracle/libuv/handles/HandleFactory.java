@@ -35,6 +35,8 @@ public interface HandleFactory {
 
     CheckHandle newCheckHandle();
 
+    IdleHandle newIdleHandle();
+
     PipeHandle newPipeHandle(boolean ipc);
 
     PipeHandle newPipeHandle(long pointer,

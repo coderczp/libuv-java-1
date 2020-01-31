@@ -15,6 +15,7 @@
       <class name="com.oracle.libuv.handles.UDPHandle" />
       <class name="com.oracle.libuv.handles.TCPHandle" />
       <class name="com.oracle.libuv.handles.CheckHandle" />
+      <class name="com.oracle.libuv.handles.IdleHandle" />
     </javah>
   </target>
 </project>
