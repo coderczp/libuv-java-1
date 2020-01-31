@@ -71,6 +71,24 @@ public class DefaultHandleFactory implements HandleFactory {
     }
 
     @Override
+    public TCPHandle newTCPHandle() {
+        assert loop != null;
+        return new TCPHandle(loop);
+    }
+
+    @Override
+    public TCPHandle newTCPHandle(final long pointer) {
+        assert loop != null;
+        return new TCPHandle(loop, pointer, true);
+    }
+
+    @Override
+    public TCPHandle openTCPHandle(final long socket) {
+        assert loop != null;
+        return new TCPHandle(loop, socket);
+    }
+
+    @Override
     public TimerHandle newTimerHandle() {
         assert loop != null;
         return new TimerHandle(loop);

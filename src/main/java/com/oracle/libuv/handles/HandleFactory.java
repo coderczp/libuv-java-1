@@ -40,6 +40,12 @@ public interface HandleFactory {
 
     ProcessHandle newProcessHandle();
 
+    TCPHandle newTCPHandle();
+
+    TCPHandle newTCPHandle(long pointer);
+
+    TCPHandle openTCPHandle(long socket);
+
     TimerHandle newTimerHandle();
 
     UDPHandle newUDPHandle();

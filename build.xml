@@ -2,17 +2,18 @@
 <project name="libuv" default="javah" basedir=".">
   <target name="javah">
     <javah destdir="src/main/native" classpath="target/classes">
-      <class name="com.oracle.libuv.Constants"/>
-      <class name="com.oracle.libuv.LibUV"/>
-      <class name="com.oracle.libuv.NativeException"/>
-      <class name="com.oracle.libuv.handles.AsyncHandle"/>
-      <class name="com.oracle.libuv.handles.Handle"/>
-      <class name="com.oracle.libuv.handles.LoopHandle"/>
-      <class name="com.oracle.libuv.handles.PipeHandle"/>
+      <class name="com.oracle.libuv.Constants" />
+      <class name="com.oracle.libuv.LibUV" />
+      <class name="com.oracle.libuv.NativeException" />
+      <class name="com.oracle.libuv.handles.AsyncHandle" />
+      <class name="com.oracle.libuv.handles.Handle" />
+      <class name="com.oracle.libuv.handles.LoopHandle" />
+      <class name="com.oracle.libuv.handles.PipeHandle" />
       <class name="com.oracle.libuv.handles.ProcessHandle"/>
-      <class name="com.oracle.libuv.handles.StreamHandle"/>
-      <class name="com.oracle.libuv.handles.TimerHandle"/>
-      <class name="com.oracle.libuv.handles.UDPHandle"/>
+      <class name="com.oracle.libuv.handles.StreamHandle" />
+      <class name="com.oracle.libuv.handles.TimerHandle" />
+      <class name="com.oracle.libuv.handles.UDPHandle" />
+      <class name="com.oracle.libuv.handles.TCPHandle" />
     </javah>
   </target>
 </project>
