@@ -50,91 +50,49 @@ static void _list_cb(uv_handle_t* handle, void* arg) {
     bag->push_back(s);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_LoopHandle
- * Method:    _static_initialize
- * Signature: ()V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_LoopHandle__1static_1initialize
   (JNIEnv *env, jclass cls) {
-
   _string_cid = env->FindClass("java/lang/String");
   assert(_string_cid);
   _string_cid = (jclass) env->NewGlobalRef(_string_cid);
   assert(_string_cid);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_LoopHandle
- * Method:    _new
- * Signature: ()J
- */
 JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_LoopHandle__1new
   (JNIEnv *env, jclass cls) {
-
   uv_loop_t* ptr = uv_loop_new();
   assert(ptr);
   return reinterpret_cast<jlong>(ptr);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_LoopHandle
- * Method:    _run
- * Signature: (JI)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_LoopHandle__1run
   (JNIEnv *env, jobject that, jlong ptr, jint mode) {
-
   assert(ptr);
   return uv_run(reinterpret_cast<uv_loop_t*>(ptr), (uv_run_mode) mode);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_LoopHandle
- * Method:    _stop
- * Signature: (J)V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_LoopHandle__1stop
   (JNIEnv *env, jobject that, jlong ptr) {
-
   assert(ptr);
   uv_stop(reinterpret_cast<uv_loop_t*>(ptr));
 }
 
-/*
- * Class:     com_oracle_libuv_handles_LoopHandle
- * Method:    _destroy
- * Signature: (J)V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_LoopHandle__1destroy
   (JNIEnv *env, jobject that, jlong ptr) {
-
   assert(ptr);
   uv_loop_t* handle = reinterpret_cast<uv_loop_t*>(ptr);
   uv_loop_delete(handle);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_LoopHandle
- * Method:    _close_all
- * Signature: (J)V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_LoopHandle__1close_1all
   (JNIEnv *env, jobject that, jlong ptr) {
-
   assert(ptr);
   uv_loop_t* loop = reinterpret_cast<uv_loop_t*>(ptr);
   uv_walk(loop, _close_all_cb, NULL);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_LoopHandle
- * Method:    _list
- * Signature: (J)[Ljava/lang/String
- */
 JNIEXPORT jobjectArray JNICALL Java_com_oracle_libuv_handles_LoopHandle__1list
   (JNIEnv *env, jobject that, jlong ptr) {
-
   assert(ptr);
   assert(_string_cid);
   uv_loop_t* loop = reinterpret_cast<uv_loop_t*>(ptr);

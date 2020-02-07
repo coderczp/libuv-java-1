@@ -43,14 +43,8 @@ static void _tcp_connect_cb(uv_connect_t* req, int status) {
   delete req_data;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_TCPHandle
- * Method:    _new
- * Signature: (J)J
- */
 JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_TCPHandle__1new__J
   (JNIEnv *env, jclass cls, jlong loop) {
-
   assert(loop);
   uv_tcp_t* tcp = new uv_tcp_t();
   uv_loop_t* lp = reinterpret_cast<uv_loop_t*>(loop);
@@ -64,14 +58,8 @@ JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_TCPHandle__1new__J
   return reinterpret_cast<jlong>(tcp);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_TCPHandle
- * Method:    _new
- * Signature: (J)J
- */
 JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_TCPHandle__1new__JJ
   (JNIEnv *env, jclass cls, jlong loop, jlong socket) {
-
   assert(loop);
   uv_tcp_t* tcp = new uv_tcp_t();
   uv_loop_t* lp = reinterpret_cast<uv_loop_t*>(loop);
@@ -90,11 +78,6 @@ JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_TCPHandle__1new__JJ
   return reinterpret_cast<jlong>(tcp);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_TCPHandle
- * Method:    _bind
- * Signature: (JLjava/lang/String;IZ)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TCPHandle__1bind
   (JNIEnv *env, jobject that, jlong tcp, jstring host, jint port, jboolean ipv6) {
 
@@ -118,14 +101,8 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TCPHandle__1bind
   return r;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_TCPHandle
- * Method:    _connect
- * Signature: (JLjava/lang/String;ILjava/lang/Object;Z)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TCPHandle__1connect
   (JNIEnv *env, jobject that, jlong tcp, jstring host, jint port, jobject context, jboolean ipv6) {
-
   assert(tcp);
   uv_tcp_t* handle = reinterpret_cast<uv_tcp_t*>(tcp);
   const char* h = env->GetStringUTFChars(host, 0);
@@ -151,14 +128,8 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TCPHandle__1connect
   return r;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_TCPHandle
- * Method:    _open
- * Signature: (JJ)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TCPHandle__1open
   (JNIEnv *env, jobject that, jlong tcp, jlong socket) {
-
   assert(tcp);
   uv_tcp_t* handle = reinterpret_cast<uv_tcp_t*>(tcp);
   int r = uv_tcp_open(handle, (uv_os_sock_t) socket);
@@ -168,11 +139,6 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TCPHandle__1open
   return r;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_TCPHandle
- * Method:    _socket_name
- * Signature: (J)Lcom/oracle/libuv/Address;
- */
 JNIEXPORT jobject JNICALL Java_com_oracle_libuv_handles_TCPHandle__1socket_1name
   (JNIEnv *env, jobject that, jlong tcp) {
 
@@ -192,14 +158,8 @@ JNIEXPORT jobject JNICALL Java_com_oracle_libuv_handles_TCPHandle__1socket_1name
   return StreamCallbacks::_address_to_js(env, addr);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_TCPHandle
- * Method:    _peer_name
- * Signature: (J)Lcom/oracle/libuv/Address;
- */
 JNIEXPORT jobject JNICALL Java_com_oracle_libuv_handles_TCPHandle__1peer_1name
   (JNIEnv *env, jobject that, jlong tcp) {
-
   assert(tcp);
   uv_tcp_t* handle = reinterpret_cast<uv_tcp_t*>(tcp);
 
@@ -216,11 +176,6 @@ JNIEXPORT jobject JNICALL Java_com_oracle_libuv_handles_TCPHandle__1peer_1name
   return StreamCallbacks::_address_to_js(env, addr);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_TCPHandle
- * Method:    _no_delay
- * Signature: (JI)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TCPHandle__1no_1delay
   (JNIEnv *env, jobject that, jlong tcp, jint enable) {
 
@@ -234,11 +189,6 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TCPHandle__1no_1delay
   return r;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_TCPHandle
- * Method:    _keep_alive
- * Signature: (JII)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TCPHandle__1keep_1alive
   (JNIEnv *env, jobject that, jlong tcp, jint enable, jint delay) {
 
@@ -252,11 +202,6 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TCPHandle__1keep_1alive
   return r;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_TCPHandle
- * Method:    _simultaneous_accepts
- * Signature: (JI)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TCPHandle__1simultaneous_1accepts
   (JNIEnv *env, jobject that, jlong tcp, jint enable) {
 

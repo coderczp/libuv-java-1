@@ -151,14 +151,8 @@ static void _send_cb(uv_udp_send_t* req, int status) {
   delete req;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_UDPHandle
- * Method:    _new
- * Signature: (J)J
- */
 JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_UDPHandle__1new__J
   (JNIEnv *env, jclass cls, jlong loop) {
-
   assert(loop);
   uv_loop_t* lp = reinterpret_cast<uv_loop_t*>(loop);
   uv_udp_t* udp = new uv_udp_t();
@@ -171,14 +165,8 @@ JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_UDPHandle__1new__J
   return reinterpret_cast<jlong>(udp);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_UDPHandle
- * Method:    _new
- * Signature: (JJ)J
- */
 JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_UDPHandle__1new__JJ
   (JNIEnv *env, jclass cls, jlong loop, jlong socket) {
-
   assert(loop);
   uv_loop_t* lp = reinterpret_cast<uv_loop_t*>(loop);
   uv_udp_t* udp = new uv_udp_t();
@@ -197,25 +185,14 @@ JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_UDPHandle__1new__JJ
   return reinterpret_cast<jlong>(udp);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_UDPHandle
- * Method:    _static_initialize
- * Signature: ()V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_UDPHandle__1static_1initialize
   (JNIEnv *env, jclass cls) {
 
   UDPCallbacks::static_initialize(env, cls);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_UDPHandle
- * Method:    _initialize
- * Signature: (J)V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_UDPHandle__1initialize
   (JNIEnv *env, jobject that, jlong udp) {
-
   assert(udp);
   uv_udp_t* handle = reinterpret_cast<uv_udp_t*>(udp);
   assert(handle->data);
@@ -223,14 +200,8 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_UDPHandle__1initialize
   cb->initialize(env, that);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_UDPHandle
- * Method:    _address
- * Signature: (J)Lcom/oracle/libuv/Address;
- */
 JNIEXPORT jobject JNICALL Java_com_oracle_libuv_handles_UDPHandle__1address
   (JNIEnv *env, jobject that, jlong udp) {
-
   assert(udp);
   uv_udp_t* handle = reinterpret_cast<uv_udp_t*>(udp);
   struct sockaddr_storage address;
@@ -245,14 +216,8 @@ JNIEXPORT jobject JNICALL Java_com_oracle_libuv_handles_UDPHandle__1address
   return StreamCallbacks::_address_to_js(env, addr);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_UDPHandle
- * Method:    _bind
- * Signature: (JILjava/lang/String;Z)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_UDPHandle__1bind
   (JNIEnv *env, jobject that, jlong udp, jint port, jstring host, jboolean ipv6) {
-
   assert(udp);
   uv_udp_t* handle = reinterpret_cast<uv_udp_t*>(udp);
   const char* h = env->GetStringUTFChars(host, 0);
@@ -273,14 +238,8 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_UDPHandle__1bind
   return r;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_UDPHandle
- * Method:    _send
- * Signature: (JLjava/nio/ByteBuffer;[BIIILjava/lang/String;Ljava/lang/Object;Z)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_UDPHandle__1send
   (JNIEnv *env, jobject that, jlong udp, jobject buffer, jbyteArray data, jint offset, jint length, jint port, jstring host, jobject context, jboolean ipv6) {
-
   assert(udp);
   uv_udp_t* handle = reinterpret_cast<uv_udp_t*>(udp);
   const char* h = env->GetStringUTFChars(host, 0);
@@ -324,14 +283,8 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_UDPHandle__1send
   return r;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_UDPHandle
- * Method:    _recv_start
- * Signature: (J)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_UDPHandle__1recv_1start
   (JNIEnv *env, jobject that, jlong udp) {
-
   assert(udp);
   uv_udp_t* handle = reinterpret_cast<uv_udp_t*>(udp);
   int r = uv_udp_recv_start(handle, _alloc_cb, _recv_cb);
@@ -342,14 +295,8 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_UDPHandle__1recv_1start
   return r;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_UDPHandle
- * Method:    _recv_stop
- * Signature: (J)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_UDPHandle__1recv_1stop
   (JNIEnv *env, jobject that, jlong udp) {
-
   assert(udp);
   uv_udp_t* handle = reinterpret_cast<uv_udp_t*>(udp);
   int r = uv_udp_recv_stop(handle);
@@ -359,14 +306,8 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_UDPHandle__1recv_1stop
   return r;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_UDPHandle
- * Method:    _set_ttl
- * Signature: (JI)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_UDPHandle__1set_1ttl
   (JNIEnv *env, jobject that, jlong udp, jint ttl) {
-
   assert(udp);
   uv_udp_t* handle = reinterpret_cast<uv_udp_t*>(udp);
   int r = uv_udp_set_ttl(handle, ttl);
@@ -376,14 +317,8 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_UDPHandle__1set_1ttl
   return r;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_UDPHandle
- * Method:    _set_membership
- * Signature: (JLjava/lang/String;Ljava/lang/String;I)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_UDPHandle__1set_1membership
   (JNIEnv *env, jobject that, jlong udp, jstring multicastAddress, jstring interfaceAddress, jint membership) {
-
   assert(udp);
   uv_udp_t* handle = reinterpret_cast<uv_udp_t*>(udp);
   const char* maddr = env->GetStringUTFChars(multicastAddress, 0);
@@ -397,14 +332,8 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_UDPHandle__1set_1membership
   return r;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_UDPHandle
- * Method:    _set_multicast_loop
- * Signature: (JI)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_UDPHandle__1set_1multicast_1loop
   (JNIEnv *env, jobject that, jlong udp, jint on) {
-
   assert(udp);
   uv_udp_t* handle = reinterpret_cast<uv_udp_t*>(udp);
   int r = uv_udp_set_multicast_loop(handle, on);
@@ -414,14 +343,8 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_UDPHandle__1set_1multicast_
   return r;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_UDPHandle
- * Method:    _set_multicast_ttl
- * Signature: (JI)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_UDPHandle__1set_1multicast_1ttl
   (JNIEnv *env, jobject that, jlong udp, jint ttl) {
-
   assert(udp);
   uv_udp_t* handle = reinterpret_cast<uv_udp_t*>(udp);
   int r = uv_udp_set_multicast_ttl(handle, ttl);
@@ -431,14 +354,8 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_UDPHandle__1set_1multicast_
   return r;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_UDPHandle
- * Method:    _set_broadcast
- * Signature: (JI)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_UDPHandle__1set_1broadcast
   (JNIEnv *env, jobject that, jlong udp, jint on) {
-
   assert(udp);
   uv_udp_t* handle = reinterpret_cast<uv_udp_t*>(udp);
   int r = uv_udp_set_broadcast(handle, on);
@@ -448,11 +365,6 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_UDPHandle__1set_1broadcast
   return r;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_UDPHandle
- * Method:    _close
- * Signature: (J)V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_UDPHandle__1close
   (JNIEnv *env, jobject that, jlong udp) {
 

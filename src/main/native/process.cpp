@@ -38,11 +38,6 @@
 #endif
 
 
-/*
- * Class:     com_oracle_libuv_LibUV
- * Method:    _exe_path
- * Signature: ()Ljava/lang/String;
- */
 JNIEXPORT jstring JNICALL Java_com_oracle_libuv_LibUV__1exe_1path
   (JNIEnv *env, jclass cls) {
 
@@ -87,11 +82,6 @@ JNIEXPORT jstring JNICALL Java_com_oracle_libuv_LibUV__1cwd
   return env->NewStringUTF(buf);
 }
 
-/*
- * Class:     com_oracle_libuv_LibUV
- * Method:    _chdir
- * Signature: (Ljava/lang/String;)V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_LibUV__1chdir
   (JNIEnv *env, jclass cls, jstring arg) {
 
@@ -103,11 +93,6 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_LibUV__1chdir
   env->ReleaseStringUTFChars(arg, dir);
 }
 
-/*
- * Class:     com_oracle_libuv_LibUV
- * Method:    _getTitle
- * Signature: ()Ljava/lang/String;
- */
 JNIEXPORT jstring JNICALL Java_com_oracle_libuv_LibUV__1getTitle
   (JNIEnv *env, jclass cls) {
   char process_title[4096];
@@ -115,11 +100,6 @@ JNIEXPORT jstring JNICALL Java_com_oracle_libuv_LibUV__1getTitle
   return env->NewStringUTF(r == 0 ? process_title : "");
 }
 
-/*
- * Class:     com_oracle_libuv_LibUV
- * Method:    _setTitle
- * Signature: (Ljava/lang/String;)V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_LibUV__1setTitle
   (JNIEnv *env, jclass cls, jstring title) {
   const char* t = env->GetStringUTFChars(title, JNI_FALSE);
@@ -127,30 +107,17 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_LibUV__1setTitle
   env->ReleaseStringUTFChars(title, t);
 }
 
-/*
- * Class:     com_oracle_libuv_LibUV
- * Method:    _kill
- * Signature: (II)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_LibUV__1kill
   (JNIEnv *env, jclass cls, jint pid, jint signal) {
-
   int err = uv_kill(pid, signal);
   if (err) {
     return err;
   }
-
   return 0;
 }
 
-/*
- * Class:     com_oracle_libuv_LibUV
- * Method:    _rss
- * Signature: ()I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_LibUV__1rss
   (JNIEnv *env, jclass cls) {
-
   size_t rss;
   int err = uv_resident_set_memory(&rss);
   if (err) {

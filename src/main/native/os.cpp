@@ -34,14 +34,8 @@
 #include "exception.h"
 #include "com_oracle_libuv_LibUV.h"
 
-/*
- * Class:     com_oracle_libuv_LibUV
- * Method:    _getUptime
- * Signature: ()D
- */
 JNIEXPORT jdouble JNICALL Java_com_oracle_libuv_LibUV__1getUptime
   (JNIEnv *env, jclass cls) {
-
   double uptime;
 
   int err = uv_uptime(&uptime);
@@ -53,14 +47,8 @@ JNIEXPORT jdouble JNICALL Java_com_oracle_libuv_LibUV__1getUptime
   return uptime;
 }
 
-/*
- * Class:     com_oracle_libuv_LibUV
- * Method:    _getLoadAvg
- * Signature: ()[D
- */
 JNIEXPORT jdoubleArray JNICALL Java_com_oracle_libuv_LibUV__1getLoadAvg
   (JNIEnv *env, jclass cls) {
-
   double loadavg[3];
 
   uv_loadavg(loadavg);
@@ -72,36 +60,19 @@ JNIEXPORT jdoubleArray JNICALL Java_com_oracle_libuv_LibUV__1getLoadAvg
   return array;
 }
 
-/*
- * Class:     com_oracle_libuv_LibUV
- * Method:    _getTotalMem
- * Signature: ()D
- */
 JNIEXPORT jdouble JNICALL Java_com_oracle_libuv_LibUV__1getTotalMem
   (JNIEnv *env, jclass cls) {
 
   return (jdouble) uv_get_total_memory();
 }
 
-/*
- * Class:     com_oracle_libuv_LibUV
- * Method:    _getFreeMem
- * Signature: ()D
- */
 JNIEXPORT jdouble JNICALL Java_com_oracle_libuv_LibUV__1getFreeMem
   (JNIEnv *env, jclass cls) {
-
   return (jdouble) uv_get_free_memory();
 }
 
-/*
- * Class:     com_oracle_libuv_LibUV
- * Method:    _getCPUs
- * Signature: ()[Ljava/lang/Object;
- */
 JNIEXPORT jobjectArray JNICALL Java_com_oracle_libuv_LibUV__1getCPUs
   (JNIEnv *env, jclass cls) {
-
   uv_cpu_info_t* cpu_infos;
   int count;
 
@@ -162,11 +133,6 @@ JNIEXPORT jobjectArray JNICALL Java_com_oracle_libuv_LibUV__1getCPUs
   return array;
 }
 
-/*
- * Class:     com_oracle_libuv_LibUV
- * Method:    _isIPv6
- * Signature: (Ljava/lang/String;)Z
- */
 JNIEXPORT jboolean JNICALL Java_com_oracle_libuv_LibUV__1isIPv6
   (JNIEnv *env, jclass cls, jstring ip) {
 

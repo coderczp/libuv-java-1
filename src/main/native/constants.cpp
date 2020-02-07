@@ -134,11 +134,6 @@
 #define S_IFWHT 0160000
 #endif
 
-/*
- * Class:     com_oracle_libuv_Constants
- * Method:    _getFieldValues
- * Signature: ([I)V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_Constants__1get_1field_1values
   (JNIEnv *env, jclass cls, jintArray array) {
 
@@ -215,4 +210,3 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_Constants__1get_1field_1values
 
   env->ReleaseIntArrayElements(array, values, 0);
 }
-

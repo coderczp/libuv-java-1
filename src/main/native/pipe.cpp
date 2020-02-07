@@ -43,14 +43,8 @@ static void _pipe_connect_cb(uv_connect_t* req, int status) {
   delete req;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_PipeHandle
- * Method:    _new
- * Signature: (JZ)J
- */
 JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_PipeHandle__1new
   (JNIEnv *env, jclass cls, jlong loop, jboolean ipc) {
-
   assert(loop);
   uv_pipe_t* pipe = new uv_pipe_t();
   uv_loop_t* lp = reinterpret_cast<uv_loop_t*>(loop);
@@ -64,14 +58,8 @@ JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_PipeHandle__1new
   return reinterpret_cast<jlong>(pipe);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_PipeHandle
- * Method:    _open
- * Signature: (JI)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_PipeHandle__1open
   (JNIEnv *env, jobject that, jlong pipe, jint fd) {
-
   assert(pipe);
   uv_pipe_t* handle = reinterpret_cast<uv_pipe_t*>(pipe);
   int r = uv_pipe_open(handle, fd);
@@ -81,14 +69,8 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_PipeHandle__1open
   return r;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_PipeHandle
- * Method:    _bind
- * Signature: (JLjava/lang/String;)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_PipeHandle__1bind
   (JNIEnv *env, jobject that, jlong pipe, jstring name) {
-
   assert(pipe);
   uv_pipe_t* handle = reinterpret_cast<uv_pipe_t*>(pipe);
   const char* n = env->GetStringUTFChars(name, 0);
@@ -100,14 +82,8 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_PipeHandle__1bind
   return r;
  }
 
-/*
- * Class:     com_oracle_libuv_handles_PipeHandle
- * Method:    _connect
- * Signature: (JLjava/lang/String;)V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_PipeHandle__1connect
   (JNIEnv *env, jobject that, jlong pipe, jstring name, jobject context) {
-
   assert(pipe);
   uv_pipe_t* handle = reinterpret_cast<uv_pipe_t*>(pipe);
   uv_connect_t* connect = new uv_connect_t();

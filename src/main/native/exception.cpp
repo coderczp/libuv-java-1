@@ -135,11 +135,6 @@ void ThrowOutOfMemoryError(JNIEnv* env, const char* func, const char* file, cons
   env->ThrowNew(_oom_cid, _message);
 }
 
-/*
- * Class:     com_oracle_libuv_NativeException
- * Method:    _static_initialize
- * Signature: ()V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_NativeException__1static_1initialize
   (JNIEnv* env, jclass cls) {
 

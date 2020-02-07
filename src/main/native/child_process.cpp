@@ -140,14 +140,8 @@ static void _exit_cb(uv_process_t* process, int64_t exit_status, int term_signal
   }
 }
 
-/*
- * Class:     com_oracle_libuv_handles_ProcessHandle
- * Method:    _new
- * Signature: (J)J
- */
 JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1new
   (JNIEnv *env, jclass cls, jlong loop) {
-
   uv_process_t* process = new uv_process_t();
   assert(process);
   process->loop = reinterpret_cast<uv_loop_t*>(loop);
@@ -155,25 +149,13 @@ JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1new
   return reinterpret_cast<jlong>(process);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_ProcessHandle
- * Method:    _static_initialize
- * Signature: ()V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1static_1initialize
   (JNIEnv *env, jclass cls) {
-
   ProcessCallbacks::static_initialize(env, cls);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_ProcessHandle
- * Method:    _initialize
- * Signature: (J)V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1initialize
   (JNIEnv *env, jobject that, jlong process) {
-
   assert(process);
   uv_process_t* handle = reinterpret_cast<uv_process_t*>(process);
   assert(handle->data);
@@ -181,28 +163,16 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1initialize
   cb->initialize(env, that);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_ProcessHandle
- * Method:    _close
- * Signature: (J)V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1close
   (JNIEnv *env, jobject that, jlong process) {
-
   assert(process);
   uv_handle_t* handle = reinterpret_cast<uv_handle_t*>(process);
   uv_close(handle, _close_cb);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_ProcessHandle
- * Method:    _spawn
- * Signature: (JLjava/lang/String;[Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;I[I[J[III)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1spawn
   (JNIEnv *env, jobject that, jlong process, jstring program, jobjectArray args, jobjectArray environArgs,
     jstring dir, jint process_flags, jintArray stdio_flags, jlongArray streams, jintArray fds, jint uid, jint gid) {
-
   assert(process);
   uv_process_t* handle = reinterpret_cast<uv_process_t*>(process);
   assert(handle->loop);
@@ -337,14 +307,8 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1spawn
   return r;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_ProcessHandle
- * Method:    _kill
- * Signature: (JI)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1kill
   (JNIEnv *env, jobject that, jlong ptr, jint signal) {
-
   assert(ptr);
   uv_process_t* handle = reinterpret_cast<uv_process_t*>(ptr);
   int r = uv_process_kill(handle, signal);

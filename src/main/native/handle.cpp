@@ -70,11 +70,6 @@ const char* handle_to_string(const uv_handle_t* handle) {
     return buffer;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_Handle
- * Method:    _ref
- * Signature: (J)V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_Handle__1ref
   (JNIEnv *env, jobject that, jlong ptr) {
 
@@ -83,11 +78,6 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_Handle__1ref
   uv_ref(handle);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_Handle
- * Method:    _unref
- * Signature: (J)V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_Handle__1unref
   (JNIEnv *env, jobject that, jlong ptr) {
 
@@ -96,11 +86,6 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_Handle__1unref
   uv_unref(handle);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_Handle
- * Method:    _closing
- * Signature: (J)Z
- */
 JNIEXPORT jboolean JNICALL Java_com_oracle_libuv_handles_Handle__1closing
   (JNIEnv *env, jobject that, jlong ptr) {
 
@@ -112,4 +97,3 @@ JNIEXPORT jboolean JNICALL Java_com_oracle_libuv_handles_Handle__1closing
   }
   return r == 0 ? JNI_TRUE : JNI_FALSE;
 }
-

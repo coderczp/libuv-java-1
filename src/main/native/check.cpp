@@ -120,14 +120,8 @@ static void _close_cb(uv_handle_t* handle) {
   delete handle;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_CheckHandle
- * Method:    _new
- * Signature: (J)J
- */
 JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_CheckHandle__1new
   (JNIEnv *env, jclass cls, jlong loop) {
-
   assert(loop);
   uv_loop_t* lp = reinterpret_cast<uv_loop_t*>(loop);
   uv_check_t* check = new uv_check_t();
@@ -140,22 +134,11 @@ JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_CheckHandle__1new
   return reinterpret_cast<jlong>(check);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_CheckHandle
- * Method:    _static_initialize
- * Signature: ()V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_CheckHandle__1static_1initialize
   (JNIEnv *env, jclass cls) {
-
   CheckCallbacks::static_initialize(env, cls);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_CheckHandle
- * Method:    _initialize
- * Signature: (J)V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_CheckHandle__1initialize
   (JNIEnv *env, jobject that, jlong check) {
 
@@ -166,14 +149,8 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_CheckHandle__1initialize
   cb->initialize(env, that);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_CheckHandle
- * Method:    _start
- * Signature: (J)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_CheckHandle__1start
   (JNIEnv *env, jobject that, jlong check) {
-
   assert(check);
   uv_check_t* handle = reinterpret_cast<uv_check_t*>(check);
   int r = uv_check_start(handle, _check_cb);
@@ -183,14 +160,8 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_CheckHandle__1start
   return r;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_CheckHandle
- * Method:    _stop
- * Signature: (J)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_CheckHandle__1stop
   (JNIEnv *env, jobject that, jlong check) {
-
   assert(check);
   uv_check_t* handle = reinterpret_cast<uv_check_t*>(check);
   int r = uv_check_stop(handle);
@@ -200,14 +171,8 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_CheckHandle__1stop
   return r;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_CheckHandle
- * Method:    _close
- * Signature: (J)V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_CheckHandle__1close
   (JNIEnv *env, jobject that, jlong check) {
-
   assert(check);
   uv_handle_t* handle = reinterpret_cast<uv_handle_t*>(check);
   uv_close(handle, _close_cb);

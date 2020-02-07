@@ -120,14 +120,8 @@ static void _close_cb(uv_handle_t* handle) {
   delete handle;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_IdleHandle
- * Method:    _new
- * Signature: (J)J
- */
 JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_IdleHandle__1new
   (JNIEnv *env, jclass cls, jlong loop) {
-
   assert(loop);
   uv_loop_t* lp = reinterpret_cast<uv_loop_t*>(loop);
   uv_idle_t* idle = new uv_idle_t();
@@ -140,25 +134,13 @@ JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_IdleHandle__1new
   return reinterpret_cast<jlong>(idle);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_IdleHandle
- * Method:    _static_initialize
- * Signature: ()V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_IdleHandle__1static_1initialize
   (JNIEnv *env, jclass cls) {
-
   IdleCallbacks::static_initialize(env, cls);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_IdleHandle
- * Method:    _initialize
- * Signature: (J)V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_IdleHandle__1initialize
   (JNIEnv *env, jobject that, jlong idle) {
-
   assert(idle);
   uv_idle_t* handle = reinterpret_cast<uv_idle_t*>(idle);
   assert(handle->data);
@@ -166,14 +148,8 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_IdleHandle__1initialize
   cb->initialize(env, that);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_IdleHandle
- * Method:    _start
- * Signature: (J)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_IdleHandle__1start
   (JNIEnv *env, jobject that, jlong idle) {
-
   assert(idle);
   uv_idle_t* handle = reinterpret_cast<uv_idle_t*>(idle);
   int r = uv_idle_start(handle, _idle_cb);
@@ -183,14 +159,8 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_IdleHandle__1start
   return r;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_IdleHandle
- * Method:    _stop
- * Signature: (J)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_IdleHandle__1stop
   (JNIEnv *env, jobject that, jlong idle) {
-
   assert(idle);
   uv_idle_t* handle = reinterpret_cast<uv_idle_t*>(idle);
   int r = uv_idle_stop(handle);
@@ -200,14 +170,8 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_IdleHandle__1stop
   return r;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_IdleHandle
- * Method:    _close
- * Signature: (J)V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_IdleHandle__1close
   (JNIEnv *env, jobject that, jlong idle) {
-
   assert(idle);
   uv_handle_t* handle = reinterpret_cast<uv_handle_t*>(idle);
   uv_close(handle, _close_cb);

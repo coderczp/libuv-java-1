@@ -26,11 +26,6 @@
 #include "uv.h"
 #include "com_oracle_libuv_LibUV.h"
 
-/*
- * Class:     com_oracle_libuv_LibUV
- * Method:    _version
- * Signature: ()Ljava/lang/String;
- */
 JNIEXPORT jstring JNICALL Java_com_oracle_libuv_LibUV__1version
   (JNIEnv *env, jclass cls) {
 
@@ -41,14 +36,8 @@ JNIEXPORT jstring JNICALL Java_com_oracle_libuv_LibUV__1version
   return NULL;
 }
 
-/*
- * Class:     com_oracle_libuv_LibUV
- * Method:    _disable_stdio_inheritance
- * Signature: ()V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_LibUV__1disable_1stdio_1inheritance
   (JNIEnv *env, jclass cls) {
-
   // Make inherited handles noninheritable.
   uv_disable_stdio_inheritance();
 }

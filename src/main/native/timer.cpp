@@ -120,14 +120,8 @@ static void _close_cb(uv_handle_t* handle) {
   delete handle;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_TimerHandle
- * Method:    _new
- * Signature: (J)J
- */
 JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_TimerHandle__1new
   (JNIEnv *env, jclass cls, jlong loop) {
-
   assert(loop);
   uv_loop_t* lp = reinterpret_cast<uv_loop_t*>(loop);
   uv_timer_t* timer = new uv_timer_t();
@@ -140,25 +134,13 @@ JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_TimerHandle__1new
   return reinterpret_cast<jlong>(timer);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_TimerHandle
- * Method:    _static_initialize
- * Signature: ()V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_TimerHandle__1static_1initialize
   (JNIEnv *env, jclass cls) {
-
   TimerCallbacks::static_initialize(env, cls);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_TimerHandle
- * Method:    _initialize
- * Signature: (J)V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_TimerHandle__1initialize
   (JNIEnv *env, jobject that, jlong timer) {
-
   assert(timer);
   uv_timer_t* handle = reinterpret_cast<uv_timer_t*>(timer);
   assert(handle->data);
@@ -166,28 +148,16 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_TimerHandle__1initialize
   cb->initialize(env, that);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_TimerHandle
- * Method:    _now
- * Signature: (J)J
- */
 JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_TimerHandle__1now
   (JNIEnv *env, jclass cls, jlong loop) {
-
   assert(loop);
   uv_loop_t* lp = reinterpret_cast<uv_loop_t*>(loop);
   uv_update_time(lp);
   return uv_now(lp);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_TimerHandle
- * Method:    _start
- * Signature: (JJJ)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TimerHandle__1start
   (JNIEnv *env, jobject that, jlong timer, jlong timeout, jlong repeat) {
-
   assert(timer);
   uv_timer_t* handle = reinterpret_cast<uv_timer_t*>(timer);
   int r = uv_timer_start(handle, _timer_cb, static_cast<uint64_t>(timeout), static_cast<uint64_t>(repeat));
@@ -197,14 +167,8 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TimerHandle__1start
   return r;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_TimerHandle
- * Method:    _again
- * Signature: (J)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TimerHandle__1again
   (JNIEnv *env, jobject that, jlong timer) {
-
   assert(timer);
   uv_timer_t* handle = reinterpret_cast<uv_timer_t*>(timer);
   int r = uv_timer_again(handle);
@@ -214,40 +178,22 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TimerHandle__1again
   return r;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_TimerHandle
- * Method:    _get_repeat
- * Signature: (J)J
- */
 JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_TimerHandle__1get_1repeat
   (JNIEnv *env, jobject that, jlong timer) {
-
   assert(timer);
   uv_timer_t* handle = reinterpret_cast<uv_timer_t*>(timer);
   return uv_timer_get_repeat(handle);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_TimerHandle
- * Method:    _set_repeat
- * Signature: (JJ)V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_TimerHandle__1set_1repeat
   (JNIEnv *env, jobject that, jlong timer, jlong repeat) {
-
   assert(timer);
   uv_timer_t* handle = reinterpret_cast<uv_timer_t*>(timer);
   uv_timer_set_repeat(handle, static_cast<uint64_t>(repeat));
 }
 
-/*
- * Class:     com_oracle_libuv_handles_TimerHandle
- * Method:    _stop
- * Signature: (J)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TimerHandle__1stop
   (JNIEnv *env, jobject that, jlong timer) {
-
   assert(timer);
   uv_timer_t* handle = reinterpret_cast<uv_timer_t*>(timer);
   int r = uv_timer_stop(handle);
@@ -257,11 +203,6 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TimerHandle__1stop
   return r;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_TimerHandle
- * Method:    _close
- * Signature: (J)V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_TimerHandle__1close
   (JNIEnv *env, jobject that, jlong timer) {
 

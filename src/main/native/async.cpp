@@ -103,11 +103,6 @@ static void _close_cb(uv_handle_t* handle) {
   delete handle;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_AsyncHandle
- * Method:    _new
- * Signature: (J)J
- */
 JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_AsyncHandle__1new
   (JNIEnv *env, jclass cls, jlong loop) {
 
@@ -123,22 +118,12 @@ JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_AsyncHandle__1new
   return reinterpret_cast<jlong>(async);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_AsyncHandle
- * Method:    _static_initialize
- * Signature: ()V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_AsyncHandle__1static_1initialize
   (JNIEnv *env, jclass cls) {
 
   AsyncCallbacks::static_initialize(env, cls);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_AsyncHandle
- * Method:    _initialize
- * Signature: (J)V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_AsyncHandle__1initialize
   (JNIEnv *env, jobject that, jlong async) {
 
@@ -149,11 +134,6 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_AsyncHandle__1initialize
   cb->initialize(env, that);
 }
 
-/*
- * Class:     com_oracle_libuv_handles_AsyncHandle
- * Method:    _send
- * Signature: (J)I
- */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_AsyncHandle__1send
   (JNIEnv *env, jobject that, jlong async) {
 
@@ -166,14 +146,8 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_AsyncHandle__1send
   return r;
 }
 
-/*
- * Class:     com_oracle_libuv_handles_AsyncHandle
- * Method:    _close
- * Signature: (J)V
- */
 JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_AsyncHandle__1close
   (JNIEnv *env, jobject that, jlong async) {
-
   assert(async);
   uv_handle_t* handle = reinterpret_cast<uv_handle_t*>(async);
   uv_close(handle, _close_cb);
