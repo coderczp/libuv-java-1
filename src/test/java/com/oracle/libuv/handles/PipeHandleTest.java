@@ -25,14 +25,16 @@
 
 package com.oracle.libuv.handles;
 
+import static com.oracle.libuv.handles.DefaultHandleFactory.newFactory;
+
 import java.nio.ByteBuffer;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
 import com.oracle.libuv.Logger;
 import com.oracle.libuv.TestBase;
@@ -40,8 +42,6 @@ import com.oracle.libuv.cb.StreamCloseCallback;
 import com.oracle.libuv.cb.StreamConnectCallback;
 import com.oracle.libuv.cb.StreamConnectionCallback;
 import com.oracle.libuv.cb.StreamReadCallback;
-
-import static com.oracle.libuv.handles.DefaultHandleFactory.newFactory;
 
 public class PipeHandleTest extends TestBase {
 

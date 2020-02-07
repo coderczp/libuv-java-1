@@ -30,8 +30,8 @@ import static com.oracle.libuv.handles.DefaultHandleFactory.newFactory;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
 import com.oracle.libuv.TestBase;
 import com.oracle.libuv.cb.IdleCallback;

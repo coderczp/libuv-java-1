@@ -25,21 +25,21 @@
 
 package com.oracle.libuv;
 
-import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 public class CWDTest extends TestBase {
 
     private String cwd;
 
-    @BeforeMethod
+    @Before
     public void before() {
         cwd = LibUV.cwd();
     }
 
-    @AfterMethod
+    @After
     public void after() {
         LibUV.chdir(cwd);
     }

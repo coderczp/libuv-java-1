@@ -31,6 +31,7 @@ import java.util.Objects;
 public abstract class Handle implements Closeable {
 
     protected final long pointer;
+
     protected final LoopHandle loop;
 
     protected Handle(final long pointer, final LoopHandle loop) {

@@ -407,47 +407,6 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_StreamHandle__1writev
   return r;
 }
 
-JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_StreamHandle__1write2
-  (JNIEnv *env, jobject that, jlong stream, jobject buffer, jbyteArray data, jint offset, jint length, jlong send_stream, jobject context) {
-  assert(stream);
-  assert(send_stream);
-
-  int r;
-  uv_stream_t* handle = reinterpret_cast<uv_stream_t*>(stream);
-  uv_write_t* req = new uv_write_t();
-  ContextHolder* req_data = NULL;
-  req->handle = handle;
-  if (data) {
-    jbyte* base = (jbyte*) env->GetPrimitiveArrayCritical(data, NULL);
-    OOME(env, base);
-    uv_buf_t buf;
-    buf.base = reinterpret_cast<char*>(base + offset);
-    buf.len = length - offset;
-    req_data = new ContextHolder(env, context);
-    req->data = req_data;
-    uv_stream_t* send_handle = reinterpret_cast<uv_stream_t*>(send_stream);
-    r = uv_write2(req, handle, &buf, 1, send_handle, _write_cb);
-    env->ReleasePrimitiveArrayCritical(data, base, 0);
-  } else {
-    jbyte* base = (jbyte*) env->GetDirectBufferAddress(buffer);
-    OOME(env, base);
-    uv_buf_t buf;
-    buf.base = reinterpret_cast<char*>(base + offset);
-    buf.len = length - offset;
-    assert(stream);
-    req_data = new ContextHolder(env, buffer, context);
-    req->data = req_data;
-    uv_stream_t* send_handle = reinterpret_cast<uv_stream_t*>(send_stream);
-    r = uv_write2(req, handle, &buf, 1, send_handle, _write_cb);
-  }
-  if (r) {
-    delete req_data;
-    delete req;
-    ThrowException(env, r, "uv_write2");
-  }
-  return r;
-}
-
 JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_StreamHandle__1write_1queue_1size
   (JNIEnv *env, jobject that, jlong stream) {
   assert(stream);

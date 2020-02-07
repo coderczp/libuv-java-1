@@ -25,15 +25,15 @@
 
 package com.oracle.libuv.handles;
 
+import static com.oracle.libuv.handles.DefaultHandleFactory.newFactory;
+
 import java.util.HashSet;
 import java.util.Set;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
 import com.oracle.libuv.TestBase;
-
-import static com.oracle.libuv.handles.DefaultHandleFactory.newFactory;
 
 public class LoopHandleTest extends TestBase {
 

@@ -73,14 +73,6 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_StreamHandle__1writev
 
 /*
  * Class:     com_oracle_libuv_handles_StreamHandle
- * Method:    _write2
- * Signature: (JLjava/nio/ByteBuffer;[BIIJLjava/lang/Object;)I
- */
-JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_StreamHandle__1write2
-  (JNIEnv *, jobject, jlong, jobject, jbyteArray, jint, jint, jlong, jobject);
-
-/*
- * Class:     com_oracle_libuv_handles_StreamHandle
  * Method:    _write_queue_size
  * Signature: (J)J
  */

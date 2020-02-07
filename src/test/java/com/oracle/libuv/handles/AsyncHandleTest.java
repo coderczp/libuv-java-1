@@ -25,19 +25,19 @@
 
 package com.oracle.libuv.handles;
 
+import static com.oracle.libuv.handles.DefaultHandleFactory.newFactory;
+
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
 import com.oracle.libuv.TestBase;
 import com.oracle.libuv.cb.AsyncCallback;
-
-import static com.oracle.libuv.handles.DefaultHandleFactory.newFactory;
 
 public class AsyncHandleTest extends TestBase {
 

@@ -94,18 +94,6 @@ class StreamHandle extends Handle {
         readStarted = false;
     }
 
-    private int _write2(final String str, final Handle handle) {
-        Objects.requireNonNull(str);
-        assert handle != null;
-        final byte[] data;
-        try {
-            data = str.getBytes("utf-8");
-        } catch (final UnsupportedEncodingException e) {
-            throw new RuntimeException(e); // "utf-8" is always supported
-        }
-        return _write2(pointer, ByteBuffer.wrap(data), data, 0, data.length, handle.pointer, loop.getContext());
-    }
-
     public int write(final String str) {
         Objects.requireNonNull(str);
         try {
@@ -231,9 +219,6 @@ class StreamHandle extends Handle {
             final int length, final Object context);
 
     private native int _writev(final long ptr, final byte[][] buffers, final int bufcount, final Object context);
-
-    private native int _write2(final long ptr, final ByteBuffer buffer, final byte[] data, final int offset,
-            final int length, final long handlePointer, final Object context);
 
     private native long _write_queue_size(final long ptr);
 

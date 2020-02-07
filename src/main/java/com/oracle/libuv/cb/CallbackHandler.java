@@ -30,6 +30,7 @@ import java.nio.ByteBuffer;
 import com.oracle.libuv.Address;
 
 public interface CallbackHandler {
+
     public void handleAsyncCallback(AsyncCallback cb, int status);
 
     public void handleCheckCallback(CheckCallback cb, int status);
