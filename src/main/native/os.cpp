@@ -31,8 +31,8 @@
 #endif
 
 #include "uv.h"
-#include "exception.h"
-#include "com_oracle_libuv_LibUV.h"
+#include "header/private/exception.h"
+#include "header/jni/com_oracle_libuv_LibUV.h"
 
 JNIEXPORT jdouble JNICALL Java_com_oracle_libuv_LibUV__1getUptime
   (JNIEnv *env, jclass cls) {

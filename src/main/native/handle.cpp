@@ -27,9 +27,9 @@
 #include <string.h>
 
 #include "uv.h"
-#include "exception.h"
-#include "handle.h"
-#include "com_oracle_libuv_handles_Handle.h"
+#include "header/private/exception.h"
+#include "header/private/handle.h"
+#include "header/jni/com_oracle_libuv_handles_Handle.h"
 
 const char* handle_typeof(const uv_handle_t* handle) {
     switch (handle->type) {

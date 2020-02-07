@@ -31,7 +31,7 @@
 #include <string>
 
 #include "uv.h"
-#include "com_oracle_libuv_NativeException.h"
+#include "header/jni/com_oracle_libuv_NativeException.h"
 
 const char* get_uv_errno_string(int errorno) {
   return uv_err_name(errorno);

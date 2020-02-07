@@ -26,10 +26,10 @@
 #include <assert.h>
 
 #include "uv.h"
-#include "exception.h"
-#include "context.h"
-#include "stream.h"
-#include "com_oracle_libuv_handles_PipeHandle.h"
+#include "header/private/exception.h"
+#include "header/private/context.h"
+#include "header/private/stream.h"
+#include "header/jni/com_oracle_libuv_handles_PipeHandle.h"
 
 static void _pipe_connect_cb(uv_connect_t* req, int status) {
   assert(req);

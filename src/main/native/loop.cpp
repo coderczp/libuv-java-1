@@ -29,9 +29,9 @@
 #include <vector>
 
 #include "uv.h"
-#include "exception.h"
-#include "handle.h"
-#include "com_oracle_libuv_handles_LoopHandle.h"
+#include "header/private/exception.h"
+#include "header/private/handle.h"
+#include "header/jni/com_oracle_libuv_handles_LoopHandle.h"
 
 static jclass _string_cid = NULL;
 

@@ -27,8 +27,8 @@
 #include <assert.h>
 
 #include "uv.h"
-#include "exception.h"
-#include "com_oracle_libuv_handles_ProcessHandle.h"
+#include "header/private/exception.h"
+#include "header/jni/com_oracle_libuv_handles_ProcessHandle.h"
 
 class ProcessCallbacks {
 private:

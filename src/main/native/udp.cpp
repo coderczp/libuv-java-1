@@ -28,11 +28,11 @@
 #include <stdlib.h>
 
 #include "uv.h"
-#include "exception.h"
-#include "context.h"
-#include "stream.h"
-#include "udp.h"
-#include "com_oracle_libuv_handles_UDPHandle.h"
+#include "header/private/exception.h"
+#include "header/private/context.h"
+#include "header/private/stream.h"
+#include "header/private/udp.h"
+#include "header/jni/com_oracle_libuv_handles_UDPHandle.h"
 
 #ifndef ULONG
 #define ULONG unsigned long

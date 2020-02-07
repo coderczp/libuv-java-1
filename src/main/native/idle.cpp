@@ -29,9 +29,9 @@
 #include <jni.h>
 
 #include "uv.h"
-#include "exception.h"
-#include "stream.h"
-#include "com_oracle_libuv_handles_IdleHandle.h"
+#include "header/private/exception.h"
+#include "header/private/stream.h"
+#include "header/jni/com_oracle_libuv_handles_IdleHandle.h"
 
 class IdleCallbacks {
 private:

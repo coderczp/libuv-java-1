@@ -18,7 +18,7 @@ find_package(unofficial-libuv CONFIG REQUIRED)
 INCLUDE_DIRECTORIES(${JAVA_INCLUDE_PATH})
 INCLUDE_DIRECTORIES(${JAVA_INCLUDE_PATH2})
 
-file(GLOB_RECURSE sources "*native/.h" "native/*.cpp")
+file(GLOB_RECURSE sources "*native/header/private/*.h" "*native/header/jni/*.h" "native/*.cpp")
 
 if (MSVC)
   set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${PROJECT_BINARY_DIR}/../resources/META-INF)

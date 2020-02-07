@@ -28,7 +28,7 @@
 #include <fcntl.h>
 #include <signal.h>
 
-#include "com_oracle_libuv_Constants.h"
+#include "header/jni/com_oracle_libuv_Constants.h"
 
 #ifdef _WIN32
 

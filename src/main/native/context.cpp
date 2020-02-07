@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #include <jni.h>
 
-#include "context.h"
+#include "header/private/context.h"
 
 ContextHolder::ContextHolder(JNIEnv* env, jobject data, jobject context) {
   _data = data ? (jobject) env->NewGlobalRef(data) : NULL;
