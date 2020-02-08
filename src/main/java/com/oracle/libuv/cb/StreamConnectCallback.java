@@ -27,5 +27,8 @@ package com.oracle.libuv.cb;
 
 public interface StreamConnectCallback {
 
+    /**
+     * @param status {@code 0} on success, or an error {@code code < 0} on failure.
+     */
     public void onConnect(int status, Exception error) throws Exception;
 }

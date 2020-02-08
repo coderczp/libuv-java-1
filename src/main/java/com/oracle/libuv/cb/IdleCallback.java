@@ -33,5 +33,8 @@ package com.oracle.libuv.cb;
  */
 public interface IdleCallback {
 
+    /**
+     * @param status {@code 0} on success, or an error {@code code < 0} on failure.
+     */
     public void onIdle(int status) throws Exception;
 }

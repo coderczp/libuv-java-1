@@ -27,5 +27,8 @@ package com.oracle.libuv.cb;
 
 public interface StreamWriteCallback {
 
+    /**
+     * @param status {@code 0} on success, or an error {@code code < 0} on failure.
+     */
     public void onWrite(int status, Exception error) throws Exception;
 }

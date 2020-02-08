@@ -27,11 +27,13 @@ package com.oracle.libuv.cb;
 
 /**
  * Async handles allow the user to <strong>wakeup</strong> the event loop and
- * get a callback called from another thread.
- * 
+ * get a callback called from another thread. <br>
  * See <a href="http://docs.libuv.org/en/v1.x/async.html">Async handle</a>
  */
 public interface AsyncCallback {
 
+    /**
+     * @param status {@code 0} on success, or an error {@code code < 0} on failure.
+     */
     public void onSend(int status) throws Exception;
 }
