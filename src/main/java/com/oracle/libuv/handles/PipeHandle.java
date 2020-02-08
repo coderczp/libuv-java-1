@@ -22,11 +22,18 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-
 package com.oracle.libuv.handles;
 
 import java.util.Objects;
 
+import com.oracle.libuv.cb.StreamConnectionCallback;
+
+/**
+ * Pipe handles provide an abstraction over streaming files on Unix (including
+ * local domain sockets, pipes, and FIFOs) and named pipes on Windows.
+ * <p>
+ * See <a href="http://docs.libuv.org/en/v1.x/pipe.html">Pipe handle</a>
+ */
 public class PipeHandle extends StreamHandle {
 
     protected PipeHandle(final LoopHandle loop, final boolean ipc) {
@@ -37,15 +44,41 @@ public class PipeHandle extends StreamHandle {
         super(pointer, loop);
     }
 
+    /**
+     * Open an existing file as a pipe.
+     * 
+     * @param fd file descriptor.
+     * 
+     * @return {@code 0} on success, or an error {@code code < 0} on failure.
+     */
     public int open(final int fd) {
         return _open(pointer, fd);
     }
 
+    /**
+     * Bind the pipe to a file path (Unix) or a name (Windows).
+     * 
+     * @param name socket, pipe or FIFO name.
+     * 
+     * @return {@code 0} on success, or an error {@code code < 0} on failure.
+     */
     public int bind(final String name) {
         Objects.requireNonNull(name);
         return _bind(pointer, name);
     }
 
+    /**
+     * Accepts connections.
+     * <p>
+     * This call is used in conjunction with {@link #listen(int)} to accept incoming
+     * connections.
+     * <p>
+     * Call this function after receiving a {@link StreamConnectionCallback} to accept
+     * the connection. Before calling this function the client handle must be
+     * initialized.
+     * 
+     * @return {@code 0} on success, or an error {@code code < 0} on failure.
+     */
     @Override
     public int accept(final StreamHandle client) {
         return super.accept(client);
