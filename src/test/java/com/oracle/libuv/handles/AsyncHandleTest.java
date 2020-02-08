@@ -51,22 +51,16 @@ public class AsyncHandleTest extends TestBase {
         final AsyncHandle asyncHandle = handleFactory.newAsyncHandle();
         final ScheduledExecutorService timer = new ScheduledThreadPoolExecutor(1);
 
-        asyncHandle.setAsyncCallback(new AsyncCallback() {
-            @Override
-            public void onSend(final int status) throws Exception {
-                gotCallback.set(true);
-                System.out.println("onSend!");
-                times.incrementAndGet();
-                asyncHandle.close();
-            }
+        asyncHandle.setAsyncCallback(status -> {
+            gotCallback.set(true);
+            System.out.println("onSend!");
+            times.incrementAndGet();
+            asyncHandle.close();
         });
 
-        timer.schedule(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("calling asyncHandle.send...");
-                asyncHandle.send();
-            }
+        timer.schedule(() -> {
+            System.out.println("calling asyncHandle.send...");
+            asyncHandle.send();
         }, 100, TimeUnit.MILLISECONDS);
 
         loop.run();
