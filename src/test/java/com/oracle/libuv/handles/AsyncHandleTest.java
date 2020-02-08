@@ -122,12 +122,9 @@ public class AsyncHandleTest extends TestBase {
                 }
             }
             final int fi = i;
-            timer.schedule(new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println(fi + " calling asyncHandle.send...");
-                    holder.asyncHandle.send();
-                }
+            timer.schedule(() -> {
+                System.out.println(fi + " calling asyncHandle.send...");
+                holder.asyncHandle.send();
             }, (int) (Math.random() * 1000), TimeUnit.MILLISECONDS);
         }
 

@@ -27,7 +27,6 @@ package com.oracle.libuv.handles;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.oracle.libuv.cb.AsyncCallback;
-import com.oracle.libuv.cb.CloseCallback;
 
 /**
  * Async handles allow the user to <strong>wakeup</strong> the event loop and

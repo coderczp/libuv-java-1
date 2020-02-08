@@ -26,8 +26,6 @@ package com.oracle.libuv.handles;
 
 import java.util.Objects;
 
-import com.oracle.libuv.cb.StreamConnectionCallback;
-
 /**
  * Pipe handles provide an abstraction over streaming files on Unix (including
  * local domain sockets, pipes, and FIFOs) and named pipes on Windows.

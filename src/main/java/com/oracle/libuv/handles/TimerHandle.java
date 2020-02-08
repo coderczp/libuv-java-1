@@ -25,7 +25,6 @@
 package com.oracle.libuv.handles;
 
 import com.oracle.libuv.cb.CloseCallback;
-import com.oracle.libuv.cb.PrepareCallback;
 import com.oracle.libuv.cb.TimerCallback;
 
 /**

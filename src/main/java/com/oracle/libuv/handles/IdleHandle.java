@@ -26,7 +26,6 @@ package com.oracle.libuv.handles;
 
 import com.oracle.libuv.cb.CloseCallback;
 import com.oracle.libuv.cb.IdleCallback;
-import com.oracle.libuv.cb.PrepareCallback;
 
 /**
  * Idle handles will run the given callback once <strong>per loop
