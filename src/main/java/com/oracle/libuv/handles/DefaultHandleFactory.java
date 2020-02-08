@@ -59,6 +59,13 @@ public class DefaultHandleFactory implements HandleFactory {
         return new CheckHandle(loop);
     }
 
+
+    @Override
+    public PrepareHandle newPrepareHandle() {
+        assert loop != null;
+        return new PrepareHandle(loop);
+    }
+
     @Override
     public IdleHandle newIdleHandle() {
         assert loop != null;
