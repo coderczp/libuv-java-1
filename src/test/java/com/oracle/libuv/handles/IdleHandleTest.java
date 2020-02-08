@@ -34,7 +34,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.oracle.libuv.TestBase;
-import com.oracle.libuv.cb.IdleCallback;
 
 public class IdleHandleTest extends TestBase {
 
@@ -48,22 +47,16 @@ public class IdleHandleTest extends TestBase {
         final LoopHandle loop = handleFactory.getLoopHandle();
         final IdleHandle idleHandle = handleFactory.newIdleHandle();
 
-        idleHandle.setCloseCallback(new IdleCallback() {
-            @Override
-            public void onIdle(final int i) throws Exception {
-                System.out.println("idle closed");
-                gotClose.set(true);
-            }
+        idleHandle.setCloseCallback(i -> {
+            System.out.println("idle closed");
+            gotClose.set(true);
         });
 
-        idleHandle.setIdleCallback(new IdleCallback() {
-            @Override
-            public void onIdle(final int status) throws Exception {
-                gotCallback.set(true);
-                System.out.println("idle!");
-                times.incrementAndGet();
-                idleHandle.close();
-            }
+        idleHandle.setIdleCallback(status -> {
+            gotCallback.set(true);
+            System.out.println("idle!");
+            times.incrementAndGet();
+            idleHandle.close();
         });
 
         idleHandle.start();

@@ -35,9 +35,15 @@ public interface CallbackHandler {
 
     void handleCheckCallback(CheckCallback cb, int status);
 
+    void handleCheckCallback(CloseCallback cb, int status);
+
     void handlePrepareCallback(PrepareCallback cb, int status);
 
+    void handlePrepareCallback(CloseCallback cb, int status);
+
     void handleIdleCallback(IdleCallback cb, int status);
+
+    void handleIdleCallback(CloseCallback cb, int status);
 
     void handleStreamReadCallback(StreamReadCallback cb, ByteBuffer data);
 
@@ -56,6 +62,8 @@ public interface CallbackHandler {
     void handleProcessExitCallback(ProcessExitCallback cb, int status, int signal, Exception error);
 
     void handleTimerCallback(TimerCallback cb, int status);
+
+    void handleTimerCallback(CloseCallback cb, int status);
 
     void handleUDPRecvCallback(UDPRecvCallback cb, int nread, ByteBuffer data, Address address);
 

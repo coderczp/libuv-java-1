@@ -32,6 +32,7 @@ import com.oracle.libuv.cb.AsyncCallback;
 import com.oracle.libuv.cb.CallbackExceptionHandler;
 import com.oracle.libuv.cb.CallbackHandler;
 import com.oracle.libuv.cb.CheckCallback;
+import com.oracle.libuv.cb.CloseCallback;
 import com.oracle.libuv.cb.IdleCallback;
 import com.oracle.libuv.cb.PrepareCallback;
 import com.oracle.libuv.cb.ProcessCloseCallback;
@@ -75,9 +76,28 @@ public final class LoopCallbackHandler implements CallbackHandler {
 
 
     @Override
+    public void handleCheckCallback(CloseCallback cb, int status) {
+        try {
+            cb.onClose(status);
+        } catch (final Exception ex) {
+            exceptionHandler.handle(ex);
+        }
+    }
+
+    @Override
     public void handlePrepareCallback(PrepareCallback cb, int status) {
         try {
             cb.onPrepare(status);
+        } catch (final Exception ex) {
+            exceptionHandler.handle(ex);
+        }
+    }
+
+
+    @Override
+    public void handlePrepareCallback(CloseCallback cb, int status) {
+        try {
+            cb.onClose(status);
         } catch (final Exception ex) {
             exceptionHandler.handle(ex);
         }
@@ -165,6 +185,16 @@ public final class LoopCallbackHandler implements CallbackHandler {
         }
     }
 
+
+    @Override
+    public void handleTimerCallback(CloseCallback cb, int status) {
+        try {
+            cb.onClose(status);
+        } catch (final Exception ex) {
+            exceptionHandler.handle(ex);
+        }
+    }
+
     @Override
     public void handleUDPRecvCallback(final UDPRecvCallback cb, final int nread, final ByteBuffer data,
             final Address address) {
@@ -197,6 +227,16 @@ public final class LoopCallbackHandler implements CallbackHandler {
     public void handleIdleCallback(final IdleCallback cb, final int status) {
         try {
             cb.onIdle(status);
+        } catch (final Exception ex) {
+            exceptionHandler.handle(ex);
+        }
+    }
+
+
+    @Override
+    public void handleIdleCallback(CloseCallback cb, int status) {
+        try {
+            cb.onClose(status);
         } catch (final Exception ex) {
             exceptionHandler.handle(ex);
         }

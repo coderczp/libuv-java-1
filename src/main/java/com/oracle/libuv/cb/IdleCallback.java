@@ -25,12 +25,7 @@
 
 package com.oracle.libuv.cb;
 
-/**
- * Idle handles will run the given callback once per loop iteration, right
- * before the uv_prepare_t handles.
- * 
- * See <a href="http://docs.libuv.org/en/v1.x/async.html">Idle handle</a>
- */
+@FunctionalInterface
 public interface IdleCallback {
 
     /**

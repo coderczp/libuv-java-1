@@ -29,7 +29,10 @@ public class DefaultHandleFactory implements HandleFactory {
 
     private LoopHandle loop;
 
-    public static HandleFactory newFactory() { // generally only for tests
+    /**
+     * generally only for tests
+     */
+    public static HandleFactory newFactory() {
         return new DefaultHandleFactory().initialize(new LoopHandle());
     }
 

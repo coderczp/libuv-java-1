@@ -25,6 +25,7 @@
 
 package com.oracle.libuv.cb;
 
+@FunctionalInterface
 public interface TimerCallback {
 
     /**

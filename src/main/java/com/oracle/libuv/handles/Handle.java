@@ -22,12 +22,16 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-
 package com.oracle.libuv.handles;
 
 import java.io.Closeable;
 import java.util.Objects;
 
+/**
+ * The base class for handle.
+ * 
+ * See <a href="http://docs.libuv.org/en/v1.x/handle.html">Base handle</a>
+ */
 public abstract class Handle implements Closeable {
 
     protected final long pointer;
@@ -41,14 +45,35 @@ public abstract class Handle implements Closeable {
         this.loop = loop;
     }
 
+    /**
+     * Reference this handle.
+     * <p>
+     * References are idempotent, that is, if a handle is already referenced calling
+     * this function again will have no effect.
+     */
     public void ref() {
         _ref(pointer);
     }
 
+    /**
+     * Un-reference this handle.
+     * <p>
+     * References are idempotent, that is, if a handle is not referenced calling
+     * this function again will have no effect.
+     */
     public void unref() {
         _unref(pointer);
     }
 
+    /**
+     * Retrieves whether this handle has been closed.
+     * <p>
+     * This function should only be used between the initialization of the handle
+     * and the arrival of the close callback.
+     * 
+     * @return {@code false} if the handle is closing or closed, {@code true}
+     *         otherwise.
+     */
     public boolean isClosing() {
         return _closing(pointer);
     }
@@ -67,6 +92,10 @@ public abstract class Handle implements Closeable {
     public String toString() {
         return this.getClass().getSimpleName() + "." + Long.toHexString(pointer);
     }
+
+    // ------------------------------------------------------------------------
+    // ~ Native
+    // ------------------------------------------------------------------------
 
     private native void _ref(final long ptr);
 

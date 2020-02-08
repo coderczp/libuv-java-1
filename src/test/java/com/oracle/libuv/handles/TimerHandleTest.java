@@ -34,7 +34,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.oracle.libuv.TestBase;
-import com.oracle.libuv.cb.TimerCallback;
 
 public class TimerHandleTest extends TestBase {
 
@@ -62,21 +61,15 @@ public class TimerHandleTest extends TestBase {
         final LoopHandle loop = handleFactory.getLoopHandle();
         final TimerHandle timer = handleFactory.newTimerHandle();
 
-        timer.setCloseCallback(new TimerCallback() {
-            @Override
-            public void onTimer(final int i) throws Exception {
-                System.out.println("timer closed");
-                gotClose.set(true);
-            }
+        timer.setCloseCallback(i -> {
+            System.out.println("timer closed");
+            gotClose.set(true);
         });
 
-        timer.setTimerFiredCallback(new TimerCallback() {
-            @Override
-            public void onTimer(final int status) throws Exception {
-                gotCallback.set(true);
-                System.out.println("timer fired once");
-                timer.close();
-            }
+        timer.setTimerFiredCallback(status -> {
+            gotCallback.set(true);
+            System.out.println("timer fired once");
+            timer.close();
         });
 
         timer.start(100, 0);
@@ -103,24 +96,18 @@ public class TimerHandleTest extends TestBase {
         final LoopHandle loop = new LoopHandle();
         final TimerHandle timer = new TimerHandle(loop);
 
-        timer.setCloseCallback(new TimerCallback() {
-            @Override
-            public void onTimer(final int i) throws Exception {
-                System.out.println("repeat timer closed");
-                gotClose.set(true);
-            }
+        timer.setCloseCallback(i -> {
+            System.out.println("repeat timer closed");
+            gotClose.set(true);
         });
 
-        timer.setTimerFiredCallback(new TimerCallback() {
-            @Override
-            public void onTimer(final int status) throws Exception {
-                gotCallback.set(true);
-                if (callbackCount.incrementAndGet() == TIMES) {
-                    System.out.println("closing repeat timer");
-                    gotClose.set(true);
-                }
-                System.out.println("timer fired " + callbackCount.get());
+        timer.setTimerFiredCallback(status -> {
+            gotCallback.set(true);
+            if (callbackCount.incrementAndGet() == TIMES) {
+                System.out.println("closing repeat timer");
+                gotClose.set(true);
             }
+            System.out.println("timer fired " + callbackCount.get());
         });
 
         timer.start(50, 5);
@@ -136,11 +123,5 @@ public class TimerHandleTest extends TestBase {
         Assert.assertTrue(gotCallback.get());
         Assert.assertTrue(gotClose.get());
         Assert.assertTrue(callbackCount.get() == TIMES);
-    }
-
-    public static void main(final String[] args) throws Throwable {
-        final TimerHandleTest test = new TimerHandleTest();
-        test.testOnce();
-        test.testRepeat();
     }
 }

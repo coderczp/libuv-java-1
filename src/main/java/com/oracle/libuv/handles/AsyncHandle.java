@@ -22,24 +22,41 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-
 package com.oracle.libuv.handles;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.oracle.libuv.cb.AsyncCallback;
+import com.oracle.libuv.cb.CloseCallback;
 
+/**
+ * Async handles allow the user to <strong>wakeup</strong> the event loop and
+ * get a callback called from another thread.
+ * <p>
+ * See <a href="http://docs.libuv.org/en/v1.x/async.html">Async handle</a>
+ */
 public class AsyncHandle extends Handle {
 
-    private final AtomicBoolean closed = new AtomicBoolean(false);
+    private final AtomicBoolean closed = new AtomicBoolean();
 
-    private AsyncCallback onSend = null;
+    private AsyncCallback onSend;
 
     static {
         _static_initialize();
     }
 
+    /**
+     * Attach a {@link AsyncCallback}.
+     * 
+     * @param callback A callback, which will be executed after a loop will receive
+     *                 an async signal from this handle.
+     *
+     * @throws IllegalStateException if this method called more than once.
+     */
     public void setAsyncCallback(final AsyncCallback callback) {
+        if (onSend != null) {
+            throw new IllegalStateException();
+        }
         onSend = callback;
     }
 
@@ -48,21 +65,46 @@ public class AsyncHandle extends Handle {
         _initialize(pointer);
     }
 
+    /**
+     * Wake up the event loop and call the specified callback.
+     * <p>
+     * It's safe to call this function from <strong>any thread</strong>. The
+     * callback will be called on the <strong>loop thread</strong>.
+     * 
+     * @see {@link #setAsyncCallback(AsyncCallback)}
+     * 
+     * @return {@code 0} on success, or an error {@code code < 0} on failure.
+     */
     public int send() {
         return closed.get() ? -1 : _send(pointer);
     }
 
+    /**
+     * Close the handle and free up any resources that may be held by it.
+     * <p>
+     * {@link CloseCallback} callback will be invoked right before the close.
+     * 
+     * @see {@link #setCloseCallback(CloseCallback)}
+     */
     public void close() {
         if (closed.compareAndSet(false, true)) {
             _close(pointer);
         }
     }
 
+    // ------------------------------------------------------------------------
+    // ~ Private
+    // ------------------------------------------------------------------------
+
     private void callSend(final int status) {
         if (onSend != null) {
             loop.getCallbackHandler().handleAsyncCallback(onSend, status);
         }
     }
+
+    // ------------------------------------------------------------------------
+    // ~ Native
+    // ------------------------------------------------------------------------
 
     private static native long _new(final long loop);
 

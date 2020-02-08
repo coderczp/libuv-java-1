@@ -22,14 +22,9 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-
 package com.oracle.libuv.cb;
 
-/**
- * Async handles allow the user to <strong>wakeup</strong> the event loop and
- * get a callback called from another thread. <br>
- * See <a href="http://docs.libuv.org/en/v1.x/async.html">Async handle</a>
- */
+@FunctionalInterface
 public interface AsyncCallback {
 
     /**

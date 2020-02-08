@@ -22,9 +22,9 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-
 package com.oracle.libuv.handles;
 
+import com.oracle.libuv.cb.CloseCallback;
 import com.oracle.libuv.cb.TimerCallback;
 
 public class TimerHandle extends Handle {
@@ -33,7 +33,7 @@ public class TimerHandle extends Handle {
 
     private TimerCallback onTimerFired;
 
-    private TimerCallback onClose;
+    private CloseCallback onClose;
 
     static {
         _static_initialize();
@@ -43,7 +43,7 @@ public class TimerHandle extends Handle {
         onTimerFired = callback;
     }
 
-    public void setCloseCallback(final TimerCallback callback) {
+    public void setCloseCallback(final CloseCallback callback) {
         onClose = callback;
     }
 

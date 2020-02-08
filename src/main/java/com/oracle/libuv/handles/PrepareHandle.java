@@ -25,25 +25,44 @@
 
 package com.oracle.libuv.handles;
 
+import com.oracle.libuv.cb.CloseCallback;
 import com.oracle.libuv.cb.PrepareCallback;
 
+/**
+ * Prepare handles will run the given callback once per loop iteration, right
+ * before <strong>polling for i/o</strong>.
+ * <p>
+ * See <a href="http://docs.libuv.org/en/v1.x/prepare.html">Perpare handle</a>
+ */
 public class PrepareHandle extends Handle {
 
     private boolean closed;
 
     private PrepareCallback onPrepare;
 
-    private PrepareCallback onClose;
+    private CloseCallback onClose;
 
     static {
         _static_initialize();
     }
 
+    /**
+     * Attach a {@link PrepareCallback}.
+     * 
+     * @param callback A Callback, which will be invoked once per loop iteration,
+     *                 right before <strong>polling for i/o</strong>.
+     */
     public void setPrepareCallback(final PrepareCallback callback) {
         onPrepare = callback;
     }
 
-    public void setCloseCallback(final PrepareCallback callback) {
+    /**
+     * Attach a {@link CloseCallback}.
+     * 
+     * @param callback A Callback, which will be invoked when check handle is
+     *                 closed.
+     */
+    public void setCloseCallback(final CloseCallback callback) {
         onClose = callback;
     }
 
@@ -52,14 +71,30 @@ public class PrepareHandle extends Handle {
         _initialize(pointer);
     }
 
+    /**
+     * Starts the prepare handle with the callback specified
+     * {@link #setPrepareCallback(PrepareCallback)}.
+     * 
+     * @return {@code 0} on success, or an error {@code code < 0} on failure.
+     */
     public int start() {
         return _start(pointer);
     }
 
+    /**
+     * Stop the handle, the callback will no longer be called.
+     * 
+     * @return {@code 0} on success, or an error {@code code < 0} on failure.
+     */
     public int stop() {
         return _stop(pointer);
     }
 
+    /**
+     * Close the handle and free up any resources that may be held by it.
+     * 
+     * @return {@code 0} on success, or an error {@code code < 0} on failure.
+     */
     public void close() {
         if (!closed) {
             _close(pointer);
@@ -67,11 +102,9 @@ public class PrepareHandle extends Handle {
         closed = true;
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        close();
-        super.finalize();
-    }
+    // ------------------------------------------------------------------------
+    // ~ Private
+    // ------------------------------------------------------------------------
 
     private void callback(final int type, final int status) {
         switch (type) {
@@ -89,6 +122,10 @@ public class PrepareHandle extends Handle {
             assert false : "unsupported callback type " + type;
         }
     }
+
+    // ------------------------------------------------------------------------
+    // ~ Native
+    // ------------------------------------------------------------------------
 
     private static native long _new(final long loop);
 

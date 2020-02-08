@@ -25,12 +25,7 @@
 
 package com.oracle.libuv.cb;
 
-/**
- * Check handles will run the given callback once per loop iteration, right
- * after polling for i/o.
- * 
- * See <a href="http://docs.libuv.org/en/v1.x/check.html">Check handle</a>
- */
+@FunctionalInterface
 public interface CheckCallback {
 
     /**

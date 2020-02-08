@@ -25,6 +25,7 @@
 
 package com.oracle.libuv.cb;
 
+@FunctionalInterface
 public interface UDPCloseCallback {
 
     public void onClose() throws Exception;

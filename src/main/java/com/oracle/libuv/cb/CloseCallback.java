@@ -22,15 +22,13 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-
 package com.oracle.libuv.cb;
 
-import java.nio.ByteBuffer;
-
-import com.oracle.libuv.Address;
-
 @FunctionalInterface
-public interface UDPRecvCallback {
+public interface CloseCallback {
 
-    public void onRecv(int nread, ByteBuffer data, Address address) throws Exception;
+    /**
+     * @param status {@code 0} on success, or an error {@code code < 0} on failure.
+     */
+    public void onClose(int status) throws Exception;
 }

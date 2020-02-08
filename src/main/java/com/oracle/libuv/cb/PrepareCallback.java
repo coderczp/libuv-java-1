@@ -25,12 +25,7 @@
 
 package com.oracle.libuv.cb;
 
-/**
- * Prepare handles will run the given callback once per loop iteration, right
- * before polling for i/o.
- * 
- * See <a href="http://docs.libuv.org/en/v1.x/prepare.html">Perpare handle</a>
- */
+@FunctionalInterface
 public interface PrepareCallback {
 
     /**

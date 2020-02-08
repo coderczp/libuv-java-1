@@ -34,7 +34,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.oracle.libuv.TestBase;
-import com.oracle.libuv.cb.CheckCallback;
 
 public class CheckHandleTest extends TestBase {
 
@@ -48,22 +47,16 @@ public class CheckHandleTest extends TestBase {
         final LoopHandle loop = handleFactory.getLoopHandle();
         final CheckHandle checkHandle = handleFactory.newCheckHandle();
 
-        checkHandle.setCloseCallback(new CheckCallback() {
-            @Override
-            public void onCheck(final int i) throws Exception {
-                System.out.println("check closed");
-                gotClose.set(true);
-            }
+        checkHandle.setCloseCallback(i -> {
+            System.out.println("check closed");
+            gotClose.set(true);
         });
 
-        checkHandle.setCheckCallback(new CheckCallback() {
-            @Override
-            public void onCheck(final int status) throws Exception {
-                gotCallback.set(true);
-                System.out.println("check!");
-                times.incrementAndGet();
-                checkHandle.close();
-            }
+        checkHandle.setCheckCallback(status -> {
+            gotCallback.set(true);
+            System.out.println("check!");
+            times.incrementAndGet();
+            checkHandle.close();
         });
 
         checkHandle.start();

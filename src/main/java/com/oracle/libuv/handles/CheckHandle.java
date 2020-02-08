@@ -22,28 +22,56 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-
 package com.oracle.libuv.handles;
 
 import com.oracle.libuv.cb.CheckCallback;
+import com.oracle.libuv.cb.CloseCallback;
 
+/**
+ * Check handles will run the given callback once per loop iteration, right
+ * after <stop>polling for i/o</stop>.
+ * 
+ * See <a href="http://docs.libuv.org/en/v1.x/check.html">Check handle</a>
+ */
 public class CheckHandle extends Handle {
 
     private boolean closed;
 
     private CheckCallback onCheck;
 
-    private CheckCallback onClose;
+    private CloseCallback onClose;
 
     static {
         _static_initialize();
     }
 
+    /**
+     * Attach a {@link CheckCallback}.
+     * 
+     * @param callback A Callback, which will be invoked once per loop iteration,
+     *                 right after <stop>polling for i/o</stop>.
+     * 
+     * @throws IllegalStateException if this method called more than once.
+     */
     public void setCheckCallback(final CheckCallback callback) {
+        if (onCheck != null) {
+            throw new IllegalStateException();
+        }
         onCheck = callback;
     }
 
-    public void setCloseCallback(final CheckCallback callback) {
+    /**
+     * Attach a {@link CloseCallback}.
+     * 
+     * @param callback A Callback, which will be invoked when check handle is
+     *                 closed.
+     *
+     * @throws IllegalStateException if this method called more than once.
+     */
+    public void setCloseCallback(final CloseCallback callback) {
+        if (onClose != null) {
+            throw new IllegalStateException();
+        }
         onClose = callback;
     }
 
@@ -52,14 +80,33 @@ public class CheckHandle extends Handle {
         _initialize(pointer);
     }
 
+    /**
+     * Starts the handle with the callback specified.
+     * 
+     * @see {@link #setCheckCallback(CheckCallback)}
+     * 
+     * @return {@code 0} on success, or an error {@code code < 0} on failure.
+     */
     public int start() {
         return _start(pointer);
     }
 
+    /**
+     * Stop the handle, the callback will no longer be called.
+     * 
+     * @return {@code 0} on success, or an error {@code code < 0} on failure.
+     */
     public int stop() {
         return _stop(pointer);
     }
 
+    /**
+     * Close the handle and free up any resources that may be held by it.
+     * <p>
+     * {@link CloseCallback} callback will be invoked right before the close.
+     * 
+     * @see {@link #setCloseCallback(CloseCallback)}
+     */
     public void close() {
         if (!closed) {
             _close(pointer);
@@ -67,11 +114,9 @@ public class CheckHandle extends Handle {
         closed = true;
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        close();
-        super.finalize();
-    }
+    // ------------------------------------------------------------------------
+    // ~ Private
+    // ------------------------------------------------------------------------
 
     private void callback(final int type, final int status) {
         switch (type) {
@@ -89,6 +134,10 @@ public class CheckHandle extends Handle {
             assert false : "unsupported callback type " + type;
         }
     }
+
+    // ------------------------------------------------------------------------
+    // ~ Native
+    // ------------------------------------------------------------------------
 
     private static native long _new(final long loop);
 

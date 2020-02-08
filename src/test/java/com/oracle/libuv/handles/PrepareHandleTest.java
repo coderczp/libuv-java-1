@@ -34,7 +34,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.oracle.libuv.TestBase;
-import com.oracle.libuv.cb.PrepareCallback;
 
 public class PrepareHandleTest extends TestBase {
 
@@ -48,22 +47,16 @@ public class PrepareHandleTest extends TestBase {
         final LoopHandle loop = handleFactory.getLoopHandle();
         final PrepareHandle prepareHandle = handleFactory.newPrepareHandle();
 
-        prepareHandle.setCloseCallback(new PrepareCallback() {
-            @Override
-            public void onPrepare(final int i) throws Exception {
-                System.out.println("prepare closed");
-                gotClose.set(true);
-            }
+        prepareHandle.setCloseCallback(i -> {
+            System.out.println("prepare closed");
+            gotClose.set(true);
         });
 
-        prepareHandle.setPrepareCallback(new PrepareCallback() {
-            @Override
-            public void onPrepare(final int status) throws Exception {
-                gotCallback.set(true);
-                System.out.println("prepare!");
-                times.incrementAndGet();
-                prepareHandle.close();
-            }
+        prepareHandle.setPrepareCallback(status -> {
+            gotCallback.set(true);
+            System.out.println("prepare!");
+            times.incrementAndGet();
+            prepareHandle.close();
         });
 
         prepareHandle.start();

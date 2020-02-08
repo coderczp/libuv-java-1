@@ -29,6 +29,7 @@ package com.oracle.libuv.cb;
  * This callback indicate the exit status and the signal that caused the process
  * to terminate, if any.
  */
+@FunctionalInterface
 public interface ProcessExitCallback {
 
     /**

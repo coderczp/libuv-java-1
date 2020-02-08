@@ -27,6 +27,7 @@ package com.oracle.libuv.cb;
 
 import java.nio.ByteBuffer;
 
+@FunctionalInterface
 public interface StreamReadCallback {
 
     /**
