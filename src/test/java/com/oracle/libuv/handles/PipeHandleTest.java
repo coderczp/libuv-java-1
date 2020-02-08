@@ -162,9 +162,4 @@ public class PipeHandleTest extends TestBase {
         Assert.assertEquals(serverRecvCount.get(), TIMES);
         Assert.assertEquals(clientRecvCount.get(), TIMES);
     }
-
-    public static void main(final String[] args) throws Throwable {
-        new PipeHandleTest().testConnection();
-    }
-
 }

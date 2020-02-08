@@ -148,11 +148,4 @@ public class AsyncHandleTest extends TestBase {
             Assert.assertEquals(holder.times.get(), 1);
         }
     }
-
-    public static void main(final String[] args) throws Throwable {
-        final AsyncHandleTest test = new AsyncHandleTest();
-        test.testAsync();
-        test.testAsyncMulti();
-    }
-
 }

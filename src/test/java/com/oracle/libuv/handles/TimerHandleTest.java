@@ -143,5 +143,4 @@ public class TimerHandleTest extends TestBase {
         test.testOnce();
         test.testRepeat();
     }
-
 }

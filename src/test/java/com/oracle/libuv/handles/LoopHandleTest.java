@@ -74,9 +74,4 @@ public class LoopHandleTest extends TestBase {
         }
         Assert.assertTrue(pointers.isEmpty());
     }
-
-    public static void main(final String[] args) throws Throwable {
-        final LoopHandleTest test = new LoopHandleTest();
-        test.testList();
-    }
 }

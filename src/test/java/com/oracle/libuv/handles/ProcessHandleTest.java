@@ -132,9 +132,4 @@ public class ProcessHandleTest extends TestBase {
             loop.run();
         }
     }
-
-    public static void main(final String[] args) throws Throwable {
-        final ProcessHandleTest test = new ProcessHandleTest();
-        test.testExitCode();
-    }
 }

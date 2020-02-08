@@ -168,10 +168,4 @@ public class TCPHandleTest extends TestBase {
     public void testConnectionIpv6() throws Throwable {
         testConnection(true);
     }
-
-    public static void main(final String[] args) throws Throwable {
-        final TCPHandleTest test = new TCPHandleTest();
-        test.testConnectionIpv4();
-        test.testConnectionIpv6();
-    }
 }

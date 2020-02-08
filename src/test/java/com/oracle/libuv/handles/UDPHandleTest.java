@@ -114,10 +114,4 @@ public class UDPHandleTest extends TestBase {
     public void testConnectionIpv6() throws Throwable {
         testConnection(true);
     }
-
-    public static void main(final String[] args) throws Throwable {
-        final UDPHandleTest test = new UDPHandleTest();
-        test.testConnectionIpv4();
-        test.testConnectionIpv6();
-    }
 }

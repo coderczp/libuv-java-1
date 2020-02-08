@@ -80,10 +80,4 @@ public class PrepareHandleTest extends TestBase {
         Assert.assertTrue(gotClose.get());
         Assert.assertEquals(times.get(), 1);
     }
-
-    public static void main(final String[] args) throws Throwable {
-        final PrepareHandleTest test = new PrepareHandleTest();
-        test.testPrepare();
-    }
-
 }

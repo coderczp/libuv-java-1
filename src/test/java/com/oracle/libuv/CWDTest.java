@@ -59,5 +59,4 @@ public class CWDTest extends TestBase {
         LibUV.chdir(java);
         Assert.assertEquals(java, LibUV.cwd());
     }
-
 }

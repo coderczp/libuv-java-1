@@ -32,8 +32,7 @@ import java.util.Arrays;
 public class TestBase {
 
     static {
-        // call an idempotent LibUV method just to ensure that the native lib is loaded
-        LibUV.cwd();
+        LibUV.loadJni();
     }
 
     protected static final String TMPDIR = System.getProperty("java.io.tmpdir");
@@ -75,5 +74,4 @@ public class TestBase {
             return null;
         }
     }
-
 }
