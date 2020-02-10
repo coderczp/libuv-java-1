@@ -22,7 +22,6 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-
 package com.oracle.libuv.handles;
 
 import java.util.ArrayList;
@@ -152,6 +151,10 @@ public class ProcessHandle extends Handle {
         return _kill(pointer, signal);
     }
 
+    // ------------------------------------------------------------------------
+    // ~ Private
+    // ------------------------------------------------------------------------
+
     private void callClose() {
         if (onClose != null) {
             loop.getCallbackHandler().handleProcessCloseCallback(onClose);
@@ -163,6 +166,10 @@ public class ProcessHandle extends Handle {
             loop.getCallbackHandler().handleProcessExitCallback(onExit, status, signal, error);
         }
     }
+
+    // ------------------------------------------------------------------------
+    // ~ Native
+    // ------------------------------------------------------------------------
 
     private static native long _new(final long loop);
 

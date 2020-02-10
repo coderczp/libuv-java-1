@@ -22,8 +22,9 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-
 package com.oracle.libuv.handles;
+
+import static com.oracle.libuv.NativeException.static_initialize;
 
 import java.io.Closeable;
 
@@ -36,7 +37,7 @@ import com.oracle.libuv.cb.ContextProvider;
 public class LoopHandle implements Closeable {
 
     static {
-        NativeException.static_initialize();
+        static_initialize();
         _static_initialize();
     }
 
@@ -164,6 +165,10 @@ public class LoopHandle implements Closeable {
         return pointer;
     }
 
+    // ------------------------------------------------------------------------
+    // ~ Native
+    // ------------------------------------------------------------------------
+
     private void throwPendingException() throws Throwable {
         if (pendingException != null) {
             final Throwable pex = pendingException;
@@ -171,6 +176,10 @@ public class LoopHandle implements Closeable {
             throw pex;
         }
     }
+
+    // ------------------------------------------------------------------------
+    // ~ Native
+    // ------------------------------------------------------------------------
 
     private static native long _new();
 

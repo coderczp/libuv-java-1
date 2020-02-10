@@ -22,7 +22,6 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-
 package com.oracle.libuv.handles;
 
 import java.io.UnsupportedEncodingException;
@@ -202,6 +201,10 @@ class StreamHandle extends Handle {
             loop.getCallbackHandler(context).handleStreamShutdownCallback(onShutdown, status, error);
         }
     }
+
+    // ------------------------------------------------------------------------
+    // ~ Native
+    // ------------------------------------------------------------------------
 
     private static native void _static_initialize();
 

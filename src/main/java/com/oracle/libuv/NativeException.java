@@ -22,7 +22,6 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-
 package com.oracle.libuv;
 
 @SuppressWarnings("serial")
@@ -77,30 +76,14 @@ public final class NativeException extends RuntimeException {
         return path;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder(4096);
-        sb.append("errno: ");
-        sb.append(errno);
-        sb.append(", errnoString: ");
-        sb.append(errnoString);
-        sb.append(", errnoMessage: ");
-        sb.append(errnoMessage);
-        if (syscall != null && syscall.length() > 0) {
-            sb.append(", syscall: ");
-            sb.append(syscall);
-        }
-        if (path != null && path.length() > 0) {
-            sb.append(", path: ");
-            sb.append(path);
-        }
-        sb.append(", message: ");
-        sb.append(super.getMessage());
-        return sb.toString();
-    }
-
     public static void static_initialize() {
         _static_initialize();
+    }
+
+    @Override
+    public String toString() {
+        return "NativeException [errno=" + errno + ", errnoString=" + errnoString + ", errnoMessage=" + errnoMessage
+                + ", syscall=" + syscall + ", path=" + path + "]";
     }
 
     private static native void _static_initialize();

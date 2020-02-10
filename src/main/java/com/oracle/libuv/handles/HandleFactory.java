@@ -27,7 +27,7 @@ package com.oracle.libuv.handles;
 
 public interface HandleFactory {
 
-    HandleFactory initialize(final LoopHandle loop);
+    HandleFactory initialize(LoopHandle loop);
 
     LoopHandle getLoopHandle();
 
@@ -41,21 +41,11 @@ public interface HandleFactory {
 
     PipeHandle newPipeHandle(boolean ipc);
 
-    PipeHandle newPipeHandle(long pointer, boolean ipc);
-
     ProcessHandle newProcessHandle();
 
     TCPHandle newTCPHandle();
 
-    TCPHandle newTCPHandle(long pointer);
-
-    TCPHandle openTCPHandle(long socket);
-
     TimerHandle newTimerHandle();
 
     UDPHandle newUDPHandle();
-
-    UDPHandle newUDPHandle(long pointer);
-
-    UDPHandle openUDPHandle(long socket);
 }

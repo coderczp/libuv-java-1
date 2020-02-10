@@ -22,7 +22,6 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-
 package com.oracle.libuv.handles;
 
 import java.io.UnsupportedEncodingException;
@@ -172,6 +171,10 @@ public class UDPHandle extends Handle {
         return _set_broadcast(pointer, on ? 1 : 0);
     }
 
+    // ------------------------------------------------------------------------
+    // ~ Native
+    // ------------------------------------------------------------------------
+
     private void callRecv(final int nread, final ByteBuffer data, final Address address) {
         if (onRecv != null) {
             loop.getCallbackHandler().handleUDPRecvCallback(onRecv, nread, data, address);
@@ -189,6 +192,10 @@ public class UDPHandle extends Handle {
             loop.getCallbackHandler().handleUDPCloseCallback(onClose);
         }
     }
+
+    // ------------------------------------------------------------------------
+    // ~ Native
+    // ------------------------------------------------------------------------
 
     private static native long _new(final long loop);
 

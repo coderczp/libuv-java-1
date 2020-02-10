@@ -82,12 +82,6 @@ public class DefaultHandleFactory implements HandleFactory {
     }
 
     @Override
-    public PipeHandle newPipeHandle(final long pointer, final boolean ipc) {
-        assert loop != null;
-        return new PipeHandle(loop, pointer, ipc);
-    }
-
-    @Override
     public ProcessHandle newProcessHandle() {
         assert loop != null;
         return new ProcessHandle(loop);
@@ -100,18 +94,6 @@ public class DefaultHandleFactory implements HandleFactory {
     }
 
     @Override
-    public TCPHandle newTCPHandle(final long pointer) {
-        assert loop != null;
-        return new TCPHandle(loop, pointer, true);
-    }
-
-    @Override
-    public TCPHandle openTCPHandle(final long socket) {
-        assert loop != null;
-        return new TCPHandle(loop, socket);
-    }
-
-    @Override
     public TimerHandle newTimerHandle() {
         assert loop != null;
         return new TimerHandle(loop);
@@ -121,17 +103,5 @@ public class DefaultHandleFactory implements HandleFactory {
     public UDPHandle newUDPHandle() {
         assert loop != null;
         return new UDPHandle(loop);
-    }
-
-    @Override
-    public UDPHandle newUDPHandle(final long pointer) {
-        assert loop != null;
-        return new UDPHandle(loop, pointer, true);
-    }
-
-    @Override
-    public UDPHandle openUDPHandle(final long socket) {
-        assert loop != null;
-        return new UDPHandle(loop, socket);
     }
 }

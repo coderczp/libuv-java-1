@@ -22,7 +22,6 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-
 package com.oracle.libuv.handles;
 
 import java.util.Objects;
@@ -89,6 +88,10 @@ public class TCPHandle extends StreamHandle {
     public int setSimultaneousAccepts(final boolean enable) {
         return _simultaneous_accepts(pointer, enable ? 1 : 0);
     }
+
+    // ------------------------------------------------------------------------
+    // ~ Native
+    // ------------------------------------------------------------------------
 
     private static native long _new(final long loop);
 

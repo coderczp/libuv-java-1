@@ -87,6 +87,10 @@ public class PipeHandle extends StreamHandle {
         _connect(pointer, name, loop.getContext());
     }
 
+    // ------------------------------------------------------------------------
+    // ~ Private
+    // ------------------------------------------------------------------------
+
     private static native long _new(final long loop, final boolean ipc);
 
     private native int _open(final long ptr, final int fd);
