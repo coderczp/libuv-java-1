@@ -38,21 +38,6 @@ public class PipeHandle extends StreamHandle {
         super(_new(loop.pointer(), ipc), loop);
     }
 
-    protected PipeHandle(final LoopHandle loop, final long pointer, final boolean ipc) {
-        super(pointer, loop);
-    }
-
-    /**
-     * Open an existing file as a pipe.
-     * 
-     * @param fd file descriptor.
-     * 
-     * @return {@code 0} on success, or an error {@code code < 0} on failure.
-     */
-    public int open(final int fd) {
-        return _open(pointer, fd);
-    }
-
     /**
      * Bind the pipe to a file path (Unix) or a name (Windows).
      * 
@@ -91,11 +76,13 @@ public class PipeHandle extends StreamHandle {
     // ~ Private
     // ------------------------------------------------------------------------
 
-    private static native long _new(final long loop, final boolean ipc);
+    private static native long _new(final long    loop,
+                                    final boolean ipc);
 
-    private native int _open(final long ptr, final int fd);
+    private native int _bind(final long   ptr,
+                             final String name);
 
-    private native int _bind(final long ptr, final String name);
-
-    private native void _connect(final long ptr, final String name, final Object context);
+    private native void _connect(final long   ptr,
+                                 final String name,
+                                 final Object context);
 }

@@ -17,14 +17,6 @@ JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_PipeHandle__1new
 
 /*
  * Class:     com_oracle_libuv_handles_PipeHandle
- * Method:    _open
- * Signature: (JI)I
- */
-JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_PipeHandle__1open
-  (JNIEnv *, jobject, jlong, jint);
-
-/*
- * Class:     com_oracle_libuv_handles_PipeHandle
  * Method:    _bind
  * Signature: (JLjava/lang/String;)I
  */

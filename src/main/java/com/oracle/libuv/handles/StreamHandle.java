@@ -108,15 +108,6 @@ class StreamHandle extends Handle {
         return write(ByteBuffer.wrap(data), 0, data.length);
     }
 
-    @SuppressWarnings("deprecation")
-    public int writeLowerBytes(final String str) {
-        Objects.requireNonNull(str);
-        final byte[] data = new byte[str.length()];
-        // use deprecated (but fast) method to get lower bytes of str chars
-        str.getBytes(0, data.length, data, 0);
-        return write(ByteBuffer.wrap(data), 0, data.length);
-    }
-
     public int write(final ByteBuffer buffer, final int offset, final int length) {
         Objects.requireNonNull(buffer);
         return buffer.hasArray() ? _write(pointer, buffer, buffer.array(), offset, length, loop.getContext())

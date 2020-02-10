@@ -17,22 +17,6 @@ JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_UDPHandle__1new__J
 
 /*
  * Class:     com_oracle_libuv_handles_UDPHandle
- * Method:    _new
- * Signature: (JI)J
- */
-JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_UDPHandle__1new__JI
-  (JNIEnv *, jclass, jlong, jint);
-
-/*
- * Class:     com_oracle_libuv_handles_UDPHandle
- * Method:    _new
- * Signature: (JJ)J
- */
-JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_UDPHandle__1new__JJ
-  (JNIEnv *, jclass, jlong, jlong);
-
-/*
- * Class:     com_oracle_libuv_handles_UDPHandle
  * Method:    _static_initialize
  * Signature: ()V
  */

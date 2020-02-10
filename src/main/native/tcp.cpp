@@ -58,26 +58,6 @@ JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_TCPHandle__1new__J
   return reinterpret_cast<jlong>(tcp);
 }
 
-JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_TCPHandle__1new__JJ
-  (JNIEnv *env, jclass cls, jlong loop, jlong socket) {
-  assert(loop);
-  uv_tcp_t* tcp = new uv_tcp_t();
-  uv_loop_t* lp = reinterpret_cast<uv_loop_t*>(loop);
-  int r = uv_tcp_init(lp, tcp);
-  if (r) {
-    ThrowException(env, r, "uv_tcp_init");
-    return (jlong) NULL;
-  }
-  r = uv_tcp_open(tcp, (uv_os_sock_t) socket);
-  if (r) {
-    ThrowException(env, r, "uv_tcp_open");
-    return (jlong) NULL;
-  }
-  assert(tcp);
-  tcp->data = new StreamCallbacks();
-  return reinterpret_cast<jlong>(tcp);
-}
-
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TCPHandle__1bind
   (JNIEnv *env, jobject that, jlong tcp, jstring host, jint port, jboolean ipv6) {
 

@@ -24,7 +24,7 @@
  */
 package com.oracle.libuv.handles;
 
-import java.util.Objects;
+import static java.util.Objects.requireNonNull;
 
 import com.oracle.libuv.Address;
 
@@ -34,22 +34,21 @@ public class TCPHandle extends StreamHandle {
         super(_new(loop.pointer()), loop);
     }
 
-    protected TCPHandle(final LoopHandle loop, final long socket) {
-        super(_new(loop.pointer(), socket), loop);
+    public int bind(final String  address,
+                    final int     port,
+                    final boolean ipv6) {
+        requireNonNull(address);
+        return _bind(pointer, address,
+                     port, ipv6);
     }
 
-    protected TCPHandle(final LoopHandle loop, final long pointer, boolean dummy) {
-        super(pointer, loop);
-    }
-
-    public int bind(final String address, final int port, boolean ipv6) {
-        Objects.requireNonNull(address);
-        return _bind(pointer, address, port, ipv6);
-    }
-
-    public int connect(final String address, final int port, boolean ipv6) {
-        Objects.requireNonNull(address);
-        return _connect(pointer, address, port, loop.getContext(), ipv6);
+    public int connect(final String  address,
+                       final int     port,
+                       final boolean ipv6) {
+        requireNonNull(address);
+        return _connect(pointer, address,
+                        port, loop.getContext(),
+                        ipv6);
     }
 
     @Override
@@ -59,7 +58,7 @@ public class TCPHandle extends StreamHandle {
 
     @Override
     public int accept(final StreamHandle client) {
-        Objects.requireNonNull(client);
+        requireNonNull(client);
         assert client instanceof TCPHandle;
         final int accepted = super.accept(client);
         return accepted;
@@ -95,22 +94,31 @@ public class TCPHandle extends StreamHandle {
 
     private static native long _new(final long loop);
 
-    private static native long _new(final long loop, final long socket);
+    private native int _bind(final long    ptr,
+                             final String  address,
+                             final int     port,
+                             final boolean ipv6);
 
-    private native int _bind(final long ptr, final String address, final int port, final boolean ipv6);
+    private native int _connect(final long    ptr,
+                                final String  address,
+                                final int     port,
+                                final Object  context,
+                                final boolean ipv6);
 
-    private native int _connect(final long ptr, final String address, final int port, final Object context,
-            final boolean ipv6);
-
-    private native int _open(final long ptr, final long socket);
+    private native int _open(final long ptr,
+                             final long socket);
 
     private native Address _socket_name(final long ptr);
 
     private native Address _peer_name(final long ptr);
 
-    private native int _no_delay(final long ptr, final int enable);
+    private native int _no_delay(final long ptr,
+                                 final int enable);
 
-    private native int _keep_alive(final long ptr, final int enable, final int delay);
+    private native int _keep_alive(final long ptr,
+                                   final int  enable,
+                                   final int  delay);
 
-    private native int _simultaneous_accepts(final long ptr, final int enable);
+    private native int _simultaneous_accepts(final long ptr,
+                                             final int enable);
 }

@@ -58,17 +58,6 @@ JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_PipeHandle__1new
   return reinterpret_cast<jlong>(pipe);
 }
 
-JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_PipeHandle__1open
-  (JNIEnv *env, jobject that, jlong pipe, jint fd) {
-  assert(pipe);
-  uv_pipe_t* handle = reinterpret_cast<uv_pipe_t*>(pipe);
-  int r = uv_pipe_open(handle, fd);
-  if (r) {
-    ThrowException(env, r, "uv_pipe_open");
-  }
-  return r;
-}
-
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_PipeHandle__1bind
   (JNIEnv *env, jobject that, jlong pipe, jstring name) {
   assert(pipe);

@@ -44,8 +44,8 @@ public class UDPHandle extends Handle {
     private UDPCloseCallback onClose;
 
     public enum Membership {
-        // must be equal to uv_membership values in uv.h
-        LEAVE_GROUP(0), JOIN_GROUP(1);
+        LEAVE_GROUP(0),
+        JOIN_GROUP(1);
 
         final int value;
 
@@ -72,18 +72,6 @@ public class UDPHandle extends Handle {
 
     protected UDPHandle(final LoopHandle loop) {
         super(_new(loop.pointer()), loop);
-        this.closed = false;
-        _initialize(pointer);
-    }
-
-    protected UDPHandle(final LoopHandle loop, final long socket) {
-        super(_new(loop.pointer(), socket), loop);
-        this.closed = false;
-        _initialize(pointer);
-    }
-
-    protected UDPHandle(final LoopHandle loop, final long pointer, boolean dummy) {
-        super(pointer, loop);
         this.closed = false;
         _initialize(pointer);
     }
@@ -198,10 +186,6 @@ public class UDPHandle extends Handle {
     // ------------------------------------------------------------------------
 
     private static native long _new(final long loop);
-
-    private static native long _new(final long loop, final int fd);
-
-    private static native long _new(final long loop, final long socket);
 
     private static native void _static_initialize();
 
