@@ -26,10 +26,10 @@
 #include <assert.h>
 
 #include "uv.h"
-#include "header/private/exception.h"
-#include "header/private/stream.h"
-#include "header/private/context.h"
-#include "header/jni/com_oracle_libuv_handles_TCPHandle.h"
+#include "libuv-java/private/exception.h"
+#include "libuv-java/private/stream.h"
+#include "libuv-java/private/context.h"
+#include "libuv-java/jni/com_oracle_libuv_TCPHandle.h"
 
 static void _tcp_connect_cb(uv_connect_t* req, int status) {
   assert(req);
@@ -43,7 +43,7 @@ static void _tcp_connect_cb(uv_connect_t* req, int status) {
   delete req_data;
 }
 
-JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_TCPHandle__1new__J
+JNIEXPORT jlong JNICALL Java_com_oracle_libuv_TCPHandle__1new
   (JNIEnv *env, jclass cls, jlong loop) {
   assert(loop);
   uv_tcp_t* tcp = new uv_tcp_t();
@@ -58,7 +58,7 @@ JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_TCPHandle__1new__J
   return reinterpret_cast<jlong>(tcp);
 }
 
-JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TCPHandle__1bind
+JNIEXPORT jint JNICALL Java_com_oracle_libuv_TCPHandle__1bind
   (JNIEnv *env, jobject that, jlong tcp, jstring host, jint port, jboolean ipv6) {
 
   assert(tcp);
@@ -81,7 +81,7 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TCPHandle__1bind
   return r;
 }
 
-JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TCPHandle__1connect
+JNIEXPORT jint JNICALL Java_com_oracle_libuv_TCPHandle__1connect
   (JNIEnv *env, jobject that, jlong tcp, jstring host, jint port, jobject context, jboolean ipv6) {
   assert(tcp);
   uv_tcp_t* handle = reinterpret_cast<uv_tcp_t*>(tcp);
@@ -108,7 +108,7 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TCPHandle__1connect
   return r;
 }
 
-JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TCPHandle__1open
+JNIEXPORT jint JNICALL Java_com_oracle_libuv_TCPHandle__1open
   (JNIEnv *env, jobject that, jlong tcp, jlong socket) {
   assert(tcp);
   uv_tcp_t* handle = reinterpret_cast<uv_tcp_t*>(tcp);
@@ -119,7 +119,7 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TCPHandle__1open
   return r;
 }
 
-JNIEXPORT jobject JNICALL Java_com_oracle_libuv_handles_TCPHandle__1socket_1name
+JNIEXPORT jobject JNICALL Java_com_oracle_libuv_TCPHandle__1socket_1name
   (JNIEnv *env, jobject that, jlong tcp) {
 
   assert(tcp);
@@ -138,7 +138,7 @@ JNIEXPORT jobject JNICALL Java_com_oracle_libuv_handles_TCPHandle__1socket_1name
   return StreamCallbacks::_address_to_js(env, addr);
 }
 
-JNIEXPORT jobject JNICALL Java_com_oracle_libuv_handles_TCPHandle__1peer_1name
+JNIEXPORT jobject JNICALL Java_com_oracle_libuv_TCPHandle__1peer_1name
   (JNIEnv *env, jobject that, jlong tcp) {
   assert(tcp);
   uv_tcp_t* handle = reinterpret_cast<uv_tcp_t*>(tcp);
@@ -156,7 +156,7 @@ JNIEXPORT jobject JNICALL Java_com_oracle_libuv_handles_TCPHandle__1peer_1name
   return StreamCallbacks::_address_to_js(env, addr);
 }
 
-JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TCPHandle__1no_1delay
+JNIEXPORT jint JNICALL Java_com_oracle_libuv_TCPHandle__1no_1delay
   (JNIEnv *env, jobject that, jlong tcp, jint enable) {
 
   assert(tcp);
@@ -169,7 +169,7 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TCPHandle__1no_1delay
   return r;
 }
 
-JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TCPHandle__1keep_1alive
+JNIEXPORT jint JNICALL Java_com_oracle_libuv_TCPHandle__1keep_1alive
   (JNIEnv *env, jobject that, jlong tcp, jint enable, jint delay) {
 
   assert(tcp);
@@ -182,7 +182,7 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TCPHandle__1keep_1alive
   return r;
 }
 
-JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_TCPHandle__1simultaneous_1accepts
+JNIEXPORT jint JNICALL Java_com_oracle_libuv_TCPHandle__1simultaneous_1accepts
   (JNIEnv *env, jobject that, jlong tcp, jint enable) {
 
   assert(tcp);

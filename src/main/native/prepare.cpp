@@ -29,9 +29,9 @@
 #include <jni.h>
 
 #include "uv.h"
-#include "header/private/exception.h"
-#include "header/private/stream.h"
-#include "header/jni/com_oracle_libuv_handles_PrepareHandle.h"
+#include "libuv-java/private/exception.h"
+#include "libuv-java/private/stream.h"
+#include "libuv-java/jni/com_oracle_libuv_PrepareHandle.h"
 
 class PrepareCallbacks {
 private:
@@ -120,7 +120,7 @@ static void _close_cb(uv_handle_t* handle) {
   delete handle;
 }
 
-JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_PrepareHandle__1new
+JNIEXPORT jlong JNICALL Java_com_oracle_libuv_PrepareHandle__1new
   (JNIEnv *env, jclass cls, jlong loop) {
   assert(loop);
   uv_loop_t* lp = reinterpret_cast<uv_loop_t*>(loop);
@@ -134,12 +134,12 @@ JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_PrepareHandle__1new
   return reinterpret_cast<jlong>(prepare);
 }
 
-JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_PrepareHandle__1static_1initialize
+JNIEXPORT void JNICALL Java_com_oracle_libuv_PrepareHandle__1static_1initialize
   (JNIEnv *env, jclass cls) {
   PrepareCallbacks::static_initialize(env, cls);
 }
 
-JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_PrepareHandle__1initialize
+JNIEXPORT void JNICALL Java_com_oracle_libuv_PrepareHandle__1initialize
   (JNIEnv *env, jobject that, jlong prepare) {
   assert(prepare);
   uv_prepare_t* handle = reinterpret_cast<uv_prepare_t*>(prepare);
@@ -148,7 +148,7 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_PrepareHandle__1initialize
   cb->initialize(env, that);
 }
 
-JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_PrepareHandle__1start
+JNIEXPORT jint JNICALL Java_com_oracle_libuv_PrepareHandle__1start
   (JNIEnv *env, jobject that, jlong prepare) {
   assert(prepare);
   uv_prepare_t* handle = reinterpret_cast<uv_prepare_t*>(prepare);
@@ -159,7 +159,7 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_PrepareHandle__1start
   return r;
 }
 
-JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_PrepareHandle__1stop
+JNIEXPORT jint JNICALL Java_com_oracle_libuv_PrepareHandle__1stop
   (JNIEnv *env, jobject that, jlong prepare) {
   assert(prepare);
   uv_prepare_t* handle = reinterpret_cast<uv_prepare_t*>(prepare);
@@ -170,7 +170,7 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_PrepareHandle__1stop
   return r;
 }
 
-JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_PrepareHandle__1close
+JNIEXPORT void JNICALL Java_com_oracle_libuv_PrepareHandle__1close
   (JNIEnv *env, jobject that, jlong prepare) {
   assert(prepare);
   uv_handle_t* handle = reinterpret_cast<uv_handle_t*>(prepare);

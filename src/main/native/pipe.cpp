@@ -26,10 +26,10 @@
 #include <assert.h>
 
 #include "uv.h"
-#include "header/private/exception.h"
-#include "header/private/context.h"
-#include "header/private/stream.h"
-#include "header/jni/com_oracle_libuv_handles_PipeHandle.h"
+#include "libuv-java/private/exception.h"
+#include "libuv-java/private/context.h"
+#include "libuv-java/private/stream.h"
+#include "libuv-java/jni/com_oracle_libuv_PipeHandle.h"
 
 static void _pipe_connect_cb(uv_connect_t* req, int status) {
   assert(req);
@@ -43,7 +43,7 @@ static void _pipe_connect_cb(uv_connect_t* req, int status) {
   delete req;
 }
 
-JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_PipeHandle__1new
+JNIEXPORT jlong JNICALL Java_com_oracle_libuv_PipeHandle__1new
   (JNIEnv *env, jclass cls, jlong loop, jboolean ipc) {
   assert(loop);
   uv_pipe_t* pipe = new uv_pipe_t();
@@ -58,7 +58,7 @@ JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_PipeHandle__1new
   return reinterpret_cast<jlong>(pipe);
 }
 
-JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_PipeHandle__1bind
+JNIEXPORT jint JNICALL Java_com_oracle_libuv_PipeHandle__1bind
   (JNIEnv *env, jobject that, jlong pipe, jstring name) {
   assert(pipe);
   uv_pipe_t* handle = reinterpret_cast<uv_pipe_t*>(pipe);
@@ -71,7 +71,7 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_PipeHandle__1bind
   return r;
  }
 
-JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_PipeHandle__1connect
+JNIEXPORT void JNICALL Java_com_oracle_libuv_PipeHandle__1connect
   (JNIEnv *env, jobject that, jlong pipe, jstring name, jobject context) {
   assert(pipe);
   uv_pipe_t* handle = reinterpret_cast<uv_pipe_t*>(pipe);

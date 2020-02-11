@@ -29,9 +29,9 @@
 #include <jni.h>
 
 #include "uv.h"
-#include "header/private/exception.h"
-#include "header/private/stream.h"
-#include "header/jni/com_oracle_libuv_handles_AsyncHandle.h"
+#include "libuv-java/private/exception.h"
+#include "libuv-java/private/stream.h"
+#include "libuv-java/jni/com_oracle_libuv_AsyncHandle.h"
 
 class AsyncCallbacks {
 private:
@@ -103,7 +103,7 @@ static void _close_cb(uv_handle_t* handle) {
   delete handle;
 }
 
-JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_AsyncHandle__1new
+JNIEXPORT jlong JNICALL Java_com_oracle_libuv_AsyncHandle__1new
   (JNIEnv *env, jclass cls, jlong loop) {
 
   assert(loop);
@@ -118,13 +118,13 @@ JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_AsyncHandle__1new
   return reinterpret_cast<jlong>(async);
 }
 
-JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_AsyncHandle__1static_1initialize
+JNIEXPORT void JNICALL Java_com_oracle_libuv_AsyncHandle__1static_1initialize
   (JNIEnv *env, jclass cls) {
 
   AsyncCallbacks::static_initialize(env, cls);
 }
 
-JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_AsyncHandle__1initialize
+JNIEXPORT void JNICALL Java_com_oracle_libuv_AsyncHandle__1initialize
   (JNIEnv *env, jobject that, jlong async) {
 
   assert(async);
@@ -134,7 +134,7 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_AsyncHandle__1initialize
   cb->initialize(env, that);
 }
 
-JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_AsyncHandle__1send
+JNIEXPORT jint JNICALL Java_com_oracle_libuv_AsyncHandle__1send
   (JNIEnv *env, jobject that, jlong async) {
 
   assert(async);
@@ -146,7 +146,7 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_AsyncHandle__1send
   return r;
 }
 
-JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_AsyncHandle__1close
+JNIEXPORT void JNICALL Java_com_oracle_libuv_AsyncHandle__1close
   (JNIEnv *env, jobject that, jlong async) {
   assert(async);
   uv_handle_t* handle = reinterpret_cast<uv_handle_t*>(async);

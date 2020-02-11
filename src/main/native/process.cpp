@@ -30,8 +30,8 @@
 #include <errno.h>
 
 #include "uv.h"
-#include "header/private/exception.h"
-#include "header/jni/com_oracle_libuv_LibUV.h"
+#include "libuv-java/private/exception.h"
+#include "libuv-java/jni/com_oracle_libuv_LibUV.h"
 
 #ifndef ARRAY_SIZE
 # define ARRAY_SIZE(a) (sizeof((a)) / sizeof((a)[0]))

@@ -24,7 +24,7 @@
  */
 
 #include "uv.h"
-#include "header/jni/com_oracle_libuv_LibUV.h"
+#include "libuv-java/jni/com_oracle_libuv_LibUV.h"
 
 JNIEXPORT jstring JNICALL Java_com_oracle_libuv_LibUV__1version
   (JNIEnv *env, jclass cls) {

@@ -28,10 +28,10 @@
 #include <string.h>
 
 #include "uv.h"
-#include "header/private/exception.h"
-#include "header/private/context.h"
-#include "header/private/stream.h"
-#include "header/jni/com_oracle_libuv_handles_StreamHandle.h"
+#include "libuv-java/private/exception.h"
+#include "libuv-java/private/context.h"
+#include "libuv-java/private/stream.h"
+#include "libuv-java/jni/com_oracle_libuv_StreamHandle.h"
 
 #ifndef ULONG
 #define ULONG unsigned long
@@ -273,12 +273,12 @@ static void _connection_cb(uv_stream_t* stream, int status) {
   cb->on_connection(status, status < 0 ? status : 0);
 }
 
-JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_StreamHandle__1static_1initialize
+JNIEXPORT void JNICALL Java_com_oracle_libuv_StreamHandle__1static_1initialize
   (JNIEnv *env, jclass cls) {
   StreamCallbacks::static_initialize(env, cls);
 }
 
-JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_StreamHandle__1initialize
+JNIEXPORT void JNICALL Java_com_oracle_libuv_StreamHandle__1initialize
   (JNIEnv *env, jobject that, jlong stream) {
   assert(stream);
   uv_stream_t* handle = reinterpret_cast<uv_stream_t*>(stream);
@@ -287,7 +287,7 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_StreamHandle__1initialize
   cb->initialize(env, that);
 }
 
-JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_StreamHandle__1read_1start
+JNIEXPORT void JNICALL Java_com_oracle_libuv_StreamHandle__1read_1start
   (JNIEnv *env, jobject that, jlong stream) {
   assert(stream);
   uv_stream_t* handle = reinterpret_cast<uv_stream_t*>(stream);
@@ -301,7 +301,7 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_StreamHandle__1read_1start
   }
 }
 
-JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_StreamHandle__1read_1stop
+JNIEXPORT void JNICALL Java_com_oracle_libuv_StreamHandle__1read_1stop
   (JNIEnv *env, jobject that, jlong stream) {
   assert(stream);
   uv_stream_t* handle = reinterpret_cast<uv_stream_t*>(stream);
@@ -311,7 +311,7 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_StreamHandle__1read_1stop
   }
 }
 
-JNIEXPORT jboolean JNICALL Java_com_oracle_libuv_handles_StreamHandle__1readable
+JNIEXPORT jboolean JNICALL Java_com_oracle_libuv_StreamHandle__1readable
   (JNIEnv *env, jobject that, jlong stream) {
   assert(stream);
   uv_stream_t* handle = reinterpret_cast<uv_stream_t*>(stream);
@@ -322,7 +322,7 @@ JNIEXPORT jboolean JNICALL Java_com_oracle_libuv_handles_StreamHandle__1readable
   return r == 0 ? JNI_TRUE : JNI_FALSE;
 }
 
-JNIEXPORT jboolean JNICALL Java_com_oracle_libuv_handles_StreamHandle__1writable
+JNIEXPORT jboolean JNICALL Java_com_oracle_libuv_StreamHandle__1writable
   (JNIEnv *env, jobject that, jlong stream) {
   assert(stream);
   uv_stream_t* handle = reinterpret_cast<uv_stream_t*>(stream);
@@ -333,7 +333,7 @@ JNIEXPORT jboolean JNICALL Java_com_oracle_libuv_handles_StreamHandle__1writable
   return r == 0 ? JNI_TRUE : JNI_FALSE;
 }
 
-JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_StreamHandle__1write
+JNIEXPORT jint JNICALL Java_com_oracle_libuv_StreamHandle__1write
   (JNIEnv *env, jobject that, jlong stream, jobject buffer, jbyteArray data, jint offset, jint length, jobject context) {
   assert(stream);
 
@@ -368,7 +368,7 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_StreamHandle__1write
   return r;
 }
 
-JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_StreamHandle__1writev
+JNIEXPORT jint JNICALL Java_com_oracle_libuv_StreamHandle__1writev
   (JNIEnv *env, jobject that, jlong stream, jobjectArray buffers, jint bufcount, jobject context) {
   assert(stream);
   assert(buffers);
@@ -407,14 +407,14 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_StreamHandle__1writev
   return r;
 }
 
-JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_StreamHandle__1write_1queue_1size
+JNIEXPORT jlong JNICALL Java_com_oracle_libuv_StreamHandle__1write_1queue_1size
   (JNIEnv *env, jobject that, jlong stream) {
   assert(stream);
   uv_stream_t* handle = reinterpret_cast<uv_stream_t*>(stream);
   return handle->write_queue_size;
 }
 
-JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_StreamHandle__1close_1write
+JNIEXPORT jint JNICALL Java_com_oracle_libuv_StreamHandle__1close_1write
   (JNIEnv *env, jobject that, jlong stream, jobject context) {
   assert(stream);
   uv_stream_t* handle = reinterpret_cast<uv_stream_t*>(stream);
@@ -431,14 +431,14 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_StreamHandle__1close_1write
   return r;
 }
 
-JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_StreamHandle__1close
+JNIEXPORT void JNICALL Java_com_oracle_libuv_StreamHandle__1close
   (JNIEnv *env, jobject that, jlong stream) {
   assert(stream);
   uv_handle_t* handle = reinterpret_cast<uv_handle_t*>(stream);
   uv_close(handle, _close_cb);
 }
 
-JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_StreamHandle__1listen
+JNIEXPORT jint JNICALL Java_com_oracle_libuv_StreamHandle__1listen
   (JNIEnv *env, jobject that, jlong ptr, jint backlog) {
   assert(ptr);
   uv_stream_t* handle = reinterpret_cast<uv_stream_t*>(ptr);
@@ -449,7 +449,7 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_StreamHandle__1listen
   return r;
 }
 
-JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_StreamHandle__1accept
+JNIEXPORT jint JNICALL Java_com_oracle_libuv_StreamHandle__1accept
   (JNIEnv *env, jobject that, jlong ptr, jlong clientPtr) {
   assert(ptr);
   assert(clientPtr);

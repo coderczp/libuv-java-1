@@ -27,9 +27,9 @@
 #include <string.h>
 
 #include "uv.h"
-#include "header/private/exception.h"
-#include "header/private/handle.h"
-#include "header/jni/com_oracle_libuv_handles_Handle.h"
+#include "libuv-java/private/exception.h"
+#include "libuv-java/private/handle.h"
+#include "libuv-java/jni/com_oracle_libuv_Handle.h"
 
 const char* handle_typeof(const uv_handle_t* handle) {
     switch (handle->type) {
@@ -70,7 +70,7 @@ const char* handle_to_string(const uv_handle_t* handle) {
     return buffer;
 }
 
-JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_Handle__1ref
+JNIEXPORT void JNICALL Java_com_oracle_libuv_Handle__1ref
   (JNIEnv *env, jobject that, jlong ptr) {
 
   assert(ptr);
@@ -78,7 +78,7 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_Handle__1ref
   uv_ref(handle);
 }
 
-JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_Handle__1unref
+JNIEXPORT void JNICALL Java_com_oracle_libuv_Handle__1unref
   (JNIEnv *env, jobject that, jlong ptr) {
 
   assert(ptr);
@@ -86,7 +86,7 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_Handle__1unref
   uv_unref(handle);
 }
 
-JNIEXPORT jboolean JNICALL Java_com_oracle_libuv_handles_Handle__1closing
+JNIEXPORT jboolean JNICALL Java_com_oracle_libuv_Handle__1closing
   (JNIEnv *env, jobject that, jlong ptr) {
 
   assert(ptr);

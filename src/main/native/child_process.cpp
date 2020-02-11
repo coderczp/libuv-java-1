@@ -27,8 +27,8 @@
 #include <assert.h>
 
 #include "uv.h"
-#include "header/private/exception.h"
-#include "header/jni/com_oracle_libuv_handles_ProcessHandle.h"
+#include "libuv-java/private/exception.h"
+#include "libuv-java/jni/com_oracle_libuv_ProcessHandle.h"
 
 class ProcessCallbacks {
 private:
@@ -140,7 +140,7 @@ static void _exit_cb(uv_process_t* process, int64_t exit_status, int term_signal
   }
 }
 
-JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1new
+JNIEXPORT jlong JNICALL Java_com_oracle_libuv_ProcessHandle__1new
   (JNIEnv *env, jclass cls, jlong loop) {
   uv_process_t* process = new uv_process_t();
   assert(process);
@@ -149,12 +149,12 @@ JNIEXPORT jlong JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1new
   return reinterpret_cast<jlong>(process);
 }
 
-JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1static_1initialize
+JNIEXPORT void JNICALL Java_com_oracle_libuv_ProcessHandle__1static_1initialize
   (JNIEnv *env, jclass cls) {
   ProcessCallbacks::static_initialize(env, cls);
 }
 
-JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1initialize
+JNIEXPORT void JNICALL Java_com_oracle_libuv_ProcessHandle__1initialize
   (JNIEnv *env, jobject that, jlong process) {
   assert(process);
   uv_process_t* handle = reinterpret_cast<uv_process_t*>(process);
@@ -163,14 +163,14 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1initialize
   cb->initialize(env, that);
 }
 
-JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1close
+JNIEXPORT void JNICALL Java_com_oracle_libuv_ProcessHandle__1close
   (JNIEnv *env, jobject that, jlong process) {
   assert(process);
   uv_handle_t* handle = reinterpret_cast<uv_handle_t*>(process);
   uv_close(handle, _close_cb);
 }
 
-JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1spawn
+JNIEXPORT jint JNICALL Java_com_oracle_libuv_ProcessHandle__1spawn
   (JNIEnv *env, jobject that, jlong process, jstring program, jobjectArray args, jobjectArray environArgs,
     jstring dir, jint process_flags, jintArray stdio_flags, jlongArray streams, jintArray fds, jint uid, jint gid) {
   assert(process);
@@ -307,7 +307,7 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1spawn
   return r;
 }
 
-JNIEXPORT jint JNICALL Java_com_oracle_libuv_handles_ProcessHandle__1kill
+JNIEXPORT jint JNICALL Java_com_oracle_libuv_ProcessHandle__1kill
   (JNIEnv *env, jobject that, jlong ptr, jint signal) {
   assert(ptr);
   uv_process_t* handle = reinterpret_cast<uv_process_t*>(ptr);
