@@ -26,8 +26,6 @@ package com.oracle.libuv;
 
 public interface HandleFactory {
 
-    HandleFactory initialize(LoopHandle loop);
-
     LoopHandle getLoopHandle();
 
     AsyncHandle newAsyncHandle();

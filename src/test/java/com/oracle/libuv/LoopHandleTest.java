@@ -25,8 +25,6 @@
 
 package com.oracle.libuv;
 
-import static com.oracle.libuv.DefaultHandleFactory.newFactory;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,7 +37,7 @@ public class LoopHandleTest extends TestBase {
 
     @Test
     public void testList() throws Throwable {
-        final HandleFactory handleFactory = newFactory();
+        final HandleFactory handleFactory = new DefaultHandleFactory(new LoopHandle());
         final LoopHandle loop = handleFactory.getLoopHandle();
         final String[] handles = loop.list();
         Assert.assertNotNull(handles);

@@ -25,8 +25,6 @@
 
 package com.oracle.libuv;
 
-import static com.oracle.libuv.DefaultHandleFactory.newFactory;
-
 import java.nio.ByteBuffer;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -53,7 +51,7 @@ public class ProcessHandleTest extends TestBase {
 
         final AtomicBoolean exitCalled = new AtomicBoolean(false);
         final AtomicBoolean closeCalled = new AtomicBoolean(false);
-        final HandleFactory handleFactory = newFactory();
+        final HandleFactory handleFactory = new DefaultHandleFactory(new LoopHandle());
         final LoopHandle loop = handleFactory.getLoopHandle();
         final ProcessHandle process = handleFactory.newProcessHandle();
         final PipeHandle parent = handleFactory.newPipeHandle(false);

@@ -29,20 +29,8 @@ public class DefaultHandleFactory implements HandleFactory {
 
     private LoopHandle loop;
 
-    /**
-     * generally only for tests
-     */
-    public static HandleFactory newFactory() {
-        return new DefaultHandleFactory().initialize(new LoopHandle());
-    }
-
-    @Override
-    public HandleFactory initialize(final LoopHandle loop) {
-        if (this.loop != null) {
-            throw new IllegalStateException("already initialized");
-        }
+    public DefaultHandleFactory(final LoopHandle loop) {
         this.loop = loop;
-        return this;
     }
 
     @Override
@@ -52,56 +40,47 @@ public class DefaultHandleFactory implements HandleFactory {
 
     @Override
     public AsyncHandle newAsyncHandle() {
-        assert loop != null;
         return new AsyncHandle(loop);
     }
 
     @Override
     public CheckHandle newCheckHandle() {
-        assert loop != null;
         return new CheckHandle(loop);
     }
 
 
     @Override
     public PrepareHandle newPrepareHandle() {
-        assert loop != null;
         return new PrepareHandle(loop);
     }
 
     @Override
     public IdleHandle newIdleHandle() {
-        assert loop != null;
         return new IdleHandle(loop);
     }
 
     @Override
     public PipeHandle newPipeHandle(final boolean ipc) {
-        assert loop != null;
         return new PipeHandle(loop, ipc);
     }
 
     @Override
     public ProcessHandle newProcessHandle() {
-        assert loop != null;
         return new ProcessHandle(loop);
     }
 
     @Override
     public TCPHandle newTCPHandle() {
-        assert loop != null;
         return new TCPHandle(loop);
     }
 
     @Override
     public TimerHandle newTimerHandle() {
-        assert loop != null;
         return new TimerHandle(loop);
     }
 
     @Override
     public UDPHandle newUDPHandle() {
-        assert loop != null;
         return new UDPHandle(loop);
     }
 }

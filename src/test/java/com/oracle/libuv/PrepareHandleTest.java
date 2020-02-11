@@ -25,8 +25,6 @@
 
 package com.oracle.libuv;
 
-import static com.oracle.libuv.DefaultHandleFactory.newFactory;
-
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -41,7 +39,7 @@ public class PrepareHandleTest extends TestBase {
         final AtomicBoolean gotClose = new AtomicBoolean(false);
         final AtomicInteger times = new AtomicInteger(0);
 
-        final HandleFactory handleFactory = newFactory();
+        final HandleFactory handleFactory = new DefaultHandleFactory(new LoopHandle());
         final LoopHandle loop = handleFactory.getLoopHandle();
         final PrepareHandle prepareHandle = handleFactory.newPrepareHandle();
 

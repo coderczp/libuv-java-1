@@ -25,8 +25,6 @@
 
 package com.oracle.libuv;
 
-import static com.oracle.libuv.DefaultHandleFactory.newFactory;
-
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -43,7 +41,7 @@ public class AsyncHandleTest extends TestBase {
         final AtomicBoolean gotCallback = new AtomicBoolean(false);
         final AtomicInteger times = new AtomicInteger(0);
 
-        final HandleFactory handleFactory = newFactory();
+        final HandleFactory handleFactory = new DefaultHandleFactory(new LoopHandle());
         final LoopHandle loop = handleFactory.getLoopHandle();
         final AsyncHandle asyncHandle = handleFactory.newAsyncHandle();
         final ScheduledExecutorService timer = new ScheduledThreadPoolExecutor(1);

@@ -25,8 +25,6 @@
 
 package com.oracle.libuv;
 
-import static com.oracle.libuv.DefaultHandleFactory.newFactory;
-
 import java.nio.ByteBuffer;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -63,7 +61,7 @@ public class PipeHandleTest extends TestBase {
         final Logger serverLoggingCallback = new Logger("S: ");
         final Logger clientLoggingCallback = new Logger("C: ");
 
-        final HandleFactory handleFactory = newFactory();
+        final HandleFactory handleFactory = new DefaultHandleFactory(new LoopHandle());
         final LoopHandle loop = handleFactory.getLoopHandle();
         final PipeHandle server = handleFactory.newPipeHandle(false);
         final PipeHandle peer = handleFactory.newPipeHandle(false);

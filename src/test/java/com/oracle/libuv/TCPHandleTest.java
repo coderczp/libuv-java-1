@@ -25,8 +25,6 @@
 
 package com.oracle.libuv;
 
-import static com.oracle.libuv.DefaultHandleFactory.newFactory;
-
 import java.nio.ByteBuffer;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -53,7 +51,7 @@ public class TCPHandleTest extends TestBase {
         final AtomicBoolean serverDone = new AtomicBoolean(false);
         final AtomicBoolean clientDone = new AtomicBoolean(false);
 
-        final HandleFactory handleFactory = newFactory();
+        final HandleFactory handleFactory = new DefaultHandleFactory(new LoopHandle());
         final LoopHandle loop = handleFactory.getLoopHandle();
         final TCPHandle server = handleFactory.newTCPHandle();
         final TCPHandle peer = handleFactory.newTCPHandle();
