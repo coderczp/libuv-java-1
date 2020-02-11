@@ -185,7 +185,8 @@ public class LoopHandle implements Closeable {
 
     private static native void _static_initialize();
 
-    private native int _run(final long ptr, final int mode);
+    private native int _run(final long ptr,
+                            final int mode);
 
     private native void _stop(final long ptr);
 
@@ -197,5 +198,6 @@ public class LoopHandle implements Closeable {
 
     private native NativeException _get_last_error(final long ptr);
 
-    private native void _set_last_error(final long ptr, final int code);
+    private native void _set_last_error(final long ptr,
+                                        final int code);
 }

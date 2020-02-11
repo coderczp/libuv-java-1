@@ -115,16 +115,19 @@ public class CheckHandle extends Handle {
     // ~ Private
     // ------------------------------------------------------------------------
 
-    private void callback(final int type, final int status) {
+    private void callback(final int type,
+                          final int status) {
         switch (type) {
         case 1:
             if (onCheck != null) {
-                loop.getCallbackHandler().handleCheckCallback(onCheck, status);
+                loop.getCallbackHandler()
+                    .handleCheckCallback(onCheck, status);
             }
             break;
         case 2:
             if (onClose != null) {
-                loop.getCallbackHandler().handleCheckCallback(onClose, status);
+                loop.getCallbackHandler()
+                    .handleCheckCallback(onClose, status);
             }
             break;
         default:

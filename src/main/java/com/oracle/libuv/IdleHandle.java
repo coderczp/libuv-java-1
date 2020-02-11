@@ -108,7 +108,8 @@ public class IdleHandle extends Handle {
     // ~ Private
     // ------------------------------------------------------------------------
 
-    private void callback(final int type, final int status) {
+    private void callback(final int type,
+                          final int status) {
         switch (type) {
         case 1:
             if (onIdle != null) {

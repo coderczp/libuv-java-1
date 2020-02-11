@@ -24,6 +24,7 @@
  */
 package com.oracle.libuv;
 
+import static java.lang.System.arraycopy;
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
@@ -72,8 +73,14 @@ public class ProcessHandle extends Handle {
         onExit = callback;
     }
 
-    public int spawn(final String program, final String[] args, final String[] env, final String dir,
-            final EnumSet<ProcessFlags> flags, final StdioOptions[] stdio, final int uid, final int gid) {
+    public int spawn(final String                program,
+                     final String[]              args,
+                     final String[]              env,
+                     final String                dir,
+                     final EnumSet<ProcessFlags> flags,
+                     final StdioOptions[]        stdio,
+                     final int                   uid,
+                     final int                   gid) {
         requireNonNull(program);
         requireNonNull(args);
         assert args.length > 0;
@@ -110,8 +117,8 @@ public class ProcessHandle extends Handle {
         javaArgs.add(args[0].substring(start, end));
 
         final String[] arguments = new String[args.length + javaArgs.size() - 1];
-        System.arraycopy(javaArgs.toArray(), 0, arguments, 0, javaArgs.size());
-        System.arraycopy(args, 1, arguments, javaArgs.size(), args.length - 1);
+        arraycopy(javaArgs.toArray(), 0, arguments, 0, javaArgs.size());
+        arraycopy(args, 1, arguments, javaArgs.size(), args.length - 1);
 
         int[] stdioFlags = null;
         long[] streamPointers = null;
@@ -198,5 +205,6 @@ public class ProcessHandle extends Handle {
 
     private native void _close(final long ptr);
 
-    private native int _kill(final long ptr, final int signal);
+    private native int _kill(final long ptr,
+                             final int  signal);
 }

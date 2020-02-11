@@ -70,8 +70,7 @@ public class TimerHandle extends Handle {
         onClose = callback;
     }
 
-    // TODO: this must be protected
-    public TimerHandle(final LoopHandle loop) {
+    protected TimerHandle(final LoopHandle loop) {
         super(_new(loop.pointer()), loop);
         _initialize(pointer);
     }
@@ -192,12 +191,14 @@ public class TimerHandle extends Handle {
         switch (type) {
         case 1:
             if (onTimerFired != null) {
-                loop.getCallbackHandler().handleTimerCallback(onTimerFired, status);
+                loop.getCallbackHandler()
+                    .handleTimerCallback(onTimerFired, status);
             }
             break;
         case 2:
             if (onClose != null) {
-                loop.getCallbackHandler().handleTimerCallback(onClose, status);
+                loop.getCallbackHandler()
+                    .handleTimerCallback(onClose, status);
             }
             break;
         default:

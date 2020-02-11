@@ -24,9 +24,11 @@
  */
 package com.oracle.libuv;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Objects.requireNonNull;
+
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
-import java.util.Objects;
 
 public class UDPHandle extends Handle {
 
@@ -82,47 +84,78 @@ public class UDPHandle extends Handle {
         return _address(pointer);
     }
 
-    public int bind(final int port, final String address, boolean ipv6) {
-        Objects.requireNonNull(address);
+    public int bind(final int     port,
+                    final String  address,
+                    final boolean ipv6) {
+        requireNonNull(address);
         return _bind(pointer, port, address, ipv6);
     }
 
-    public int send(final String str, final int port, final String host, final boolean ipv6) {
-        Objects.requireNonNull(str);
-        Objects.requireNonNull(host);
-        final byte[] data;
-        try {
-            data = str.getBytes("utf-8");
-        } catch (final UnsupportedEncodingException e) {
-            throw new RuntimeException(e); // "utf-8" is always supported
-        }
-        return send(ByteBuffer.wrap(data), 0, data.length, port, host, ipv6);
+    public int send(final String  str,
+                    final int     port,
+                    final String  host,
+                    final boolean ipv6) {
+        requireNonNull(str);
+        requireNonNull(host);
+        final byte[] data = str.getBytes(UTF_8);
+        return send(ByteBuffer.wrap(data), 0,
+                    data.length, port,
+                    host, ipv6);
     }
 
-    public int send(final String str, final String encoding, final int port, final String host, final boolean ipv6)
+    public int send(final String  str,
+                    final String  encoding,
+                    final int     port,
+                    final String  host,
+                    final boolean ipv6)
             throws UnsupportedEncodingException {
-        Objects.requireNonNull(str);
-        Objects.requireNonNull(encoding);
-        Objects.requireNonNull(host);
+        requireNonNull(str);
+        requireNonNull(encoding);
+        requireNonNull(host);
         final byte[] data = str.getBytes(encoding);
-        return send(ByteBuffer.wrap(data), 0, data.length, port, host, ipv6);
+        return send(ByteBuffer.wrap(data), 0,
+                    data.length, port,
+                    host, ipv6);
     }
 
-    public int send(final ByteBuffer buffer, final int port, final String host, final boolean ipv6) {
-        Objects.requireNonNull(buffer);
-        Objects.requireNonNull(host);
+    public int send(final ByteBuffer buffer,
+                    final int        port,
+                    final String     host,
+                    final boolean    ipv6) {
+        requireNonNull(buffer);
+        requireNonNull(host);
         return buffer.hasArray()
-                ? _send(pointer, buffer, buffer.array(), 0, buffer.capacity(), port, host, loop.getContext(), ipv6)
-                : _send(pointer, buffer, null, 0, buffer.capacity(), port, host, loop.getContext(), ipv6);
+                ? _send(pointer, buffer,
+                        buffer.array(),
+                        0, buffer.capacity(),
+                        port, host,
+                        loop.getContext(), ipv6)
+                : _send(pointer, buffer,
+                        null, 0,
+                        buffer.capacity(), port,
+                        host, loop.getContext(),
+                        ipv6);
     }
 
-    public int send(final ByteBuffer buffer, final int offset, final int length, final int port, final String host,
-            final boolean ipv6) {
-        Objects.requireNonNull(buffer);
-        Objects.requireNonNull(host);
+    public int send(final ByteBuffer buffer,
+                    final int        offset,
+                    final int        length,
+                    final int        port,
+                    final String     host,
+                    final boolean    ipv6) {
+        requireNonNull(buffer);
+        requireNonNull(host);
         return buffer.hasArray()
-                ? _send(pointer, buffer, buffer.array(), offset, length, port, host, loop.getContext(), ipv6)
-                : _send(pointer, buffer, null, offset, length, port, host, loop.getContext(), ipv6);
+                ? _send(pointer, buffer,
+                        buffer.array(), offset,
+                        length, port,
+                        host, loop.getContext(),
+                        ipv6)
+                : _send(pointer, buffer,
+                        null, offset,
+                        length, port,
+                        host, loop.getContext(),
+                        ipv6);
     }
 
     public int recvStart() {
@@ -137,9 +170,11 @@ public class UDPHandle extends Handle {
         return _set_ttl(pointer, ttl);
     }
 
-    public int setMembership(final String multicastAddress, final String interfaceAddress,
-            final Membership membership) {
-        return _set_membership(pointer, multicastAddress, interfaceAddress, membership.value);
+    public int setMembership(final String     multicastAddress,
+                             final String     interfaceAddress,
+                             final Membership membership) {
+        return _set_membership(pointer, multicastAddress,
+                               interfaceAddress, membership.value);
     }
 
     public int setMulticastLoop(final boolean on) {
@@ -158,21 +193,29 @@ public class UDPHandle extends Handle {
     // ~ Native
     // ------------------------------------------------------------------------
 
-    private void callRecv(final int nread, final ByteBuffer data, final Address address) {
+    private void callRecv(final int        nread,
+                          final ByteBuffer data,
+                          final Address    address) {
         if (onRecv != null) {
-            loop.getCallbackHandler().handleUDPRecvCallback(onRecv, nread, data, address);
+            loop.getCallbackHandler()
+                .handleUDPRecvCallback(onRecv, nread,
+                                       data, address);
         }
     }
 
-    private void callSend(final int status, final Exception error, final Object context) {
+    private void callSend(final int       status,
+                          final Exception error,
+                          final Object    context) {
         if (onSend != null) {
-            loop.getCallbackHandler(context).handleUDPSendCallback(onSend, status, error);
+            loop.getCallbackHandler(context)
+                .handleUDPSendCallback(onSend, status, error);
         }
     }
 
     private void callClose() {
         if (onClose != null) {
-            loop.getCallbackHandler().handleUDPCloseCallback(onClose);
+            loop.getCallbackHandler()
+                .handleUDPCloseCallback(onClose);
         }
     }
 
@@ -180,33 +223,47 @@ public class UDPHandle extends Handle {
     // ~ Native
     // ------------------------------------------------------------------------
 
-    private static native long _new(final long loop);
+    private static native long _new(long loop);
 
     private static native void _static_initialize();
 
-    private native void _initialize(final long ptr);
+    private native void _initialize(long ptr);
 
-    private native Address _address(final long ptr);
+    private native Address _address(long ptr);
 
-    private native int _bind(final long ptr, final int port, final String host, final boolean ipv6);
+    private native int _bind(long    ptr,
+                             int     port,
+                             String  host,
+                             boolean ipv6);
 
-    private native int _send(final long ptr, final ByteBuffer buffer, final byte[] data, final int offset,
-            final int length, final int port, final String host, final Object context, final boolean ipv6);
+    private native int _send(long ptr,
+                             ByteBuffer buffer,
+                             byte[]     data,
+                             int        offset,
+                             int        length,
+                             int        port,
+                             String     host,
+                             Object     context,
+                             boolean    ipv6);
 
-    private native int _recv_start(final long ptr);
+    private native int _recv_start(long ptr);
 
-    private native int _recv_stop(final long ptr);
+    private native int _recv_stop(long ptr);
 
-    private native int _set_ttl(long ptr, int ttl);
+    private native int _set_ttl(long ptr,
+                                int  ttl);
 
-    private native int _set_membership(final long ptr, final String multicastAddress, final String interfaceAddress,
-            final int membership);
+    private native int _set_membership(long   ptr,
+                                       String multicastAddress,
+                                       String interfaceAddress,
+                                       int    membership);
 
-    private native int _set_multicast_loop(long ptr, int on);
+    private native int _set_multicast_loop(long ptr,
+                                           int on);
 
     private native int _set_multicast_ttl(long ptr, int ttl);
 
     private native int _set_broadcast(long ptr, int on);
 
-    private native void _close(final long ptr);
+    private native void _close(long ptr);
 }

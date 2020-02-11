@@ -24,9 +24,11 @@
  */
 package com.oracle.libuv;
 
-import java.io.UnsupportedEncodingException;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Objects.requireNonNull;
+
 import java.nio.ByteBuffer;
-import java.util.Objects;
+import java.nio.charset.Charset;
 
 class StreamHandle extends Handle {
 
@@ -87,28 +89,24 @@ class StreamHandle extends Handle {
     }
 
     public int write(final String str) {
-        Objects.requireNonNull(str);
-        try {
-            return write(str, "utf-8");
-        } catch (final UnsupportedEncodingException e) {
-            throw new RuntimeException(e); // "utf-8" is always supported
-        }
+        requireNonNull(str);
+        return write(str, UTF_8);
     }
 
-    public int write(final String str, final String encoding) throws UnsupportedEncodingException {
-        Objects.requireNonNull(str);
+    public int write(final String str, final Charset encoding) {
+        requireNonNull(str);
         final byte[] data = str.getBytes(encoding);
         return write(ByteBuffer.wrap(data), 0, data.length);
     }
 
     public int write(final ByteBuffer buffer, final int offset, final int length) {
-        Objects.requireNonNull(buffer);
+        requireNonNull(buffer);
         return buffer.hasArray() ? _write(pointer, buffer, buffer.array(), offset, length, loop.getContext())
                 : _write(pointer, buffer, null, offset, length, loop.getContext());
     }
 
     public int write(final ByteBuffer buffer) {
-        Objects.requireNonNull(buffer);
+        requireNonNull(buffer);
         return write(buffer, 0, buffer.capacity());
     }
 
@@ -143,7 +141,8 @@ class StreamHandle extends Handle {
         return _write_queue_size(pointer);
     }
 
-    protected StreamHandle(final long pointer, final LoopHandle loop) {
+    protected StreamHandle(final long       pointer,
+                           final LoopHandle loop) {
         super(pointer, loop);
         this.closed = false;
         this.readStarted = false;
@@ -152,37 +151,48 @@ class StreamHandle extends Handle {
 
     protected void callRead(final ByteBuffer data) {
         if (onRead != null) {
-            loop.getCallbackHandler().handleStreamReadCallback(onRead, data);
+            loop.getCallbackHandler()
+                .handleStreamReadCallback(onRead, data);
         }
     }
 
     protected void callWrite(final int status, final Exception error, final Object context) {
         if (onWrite != null) {
-            loop.getCallbackHandler(context).handleStreamWriteCallback(onWrite, status, error);
+            loop.getCallbackHandler(context)
+                .handleStreamWriteCallback(onWrite, status, error);
         }
     }
 
-    protected void callConnect(final int status, final Exception error, final Object context) {
+    protected void callConnect(final int       status,
+                               final Exception error,
+                               final Object    context) {
         if (onConnect != null) {
-            loop.getCallbackHandler(context).handleStreamConnectCallback(onConnect, status, error);
+            loop.getCallbackHandler(context)
+                .handleStreamConnectCallback(onConnect, status, error);
         }
     }
 
-    protected void callConnection(final int status, final Exception error) {
+    protected void callConnection(final int       status,
+                                  final Exception error) {
         if (onConnection != null) {
-            loop.getCallbackHandler().handleStreamConnectionCallback(onConnection, status, error);
+            loop.getCallbackHandler()
+                .handleStreamConnectionCallback(onConnection, status, error);
         }
     }
 
     protected void callClose() {
         if (onClose != null) {
-            loop.getCallbackHandler().handleStreamCloseCallback(onClose);
+            loop.getCallbackHandler()
+                .handleStreamCloseCallback(onClose);
         }
     }
 
-    protected void callShutdown(final int status, final Exception error, final Object context) {
+    protected void callShutdown(final int       status,
+                                final Exception error,
+                                final Object    context) {
         if (onShutdown != null) {
-            loop.getCallbackHandler(context).handleStreamShutdownCallback(onShutdown, status, error);
+            loop.getCallbackHandler(context)
+                .handleStreamShutdownCallback(onShutdown, status, error);
         }
     }
 
@@ -202,18 +212,28 @@ class StreamHandle extends Handle {
 
     private native boolean _writable(final long ptr);
 
-    private native int _write(final long ptr, final ByteBuffer buffer, final byte[] data, final int offset,
-            final int length, final Object context);
+    private native int _write(final long       ptr,
+                              final ByteBuffer buffer,
+                              final byte[]     data,
+                              final int        offset,
+                              final int        length,
+                              final Object     context);
 
-    private native int _writev(final long ptr, final byte[][] buffers, final int bufcount, final Object context);
+    private native int _writev(final long     ptr,
+                               final byte[][] buffers,
+                               final int      bufcount,
+                               final Object   context);
 
     private native long _write_queue_size(final long ptr);
 
     private native void _close(final long ptr);
 
-    private native int _close_write(final long ptr, final Object context);
+    private native int _close_write(final long   ptr,
+                                    final Object context);
 
-    private native int _listen(final long ptr, final int backlog);
+    private native int _listen(final long ptr,
+                               final int backlog);
 
-    private native int _accept(final long ptr, final long client);
+    private native int _accept(final long ptr,
+                               final long client);
 }

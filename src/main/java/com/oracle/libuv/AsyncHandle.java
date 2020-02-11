@@ -57,8 +57,7 @@ public class AsyncHandle extends Handle {
         onSend = callback;
     }
 
-    // TODO: this must be protected
-    public AsyncHandle(final LoopHandle loop) {
+    protected AsyncHandle(final LoopHandle loop) {
         super(_new(loop.pointer()), loop);
         _initialize(pointer);
     }

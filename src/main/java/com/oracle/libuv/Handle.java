@@ -38,7 +38,8 @@ public abstract class Handle implements Closeable {
 
     protected final LoopHandle loop;
 
-    protected Handle(final long pointer, final LoopHandle loop) {
+    protected Handle(final long       pointer,
+                     final LoopHandle loop) {
         Objects.requireNonNull(loop);
         assert pointer != 0;
         this.pointer = pointer;

@@ -37,8 +37,12 @@ public final class NativeException extends RuntimeException {
 
     private final String path;
 
-    public NativeException(final int errno, final String errnoString, final String errnoMessage, final String syscall,
-            final String message, final String path) {
+    public NativeException(final int    errno,
+                           final String errnoString,
+                           final String errnoMessage,
+                           final String syscall,
+                           final String message,
+                           final String path) {
         super(message);
         this.errno = errno;
         this.errnoString = errnoString;

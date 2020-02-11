@@ -45,9 +45,9 @@ public final class StdioOptions {
 
     private final int fd;
 
-    public StdioOptions(final StdioType type,
+    public StdioOptions(final StdioType    type,
                         final StreamHandle stream,
-                        final int fd) {
+                        final int          fd) {
         this.type = type;
         this.stream = stream;
         this.fd = fd;
