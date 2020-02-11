@@ -42,13 +42,18 @@ public class LoopHandle implements Closeable {
     }
 
     // Track the number of created LoopHandles.
-    private static int createdLoopCount = 0;
+    private static int createdLoopCount ;
 
     protected final CallbackExceptionHandler exceptionHandler;
+
     protected final CallbackHandlerFactory callbackHandlerFactory;
+
     protected final ContextProvider contextProvider;
+
     private final long pointer;
+
     private Throwable pendingException;
+
     private boolean closed;
 
     private enum RunMode {

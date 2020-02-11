@@ -24,10 +24,11 @@
  */
 package com.oracle.libuv.handles;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Objects;
 
 import com.oracle.libuv.cb.ProcessCloseCallback;
 import com.oracle.libuv.cb.ProcessExitCallback;
@@ -35,9 +36,12 @@ import com.oracle.libuv.cb.ProcessExitCallback;
 public class ProcessHandle extends Handle {
 
     public enum ProcessFlags {
-
         // must be equal to values in uv.h
-        NONE(0), SETUID(1 << 0), SETGID(1 << 1), WINDOWS_VERBATIM_ARGUMENTS(1 << 2), DETACHED(1 << 3),
+        NONE(0),
+        SETUID(1 << 0),
+        SETGID(1 << 1),
+        WINDOWS_VERBATIM_ARGUMENTS(1 << 2),
+        DETACHED(1 << 3),
         WINDOWS_HIDE(1 << 4);
 
         final int value;
@@ -73,8 +77,8 @@ public class ProcessHandle extends Handle {
 
     public int spawn(final String program, final String[] args, final String[] env, final String dir,
             final EnumSet<ProcessFlags> flags, final StdioOptions[] stdio, final int uid, final int gid) {
-        Objects.requireNonNull(program);
-        Objects.requireNonNull(args);
+        requireNonNull(program);
+        requireNonNull(args);
         assert args.length > 0;
 
         char[] cmdChars = args[0].toCharArray();
@@ -136,8 +140,12 @@ public class ProcessHandle extends Handle {
             processFlags |= ProcessFlags.DETACHED.value;
         }
 
-        return _spawn(pointer, arguments[0], arguments, env, dir, processFlags, stdioFlags, streamPointers, fds, uid,
-                gid);
+        return _spawn(pointer, arguments[0],
+                      arguments, env,
+                      dir, processFlags,
+                      stdioFlags, streamPointers,
+                      fds, uid,
+                      gid);
     }
 
     public void close() {
@@ -161,7 +169,9 @@ public class ProcessHandle extends Handle {
         }
     }
 
-    private void callExit(final int status, final int signal, final Exception error) {
+    private void callExit(final int       status,
+                          final int       signal,
+                          final Exception error) {
         if (onExit != null) {
             loop.getCallbackHandler().handleProcessExitCallback(onExit, status, signal, error);
         }
@@ -177,9 +187,17 @@ public class ProcessHandle extends Handle {
 
     private native void _initialize(final long ptr);
 
-    private native int _spawn(final long ptr, final String program, final String[] args, final String[] env,
-            final String dir, final int flags, final int[] stdioFlags, final long[] streams, final int[] fds,
-            final int uid, final int gid);
+    private native int _spawn(final long     ptr,
+                              final String   program,
+                              final String[] args,
+                              final String[] env,
+                              final String   dir,
+                              final int      flags,
+                              final int[]    stdioFlags,
+                              final long[]   streams,
+                              final int[]    fds,
+                              final int      uid,
+                              final int      gid);
 
     private native void _close(final long ptr);
 
