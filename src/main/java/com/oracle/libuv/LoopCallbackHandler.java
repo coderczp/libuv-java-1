@@ -35,7 +35,8 @@ public final class LoopCallbackHandler implements CallbackHandler {
     }
 
     @Override
-    public void handleAsyncCallback(final AsyncCallback cb, final int status) {
+    public void handleAsyncCallback(final AsyncCallback cb,
+                                    final int           status) {
         try {
             cb.onSend(status);
         } catch (final Exception ex) {
@@ -44,7 +45,8 @@ public final class LoopCallbackHandler implements CallbackHandler {
     }
 
     @Override
-    public void handleCheckCallback(final CheckCallback cb, final int status) {
+    public void handleCheckCallback(final CheckCallback cb,
+                                    final int           status) {
         try {
             cb.onCheck(status);
         } catch (final Exception ex) {
@@ -63,7 +65,8 @@ public final class LoopCallbackHandler implements CallbackHandler {
     }
 
     @Override
-    public void handlePrepareCallback(PrepareCallback cb, int status) {
+    public void handlePrepareCallback(final PrepareCallback cb,
+                                      final int             status) {
         try {
             cb.onPrepare(status);
         } catch (final Exception ex) {
@@ -73,7 +76,8 @@ public final class LoopCallbackHandler implements CallbackHandler {
 
 
     @Override
-    public void handlePrepareCallback(CloseCallback cb, int status) {
+    public void handlePrepareCallback(final CloseCallback cb,
+                                      final int           status) {
         try {
             cb.onClose(status);
         } catch (final Exception ex) {
@@ -82,7 +86,8 @@ public final class LoopCallbackHandler implements CallbackHandler {
     }
 
     @Override
-    public void handleStreamReadCallback(final StreamReadCallback cb, final ByteBuffer data) {
+    public void handleStreamReadCallback(final StreamReadCallback cb,
+                                         final ByteBuffer         data) {
         try {
             cb.onRead(data);
         } catch (final Exception ex) {
@@ -91,7 +96,9 @@ public final class LoopCallbackHandler implements CallbackHandler {
     }
 
     @Override
-    public void handleStreamWriteCallback(final StreamWriteCallback cb, final int status, final Exception error) {
+    public void handleStreamWriteCallback(final StreamWriteCallback cb,
+                                          final int                 status,
+                                          final Exception           error) {
         try {
             cb.onWrite(status, error);
         } catch (final Exception ex) {
@@ -100,7 +107,9 @@ public final class LoopCallbackHandler implements CallbackHandler {
     }
 
     @Override
-    public void handleStreamConnectCallback(final StreamConnectCallback cb, final int status, final Exception error) {
+    public void handleStreamConnectCallback(final StreamConnectCallback cb,
+                                            final int                   status,
+                                            final Exception             error) {
         try {
             cb.onConnect(status, error);
         } catch (final Exception ex) {
@@ -109,7 +118,8 @@ public final class LoopCallbackHandler implements CallbackHandler {
     }
 
     @Override
-    public void handleStreamConnectionCallback(final StreamConnectionCallback cb, final int status,
+    public void handleStreamConnectionCallback(final StreamConnectionCallback cb,
+                                               final int                      status,
             final Exception error) {
         try {
             cb.onConnection(status, error);
@@ -128,7 +138,9 @@ public final class LoopCallbackHandler implements CallbackHandler {
     }
 
     @Override
-    public void handleStreamShutdownCallback(final StreamShutdownCallback cb, final int status, final Exception error) {
+    public void handleStreamShutdownCallback(final StreamShutdownCallback cb,
+                                             final int                    status,
+                                             final Exception              error) {
         try {
             cb.onShutdown(status, error);
         } catch (final Exception ex) {
@@ -137,7 +149,7 @@ public final class LoopCallbackHandler implements CallbackHandler {
     }
 
     @Override
-    public void handleProcessCloseCallback(ProcessCloseCallback cb) {
+    public void handleProcessCloseCallback(final ProcessCloseCallback cb) {
         try {
             cb.onClose();
         } catch (Exception ex) {
@@ -146,7 +158,10 @@ public final class LoopCallbackHandler implements CallbackHandler {
     }
 
     @Override
-    public void handleProcessExitCallback(ProcessExitCallback cb, int status, int signal, Exception error) {
+    public void handleProcessExitCallback(final ProcessExitCallback cb,
+                                          final int                  status,
+                                          final int                  signal,
+                                          final Exception            error) {
         try {
             cb.onExit(status, signal, error);
         } catch (Exception ex) {
@@ -155,7 +170,8 @@ public final class LoopCallbackHandler implements CallbackHandler {
     }
 
     @Override
-    public void handleTimerCallback(final TimerCallback cb, final int status) {
+    public void handleTimerCallback(final TimerCallback cb,
+                                    final int           status) {
         try {
             cb.onTimer(status);
         } catch (final Exception ex) {
@@ -165,7 +181,8 @@ public final class LoopCallbackHandler implements CallbackHandler {
 
 
     @Override
-    public void handleTimerCallback(CloseCallback cb, int status) {
+    public void handleTimerCallback(final CloseCallback cb,
+                                    final int           status) {
         try {
             cb.onClose(status);
         } catch (final Exception ex) {
@@ -174,7 +191,9 @@ public final class LoopCallbackHandler implements CallbackHandler {
     }
 
     @Override
-    public void handleUDPRecvCallback(final UDPRecvCallback cb, final int nread, final ByteBuffer data,
+    public void handleUDPRecvCallback(final     UDPRecvCallback cb,
+                                      final int nread,
+                                      final     ByteBuffer data,
             final Address address) {
         try {
             cb.onRecv(nread, data, address);
@@ -184,7 +203,9 @@ public final class LoopCallbackHandler implements CallbackHandler {
     }
 
     @Override
-    public void handleUDPSendCallback(final UDPSendCallback cb, final int status, final Exception error) {
+    public void handleUDPSendCallback(final     UDPSendCallback cb,
+                                      final int status,
+                                      final     Exception error) {
         try {
             cb.onSend(status, error);
         } catch (final Exception ex) {
@@ -202,7 +223,8 @@ public final class LoopCallbackHandler implements CallbackHandler {
     }
 
     @Override
-    public void handleIdleCallback(final IdleCallback cb, final int status) {
+    public void handleIdleCallback(final     IdleCallback cb,
+                                   final int status) {
         try {
             cb.onIdle(status);
         } catch (final Exception ex) {
@@ -212,7 +234,8 @@ public final class LoopCallbackHandler implements CallbackHandler {
 
 
     @Override
-    public void handleIdleCallback(CloseCallback cb, int status) {
+    public void handleIdleCallback(final CloseCallback cb,
+                                   final int           status) {
         try {
             cb.onClose(status);
         } catch (final Exception ex) {

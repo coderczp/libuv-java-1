@@ -26,6 +26,9 @@ package com.oracle.libuv;
 
 public final class StdioOptions {
 
+    /**
+     * Flags specifying how a stdio should be transmitted to the child process.
+     */
     public enum StdioType {
         IGNORE(0x00),
         CREATE_PIPE(0x01),

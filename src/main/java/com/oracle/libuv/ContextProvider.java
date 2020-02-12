@@ -24,6 +24,7 @@
  */
 package com.oracle.libuv;
 
+@FunctionalInterface
 public interface ContextProvider {
 
     public Object getContext();

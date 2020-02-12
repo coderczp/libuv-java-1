@@ -34,13 +34,49 @@ import java.util.List;
 public class ProcessHandle extends Handle {
 
     public enum ProcessFlags {
-        // must be equal to values in uv.h
         NONE(0),
+        /**
+         * sets the child’s execution user ID
+         */
         SETUID(1 << 0),
+        /**
+         * sets the child’s execution group ID
+         */
         SETGID(1 << 1),
+        /**
+         * No quoting or escaping of args is done on Windows. Ignored on Unix.
+         */
         WINDOWS_VERBATIM_ARGUMENTS(1 << 2),
+        /**
+         * Spawn the child process in a detached state.
+         * <p>
+         * This will make it a process group leader, and will effectively enable the
+         * child to keep running after the parent exits. Note that the child process
+         * will still keep the parent's event loop alive unless the parent process calls
+         * uv_unref() on the child's process handle.
+         */
         DETACHED(1 << 3),
-        WINDOWS_HIDE(1 << 4);
+        /**
+         * Hide the subprocess window that would normally be created.
+         * <p>
+         * This option is only meaningful on Windows systems. On Unix it is silently
+         * ignored.
+         */
+        WINDOWS_HIDE(1 << 4),
+        /**
+         * Hide the subprocess console window that would normally be created.
+         * <p>
+         * This option is only meaningful on Windows systems. On Unix it is silently
+         * ignored.
+         */
+        WINDOWS_HIDE_CONSOLE(1 << 5),
+        /**
+         * Hide the subprocess GUI window that would normally be created.
+         * <p>
+         * This option is only meaningful on Windows systems. On Unix it is silently
+         * ignored.
+         */
+        WINDOWS_HIDE_GUI(1 << 6);
 
         final int value;
 
@@ -73,6 +109,17 @@ public class ProcessHandle extends Handle {
         onExit = callback;
     }
 
+    /**
+     * Initializes the process handle and starts the process.
+     * <p>
+     * If the process is successfully spawned, this function will return 0.
+     * Otherwise, the negative error code corresponding to the
+     * reason it couldn't spawn is returned.
+     * <p>
+     * Possible reasons for failing to spawn would include (but not be limited to) the file
+     * to execute not existing, not having permissions to use the setuid or setgid specified,
+     * or not having enough memory to allocate for the new process.
+     */
     public int spawn(final String                program,
                      final String[]              args,
                      final String[]              env,
@@ -159,6 +206,9 @@ public class ProcessHandle extends Handle {
         closed = true;
     }
 
+    /**
+     * Sends the specified signal to the given process handle.
+     */
     public int kill(final int signal) {
         return _kill(pointer, signal);
     }
@@ -173,9 +223,7 @@ public class ProcessHandle extends Handle {
         }
     }
 
-    private void callExit(final int       status,
-                          final int       signal,
-                          final Exception error) {
+    private void callExit(final int status, final int signal, final Exception error) {
         if (onExit != null) {
             loop.getCallbackHandler().handleProcessExitCallback(onExit, status, signal, error);
         }
@@ -191,20 +239,11 @@ public class ProcessHandle extends Handle {
 
     private native void _initialize(final long ptr);
 
-    private native int _spawn(final long     ptr,
-                              final String   program,
-                              final String[] args,
-                              final String[] env,
-                              final String   dir,
-                              final int      flags,
-                              final int[]    stdioFlags,
-                              final long[]   streams,
-                              final int[]    fds,
-                              final int      uid,
-                              final int      gid);
+    private native int _spawn(final long ptr, final String program, final String[] args, final String[] env,
+            final String dir, final int flags, final int[] stdioFlags, final long[] streams, final int[] fds,
+            final int uid, final int gid);
 
     private native void _close(final long ptr);
 
-    private native int _kill(final long ptr,
-                             final int  signal);
+    private native int _kill(final long ptr, final int signal);
 }

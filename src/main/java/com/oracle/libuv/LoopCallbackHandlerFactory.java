@@ -33,7 +33,7 @@ public final class LoopCallbackHandlerFactory implements CallbackHandlerFactory 
     }
 
     @Override
-    public CallbackHandler newCallbackHandler(Object context) {
+    public CallbackHandler newCallbackHandler(final Object context) {
         return defaultHandler;
     }
 
