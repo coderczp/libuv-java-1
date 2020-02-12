@@ -30,5 +30,6 @@ public interface UDPSendCallback {
     /**
      * @param status {@code 0} on success, or an error {@code code < 0} on failure.
      */
-    public void onSend(int status, Exception error) throws Exception;
+    public void onSend(int       status,
+                       Exception error) throws Exception;
 }

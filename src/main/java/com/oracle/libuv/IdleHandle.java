@@ -42,6 +42,11 @@ public class IdleHandle extends Handle {
         _static_initialize();
     }
 
+    IdleHandle(final long pointer,
+               final      LoopHandle loop) {
+        super(pointer, loop);
+    }
+
     /**
      * Attach a {@link IdleCallback}.
      * 

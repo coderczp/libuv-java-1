@@ -34,5 +34,7 @@ public interface ProcessExitCallback {
     /**
      * @param status {@code 0} on success, or an error {@code code < 0} on failure.
      */
-    public void onExit(int status, int signal, Exception error) throws Exception;
+    public void onExit(int       status,
+                       int       signal,
+                       Exception error) throws Exception;
 }

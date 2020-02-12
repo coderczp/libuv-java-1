@@ -28,7 +28,7 @@ import static java.util.Objects.requireNonNull;
 
 public class TCPHandle extends StreamHandle {
 
-    protected TCPHandle(final LoopHandle loop) {
+    TCPHandle(final LoopHandle loop) {
         super(_new(loop.pointer()), loop);
     }
 

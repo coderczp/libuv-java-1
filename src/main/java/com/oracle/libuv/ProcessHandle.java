@@ -59,7 +59,7 @@ public class ProcessHandle extends Handle {
 
     private ProcessExitCallback onExit;
 
-    protected ProcessHandle(final LoopHandle loop) {
+    ProcessHandle(final LoopHandle loop) {
         super(_new(loop.pointer()), loop);
         this.closed = false;
         _initialize(pointer);

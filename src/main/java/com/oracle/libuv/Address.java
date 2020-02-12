@@ -32,9 +32,9 @@ public class Address {
 
     private final String family;
 
-    public Address(final String ip,
-                   final int    port,
-                   final String family) {
+    Address(final String ip,
+            final int    port,
+            final String family) {
         this.ip = ip;
         this.port = port;
         this.family = family;

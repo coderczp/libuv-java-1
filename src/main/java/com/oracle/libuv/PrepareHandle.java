@@ -42,6 +42,11 @@ public class PrepareHandle extends Handle {
         _static_initialize();
     }
 
+    PrepareHandle(final long       pointer,
+                  final LoopHandle loop) {
+        super(pointer, loop);
+    }
+
     /**
      * Attach a {@link PrepareCallback}.
      * 

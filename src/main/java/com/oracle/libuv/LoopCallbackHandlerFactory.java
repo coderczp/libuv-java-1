@@ -28,7 +28,7 @@ public final class LoopCallbackHandlerFactory implements CallbackHandlerFactory 
 
     private final LoopCallbackHandler defaultHandler;
 
-    public LoopCallbackHandlerFactory(final CallbackExceptionHandler exceptionHandler) {
+    LoopCallbackHandlerFactory(final CallbackExceptionHandler exceptionHandler) {
         defaultHandler = new LoopCallbackHandler(exceptionHandler);
     }
 

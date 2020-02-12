@@ -24,8 +24,9 @@
  */
 package com.oracle.libuv;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.Closeable;
-import java.util.Objects;
 
 /**
  * The base class for handle.
@@ -38,9 +39,9 @@ public abstract class Handle implements Closeable {
 
     protected final LoopHandle loop;
 
-    protected Handle(final long       pointer,
-                     final LoopHandle loop) {
-        Objects.requireNonNull(loop);
+    Handle(final long       pointer,
+           final LoopHandle loop) {
+        requireNonNull(loop);
         assert pointer != 0;
         this.pointer = pointer;
         this.loop = loop;

@@ -72,7 +72,7 @@ public class CheckHandle extends Handle {
         onClose = callback;
     }
 
-    protected CheckHandle(final LoopHandle loop) {
+    CheckHandle(final LoopHandle loop) {
         super(_new(loop.pointer()), loop);
         _initialize(pointer);
     }

@@ -24,7 +24,7 @@
  */
 package com.oracle.libuv;
 
-import java.util.Objects;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Pipe handles provide an abstraction over streaming files on Unix (including
@@ -34,8 +34,8 @@ import java.util.Objects;
  */
 public class PipeHandle extends StreamHandle {
 
-    protected PipeHandle(final LoopHandle loop,
-                         final boolean    ipc) {
+    PipeHandle(final LoopHandle loop,
+               final boolean    ipc) {
         super(_new(loop.pointer(), ipc), loop);
     }
 
@@ -47,7 +47,7 @@ public class PipeHandle extends StreamHandle {
      * @return {@code 0} on success, or an error {@code code < 0} on failure.
      */
     public int bind(final String name) {
-        Objects.requireNonNull(name);
+        requireNonNull(name);
         return _bind(pointer, name);
     }
 
@@ -69,7 +69,7 @@ public class PipeHandle extends StreamHandle {
     }
 
     public void connect(final String name) {
-        Objects.requireNonNull(name);
+        requireNonNull(name);
         _connect(pointer, name, loop.getContext());
     }
 

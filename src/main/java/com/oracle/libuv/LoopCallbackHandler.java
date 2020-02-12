@@ -30,7 +30,7 @@ public final class LoopCallbackHandler implements CallbackHandler {
 
     private final CallbackExceptionHandler exceptionHandler;
 
-    public LoopCallbackHandler(final CallbackExceptionHandler exceptionHandler) {
+    LoopCallbackHandler(final CallbackExceptionHandler exceptionHandler) {
         this.exceptionHandler = exceptionHandler;
     }
 

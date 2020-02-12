@@ -93,7 +93,8 @@ class StreamHandle extends Handle {
         return write(str, UTF_8);
     }
 
-    public int write(final String str, final Charset encoding) {
+    public int write(final String  str,
+                     final Charset encoding) {
         requireNonNull(str);
         final byte[] data = str.getBytes(encoding);
         return write(ByteBuffer.wrap(data), 0, data.length);
@@ -141,8 +142,8 @@ class StreamHandle extends Handle {
         return _write_queue_size(pointer);
     }
 
-    protected StreamHandle(final long       pointer,
-                           final LoopHandle loop) {
+    StreamHandle(final long       pointer,
+                 final LoopHandle loop) {
         super(pointer, loop);
         this.closed = false;
         this.readStarted = false;
@@ -156,7 +157,9 @@ class StreamHandle extends Handle {
         }
     }
 
-    protected void callWrite(final int status, final Exception error, final Object context) {
+    protected void callWrite(final int status,
+                             final     Exception error,
+                             final     Object context) {
         if (onWrite != null) {
             loop.getCallbackHandler(context)
                 .handleStreamWriteCallback(onWrite, status, error);

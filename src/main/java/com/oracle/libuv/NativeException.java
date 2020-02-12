@@ -25,7 +25,7 @@
 package com.oracle.libuv;
 
 @SuppressWarnings("serial")
-public final class NativeException extends RuntimeException {
+final class NativeException extends RuntimeException {
 
     private final int errno;
 
@@ -37,12 +37,12 @@ public final class NativeException extends RuntimeException {
 
     private final String path;
 
-    public NativeException(final int    errno,
-                           final String errnoString,
-                           final String errnoMessage,
-                           final String syscall,
-                           final String message,
-                           final String path) {
+    NativeException(final int    errno,
+                    final String errnoString,
+                    final String errnoMessage,
+                    final String syscall,
+                    final String message,
+                    final String path) {
         super(message);
         this.errno = errno;
         this.errnoString = errnoString;
@@ -51,7 +51,7 @@ public final class NativeException extends RuntimeException {
         this.path = path;
     }
 
-    public NativeException(final String message) {
+    NativeException(final String message) {
         super(message);
         this.errno = 0;
         this.errnoString = null;
