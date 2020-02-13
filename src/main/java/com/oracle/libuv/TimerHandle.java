@@ -41,11 +41,6 @@ public class TimerHandle extends Handle {
         _static_initialize();
     }
 
-    TimerHandle(final long       pointer,
-                final LoopHandle loop) {
-        super(pointer, loop);
-    }
-
     /**
      * Attach a {@link TimerCallback}.
      * 
@@ -75,7 +70,7 @@ public class TimerHandle extends Handle {
         onClose = callback;
     }
 
-    protected TimerHandle(final LoopHandle loop) {
+    TimerHandle(final LoopHandle loop) {
         super(_new(loop.pointer()), loop);
         _initialize(pointer);
     }

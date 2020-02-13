@@ -70,10 +70,6 @@ public class TCPHandle extends StreamHandle {
         return _peer_name(pointer);
     }
 
-    public int open(final long socket) {
-        return _open(pointer, socket);
-    }
-
     public int setNoDelay(final boolean enable) {
         return _no_delay(pointer, enable ? 1 : 0);
     }

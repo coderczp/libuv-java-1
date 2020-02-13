@@ -42,11 +42,6 @@ public class PrepareHandle extends Handle {
         _static_initialize();
     }
 
-    PrepareHandle(final long       pointer,
-                  final LoopHandle loop) {
-        super(pointer, loop);
-    }
-
     /**
      * Attach a {@link PrepareCallback}.
      * 
@@ -67,7 +62,7 @@ public class PrepareHandle extends Handle {
         onClose = callback;
     }
 
-    protected PrepareHandle(final LoopHandle loop) {
+    PrepareHandle(final LoopHandle loop) {
         super(_new(loop.pointer()), loop);
         _initialize(pointer);
     }
@@ -107,7 +102,8 @@ public class PrepareHandle extends Handle {
     // ~ Private
     // ------------------------------------------------------------------------
 
-    private void callback(final int type, final int status) {
+    private void callback(final int type,
+                          final int status) {
         switch (type) {
         case 1:
             if (onPrepare != null) {

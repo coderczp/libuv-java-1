@@ -42,11 +42,6 @@ public class IdleHandle extends Handle {
         _static_initialize();
     }
 
-    IdleHandle(final long pointer,
-               final      LoopHandle loop) {
-        super(pointer, loop);
-    }
-
     /**
      * Attach a {@link IdleCallback}.
      * 
@@ -55,6 +50,9 @@ public class IdleHandle extends Handle {
      *                 handles.
      */
     public void setIdleCallback(final IdleCallback callback) {
+        if (onIdle != null) {
+            throw new IllegalStateException();
+        }
         onIdle = callback;
     }
 
@@ -73,7 +71,7 @@ public class IdleHandle extends Handle {
         onClose = callback;
     }
 
-    protected IdleHandle(final LoopHandle loop) {
+    IdleHandle(final LoopHandle loop) {
         super(_new(loop.pointer()), loop);
         _initialize(pointer);
     }

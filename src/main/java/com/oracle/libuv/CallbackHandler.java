@@ -67,4 +67,6 @@ public interface CallbackHandler {
     void handleUDPSendCallback(UDPSendCallback cb, int status, Exception error);
 
     void handleUDPCloseCallback(UDPCloseCallback cb);
+
+    void handleDnsCallback(DnsCallback cb, Address address, int status);
 }

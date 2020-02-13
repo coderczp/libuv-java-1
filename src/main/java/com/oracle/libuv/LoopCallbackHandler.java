@@ -232,12 +232,22 @@ public final class LoopCallbackHandler implements CallbackHandler {
         }
     }
 
-
     @Override
     public void handleIdleCallback(final CloseCallback cb,
                                    final int           status) {
         try {
             cb.onClose(status);
+        } catch (final Exception ex) {
+            exceptionHandler.handle(ex);
+        }
+    }
+
+    @Override
+    public void handleDnsCallback(final DnsCallback cb,
+                                  final Address     address,
+                                  final int         status) {
+        try {
+            cb.onAddress(address, status);
         } catch (final Exception ex) {
             exceptionHandler.handle(ex);
         }

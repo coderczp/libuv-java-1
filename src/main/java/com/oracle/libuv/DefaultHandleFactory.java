@@ -82,4 +82,9 @@ public class DefaultHandleFactory implements HandleFactory {
     public UDPHandle newUDPHandle() {
         return new UDPHandle(loop);
     }
+
+    @Override
+    public DnsHandle newDnsHandle() {
+        return new DnsHandle(loop);
+    }
 }

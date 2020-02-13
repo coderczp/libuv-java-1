@@ -102,8 +102,10 @@ class StreamHandle extends Handle {
 
     public int write(final ByteBuffer buffer, final int offset, final int length) {
         requireNonNull(buffer);
-        return buffer.hasArray() ? _write(pointer, buffer, buffer.array(), offset, length, loop.getContext())
-                : _write(pointer, buffer, null, offset, length, loop.getContext());
+        if (buffer.hasArray()) {
+            return _write(pointer, buffer, buffer.array(), offset, length, loop.getContext());
+        }
+        return _write(pointer, buffer, null, offset, length, loop.getContext());
     }
 
     public int write(final ByteBuffer buffer) {

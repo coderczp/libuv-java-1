@@ -29,7 +29,7 @@ import java.nio.ByteBuffer;
 @FunctionalInterface
 public interface UDPRecvCallback {
 
-    public void onRecv(int        nread,
-                       ByteBuffer data,
-                       Address    address) throws Exception;
+    void onRecv(int        nread,
+                ByteBuffer data,
+                Address    address) throws Exception;
 }

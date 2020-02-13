@@ -32,5 +32,5 @@ public interface StreamReadCallback {
     /**
      * @param status {@code 0} on success, or an error {@code code < 0} on failure.
      */
-    public void onRead(ByteBuffer data) throws Exception;
+    void onRead(ByteBuffer data) throws Exception;
 }

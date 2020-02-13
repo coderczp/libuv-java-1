@@ -45,4 +45,6 @@ public interface HandleFactory {
     TimerHandle newTimerHandle();
 
     UDPHandle newUDPHandle();
+
+    DnsHandle newDnsHandle();
 }

@@ -27,5 +27,5 @@ package com.oracle.libuv;
 @FunctionalInterface
 public interface StreamCloseCallback {
 
-    public void onClose() throws Exception;
+    void onClose() throws Exception;
 }
