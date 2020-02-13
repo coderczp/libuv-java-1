@@ -84,7 +84,12 @@ public class DefaultHandleFactory implements HandleFactory {
     }
 
     @Override
-    public DnsHandle newDnsHandle() {
-        return new DnsHandle(loop);
+    public DNSHandle newDnsHandle(String host, int port) {
+        return new DNSHandle(loop, host, port);
+    }
+
+    @Override
+    public DNSHandle newDnsHandle(String host) {
+        return new DNSHandle(loop, host, 0);
     }
 }

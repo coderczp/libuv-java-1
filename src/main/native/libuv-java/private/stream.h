@@ -53,6 +53,7 @@ public:
   static void static_initialize(JNIEnv *env, jclass cls);
   static void static_initialize_address(JNIEnv* env);
   static jobject _address_to_js(JNIEnv* env, const sockaddr* addr);
+  static jobject _address_info_to_js(JNIEnv* env, struct addrinfo* addr);
 
   StreamCallbacks();
   ~StreamCallbacks();

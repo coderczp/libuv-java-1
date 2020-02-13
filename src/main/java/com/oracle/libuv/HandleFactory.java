@@ -46,5 +46,7 @@ public interface HandleFactory {
 
     UDPHandle newUDPHandle();
 
-    DnsHandle newDnsHandle();
+    DNSHandle newDnsHandle(String host, int port);
+
+    DNSHandle newDnsHandle(String host);
 }

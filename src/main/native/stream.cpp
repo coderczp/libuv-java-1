@@ -52,12 +52,6 @@ jmethodID StreamCallbacks::_call_close_callback_mid = NULL;
 jmethodID StreamCallbacks::_call_shutdown_callback_mid = NULL;
 
 void StreamCallbacks::static_initialize(JNIEnv* env, jclass cls) {
-  _IPV4 = env->NewStringUTF("IPv4");
-  _IPV4 = (jstring) env->NewGlobalRef(_IPV4);
-
-  _IPV6 = env->NewStringUTF("IPv6");
-  _IPV6 = (jstring) env->NewGlobalRef(_IPV6);
-
   _stream_handle_cid = (jclass) env->NewGlobalRef(cls);
   assert(_stream_handle_cid);
 
@@ -83,7 +77,17 @@ void StreamCallbacks::static_initialize(JNIEnv* env, jclass cls) {
 }
 
 void StreamCallbacks::static_initialize_address(JNIEnv* env) {
-  if (!_address_cid) {
+    if (_IPV4 == NULL) {
+      _IPV4 = env->NewStringUTF("IPv4");
+      _IPV4 = (jstring)env->NewGlobalRef(_IPV4);
+    }
+
+    if (_IPV6 == NULL) {
+      _IPV6 = env->NewStringUTF("IPv6");
+      _IPV6 = (jstring)env->NewGlobalRef(_IPV6);
+    }
+
+	if (!_address_cid) {
       _address_cid = env->FindClass("com/oracle/libuv/Address");
       assert(_address_cid);
       _address_cid = (jclass) env->NewGlobalRef(_address_cid);
@@ -191,7 +195,7 @@ void StreamCallbacks::on_close() {
       _call_close_callback_mid);
 }
 
-// used in tcp.cpp and udp.cpp
+// used in tcp.cpp, and udp.cpp
 jobject StreamCallbacks::_address_to_js(JNIEnv* env, const sockaddr* addr) {
 	char ip[INET6_ADDRSTRLEN];
 	const sockaddr_in *a4;
@@ -220,6 +224,33 @@ jobject StreamCallbacks::_address_to_js(JNIEnv* env, const sockaddr* addr) {
 			port,
 			_IPV4);
 	}
+	return NULL;
+}
+
+// used in dns.cpp
+jobject StreamCallbacks::_address_info_to_js(JNIEnv* env, struct addrinfo* addr) {
+	char ip[INET6_ADDRSTRLEN] = { '\0' };
+	const int port = 0;
+
+	assert(addr);
+	switch (addr->ai_family) {
+	case AF_INET6:
+		uv_ip6_name((const sockaddr_in6*) addr->ai_addr, ip, INET6_ADDRSTRLEN);
+		return env->NewObject(_address_cid,
+			_address_init_mid,
+			env->NewStringUTF(ip),
+			port,
+			_IPV6);
+
+	case AF_INET:
+		uv_ip4_name((const sockaddr_in*) addr->ai_addr, ip, INET_ADDRSTRLEN);
+		return env->NewObject(_address_cid,
+			_address_init_mid,
+			env->NewStringUTF(ip),
+			port,
+			_IPV4);
+	}
+
 	return NULL;
 }
 

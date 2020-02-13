@@ -22,36 +22,54 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-
 package com.oracle.libuv;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-public class DnsHandleTest extends TestBase {
+public class DNSHandleTest extends TestBase {
 
     @Test
-    public void testIdle() throws Throwable {
+    public void testDns() throws Throwable {
         final AtomicBoolean gotCallback = new AtomicBoolean(false);
         final AtomicBoolean gotClose = new AtomicBoolean(false);
-        final AtomicInteger times = new AtomicInteger(0);
 
         final HandleFactory handleFactory = new DefaultHandleFactory(new LoopHandle());
         final LoopHandle loop = handleFactory.getLoopHandle();
-        final DnsHandle dnsHandle = handleFactory.newDnsHandle();
 
-        dnsHandle.setDnsCallback(new DnsCallback() {
+        final DNSHandle dnsHandleWf = handleFactory.newDnsHandle("webfolder.io");
+
+        dnsHandleWf.setDnsCallback(new DnsCallback() {
 
             @Override
             public void onAddress(Address address, int status) throws Exception {
-                System.out.println(address);
+                Assert.assertEquals("138.68.14.207", address.getIp());
+                Assert.assertEquals("IPv4", address.getFamily());
+                gotCallback.compareAndSet(false, true);
+                gotClose.compareAndSet(false, true);
             }
         });
 
-        dnsHandle.getAddressInfo("localhost", 80);
+        int ret = dnsHandleWf.execute();
+        Assert.assertEquals(0, ret);
+
+        final DNSHandle dnsHandleLocal = handleFactory.newDnsHandle("localhost");
+
+        dnsHandleLocal.setDnsCallback(new DnsCallback() {
+
+            @Override
+            public void onAddress(Address address, int status) throws Exception {
+                Assert.assertEquals("::1", address.getIp());
+                Assert.assertEquals("IPv6", address.getFamily());
+                gotCallback.compareAndSet(false, true);
+                gotClose.compareAndSet(false, true);
+            }
+        });
+
+        int ret2 = dnsHandleLocal.execute();
+        Assert.assertEquals(0, ret2);
 
         final long start = System.currentTimeMillis();
         while (!gotCallback.get() || !gotClose.get()) {
@@ -63,8 +81,5 @@ public class DnsHandleTest extends TestBase {
 
         Assert.assertTrue(gotCallback.get());
         Assert.assertTrue(gotClose.get());
-        Assert.assertEquals(times.get(), 1);
-
-        System.in.read();
     }
 }

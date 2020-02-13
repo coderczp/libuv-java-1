@@ -25,10 +25,13 @@
 
 #include <string.h>
 #include <assert.h>
+#include <stdlib.h>
+
 #include <jni.h>
 
 #include "uv.h"
-#include "libuv-java/jni/com_oracle_libuv_DnsHandle.h"
+#include "libuv-java/private/stream.h"
+#include "libuv-java/jni/com_oracle_libuv_DNSHandle.h"
 
 class DnsCallbacks {
 private:
@@ -47,67 +50,66 @@ public:
 
   void initialize(JNIEnv* env, jobject instance);
 
-  void on_dns(int status);
+  void on_address(int status, struct addrinfo* res);
 };
 
 jclass DnsCallbacks::_dns_handle_cid = NULL;
 
 jmethodID DnsCallbacks::_callback_mid = NULL;
 
-void DnsCallbacks::static_initialize(JNIEnv* env, jclass cls) {
-	_dns_handle_cid = (jclass)env->NewGlobalRef(cls);
-	assert(_dns_handle_cid);
 
-	_callback_mid = env->GetMethodID(_dns_handle_cid, "callback", "(Lcom/oracle/libuv/Address;I)V");
-	assert(_callback_mid);
+void DnsCallbacks::static_initialize(JNIEnv* env, jclass cls) {
+  _dns_handle_cid = (jclass)env->NewGlobalRef(cls);
+  assert(_dns_handle_cid);
+
+  _callback_mid = env->GetMethodID(_dns_handle_cid, "callback", "(Lcom/oracle/libuv/Address;I)V");
+  assert(_callback_mid);
+
+  // ensure JNI ids used by StreamCallbacks::_address_info_to_js are initialized
+  StreamCallbacks::static_initialize_address(env);
 }
 
 void DnsCallbacks::initialize(JNIEnv* env, jobject instance) {
-	_env = env;
-	assert(_env);
-	assert(instance);
-	_instance = _env->NewGlobalRef(instance);
+  _env = env;
+  assert(_env);
+  assert(instance);
+  _instance = _env->NewGlobalRef(instance);
 }
 
 DnsCallbacks::DnsCallbacks() {
-	_env = NULL;
+  _env = NULL;
 }
 
 DnsCallbacks::~DnsCallbacks() {
-	_env->DeleteGlobalRef(_instance);
+  _env->DeleteGlobalRef(_instance);
 }
 
-void DnsCallbacks::on_dns(int status) {
+void DnsCallbacks::on_address(int status, struct addrinfo* res) {
 	assert(_env);
+	jobject address = NULL;
+	if (res != NULL && status == 0) {
+		address = StreamCallbacks::_address_info_to_js(_env, res);
+	}
 	_env->CallVoidMethod(
-		_instance,
-		_callback_mid,
-		NULL,
-		0);
+      _instance,
+      _callback_mid,
+      address,
+      status);
 }
 
 static void cb_getaddrinfo_cb(uv_getaddrinfo_t* req, int status, struct addrinfo* res) {
   assert(req);
   assert(req->data);
   DnsCallbacks* cb = reinterpret_cast<DnsCallbacks*>(req->data);
-  cb->on_dns(0);
-
-  if (status == 0) {
-	  char addr[17] = { '\0' };
-	  uv_ip4_name((struct sockaddr_in*) res->ai_addr, addr, 16);
-	  fprintf(stdout, "%s\n", addr);
-	  fflush(stdout);
+  cb->on_address(0, res);
+  delete cb;
+  if (res != NULL) {
+    uv_freeaddrinfo(res);
   }
-  else {
-	  fprintf(stdout, "%s\n", uv_err_name(status));
-	  fflush(stdout);
-  }
-
   free(req);
-  uv_freeaddrinfo(res);
 }
 
-JNIEXPORT void JNICALL Java_com_oracle_libuv_DnsHandle__1initialize(JNIEnv *env, jobject that, jlong dns) {
+JNIEXPORT void JNICALL Java_com_oracle_libuv_DNSHandle__1initialize(JNIEnv *env, jobject that, jlong dns) {
   assert(dns);
   uv_getaddrinfo_t* handle = reinterpret_cast<uv_getaddrinfo_t*>(dns);
   assert(handle->data);
@@ -115,7 +117,7 @@ JNIEXPORT void JNICALL Java_com_oracle_libuv_DnsHandle__1initialize(JNIEnv *env,
   cb->initialize(env, that);
 }
 
-JNIEXPORT jlong JNICALL Java_com_oracle_libuv_DnsHandle__1new(JNIEnv * env, jclass that, jlong loop) {
+JNIEXPORT jlong JNICALL Java_com_oracle_libuv_DNSHandle__1new(JNIEnv * env, jclass that, jlong loop) {
   assert(loop);
   uv_loop_t* lp = reinterpret_cast<uv_loop_t*>(loop);
   uv_getaddrinfo_t* req = new uv_getaddrinfo_t();
@@ -124,15 +126,33 @@ JNIEXPORT jlong JNICALL Java_com_oracle_libuv_DnsHandle__1new(JNIEnv * env, jcla
   return reinterpret_cast<jlong>(req);
 }
 
-JNIEXPORT void JNICALL Java_com_oracle_libuv_DnsHandle__1static_1initialize(JNIEnv *env, jclass cls) {
+JNIEXPORT void JNICALL Java_com_oracle_libuv_DNSHandle__1static_1initialize(JNIEnv *env, jclass cls) {
   DnsCallbacks::static_initialize(env, cls);
 }
 
-JNIEXPORT jint JNICALL Java_com_oracle_libuv_DnsHandle__1uv_1getaddrinfo(JNIEnv *env, jobject that, jlong dns, jstring node, jstring service) {
+JNIEXPORT jint JNICALL Java_com_oracle_libuv_DNSHandle__1uv_1getaddrinfo(JNIEnv *env, jobject that, jlong dns, jstring node, jstring service) {
   assert(dns);
   uv_getaddrinfo_t* req = reinterpret_cast<uv_getaddrinfo_t*>(dns);
-  const char* c_node = "localhost";
-  const char* c_service = "80";
+  jboolean is_copy_node, is_copy_service;
+
+  const char* c_node = env->GetStringUTFChars(node, &is_copy_node);
+  const char* c_service = service != NULL ? env->GetStringUTFChars(service, &is_copy_service) : NULL;
+
   int r = uv_getaddrinfo(req->loop, req, cb_getaddrinfo_cb, c_node, c_service, NULL);
+
+  if (is_copy_node) {
+    env->ReleaseStringUTFChars(node, c_node);
+  }
+
+  if (service != NULL && is_copy_service) {
+    env->ReleaseStringUTFChars(service, c_service);
+  }
+
+  if (r != 0) {
+	  DnsCallbacks* cb = reinterpret_cast<DnsCallbacks*>(req->data);
+	  delete cb;
+	  free(req);
+  }
+
   return r;
 }
