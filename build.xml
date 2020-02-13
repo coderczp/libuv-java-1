@@ -2,7 +2,21 @@
 <project name="libuv" default="javah" basedir=".">
   <target name="javah">
     <javah destdir="src/main/native/libuv-java/jni" classpath="target/classes">
-      <class name="com.oracle.libuv.DNSHandle" />
+        <class name="com.oracle.libuv.LibUV" />
+        <class name="com.oracle.libuv.NativeException" />
+        <class name="com.oracle.libuv.AsyncHandle" />
+        <class name="com.oracle.libuv.Handle" />
+        <class name="com.oracle.libuv.LoopHandle" />
+        <class name="com.oracle.libuv.PipeHandle" />
+        <class name="com.oracle.libuv.ProcessHandle"/>
+        <class name="com.oracle.libuv.StreamHandle" />
+        <class name="com.oracle.libuv.TimerHandle" />
+        <class name="com.oracle.libuv.UDPHandle" />
+        <class name="com.oracle.libuv.TCPHandle" />
+        <class name="com.oracle.libuv.CheckHandle" />
+        <class name="com.oracle.libuv.IdleHandle" />
+        <class name="com.oracle.libuv.PrepareHandle" />
+        <class name="com.oracle.libuv.DNSHandle" />
     </javah>
   </target>
 </project>
