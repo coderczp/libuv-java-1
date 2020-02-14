@@ -109,3 +109,23 @@ JNIEXPORT jobjectArray JNICALL Java_com_oracle_libuv_LoopHandle__1list
   }
   return handles;
 }
+
+JNIEXPORT jthrowable JNICALL Java_com_oracle_libuv_handles_LoopHandle__1get_1last_1error
+  (JNIEnv *env, jobject that, jlong ptr) {
+  assert(ptr);
+  uv_loop_t* loop = reinterpret_cast<uv_loop_t*>(ptr);
+  int code = uv_last_error(loop).code;
+
+  return NewException(env, code);
+}
+
+JNIEXPORT void JNICALL Java_com_oracle_libuv_handles_LoopHandle__1set_1last_1error
+  (JNIEnv *env, jobject that, jlong ptr, jint code) {
+  assert(ptr);
+  uv_loop_t* loop = reinterpret_cast<uv_loop_t*>(ptr);
+
+  uv_err_t error;
+  error.code = (uv_err_code) code;
+  error.sys_errno_ = 0;
+  loop->last_err = error;
+}
