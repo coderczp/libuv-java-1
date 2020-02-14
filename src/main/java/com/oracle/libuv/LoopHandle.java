@@ -195,9 +195,4 @@ public class LoopHandle implements Closeable {
     private native void _close_all(final long ptr);
 
     private native String[] _list(final long ptr);
-
-    private native NativeException _get_last_error(final long ptr);
-
-    private native void _set_last_error(final long ptr,
-                                        final int code);
 }
