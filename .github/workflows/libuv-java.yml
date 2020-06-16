@@ -21,7 +21,7 @@ jobs:
          wget -q https://github.com/Kitware/CMake/releases/download/v3.17.3/cmake-3.17.3-Linux-x86_64.tar.gz
          tar xfz cmake-3.17.3-Linux-x86_64.tar.gz
          mv cmake-3.17.3-Linux-x86_64/ cmake/
-         export $PATH=$PWD/cmake/bin:$PATH
+         export PATH=$PWD/cmake/bin:$PATH
          wget -q https://cdn.azul.com/zulu/bin/zulu8.46.0.19-ca-jdk8.0.252-linux_x64.tar.gz
          tar xfz zulu8.46.0.19-ca-jdk8.0.252-linux_x64.tar.gz
          mv zulu8.46.0.19-ca-jdk8.0.252-linux_x64/ jdk/
