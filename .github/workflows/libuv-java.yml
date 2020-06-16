@@ -17,7 +17,7 @@ jobs:
         architecture: x64
     - name: Build
       run: |
-         sudo apt install ninja
+         sudo apt-get install ninja
          cd src/main
          ./build.sh
          cd ..
