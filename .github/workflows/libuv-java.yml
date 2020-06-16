@@ -1,48 +1,19 @@
-name: libuv-java
-
-on:
-  [push]
-jobs:
-  centos:
-    name: centos
-    runs-on: ubuntu-latest
-    if: "contains(toJSON(github.event.commits.*.message), '[build centos]')"
-    container: centos:7
-    steps:
-    - uses: actions/checkout@v2
-      name: Checkout project
-    - name: Build
-      run: |
-         yum -y update
-         yum -y group install "Development Tools"
-         yum -y install wget
-         yum -y install unzip
-         yum -y install cmake
-         wget -q https://github.com/ninja-build/ninja/releases/download/v1.10.0/ninja-linux.zip
-         unzip ninja-linux.zip
-         PATH=$PATH:$PWD
-         wget -q https://github.com/Kitware/CMake/releases/download/v3.17.3/cmake-3.17.3-Linux-x86_64.tar.gz
-         tar xfz cmake-3.17.3-Linux-x86_64.tar.gz
-         mv cmake-3.17.3-Linux-x86_64/ cmake/
-         export PATH=$PWD/cmake/bin:$PATH
-         wget -q https://cdn.azul.com/zulu/bin/zulu8.46.0.19-ca-jdk8.0.252-linux_x64.tar.gz
-         tar xfz zulu8.46.0.19-ca-jdk8.0.252-linux_x64.tar.gz
-         mv zulu8.46.0.19-ca-jdk8.0.252-linux_x64/ jdk/
-         rm -f zulu8.46.0.19-ca-jdk8.0.252-linux_x64.tar.gz
-         export JAVA_HOME=$PWD/jdk
-         export PATH=$PATH:$JAVA_HOME/bin
-         wget -q https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
-         tar xfz apache-maven-3.6.3-bin.tar.gz
-         mv apache-maven-3.6.3/ maven/
-         export PATH=$PATH:$PWD/maven/bin
-         cd src/main
-         ./build.sh
-         cd ..
-         cd ..
-         mvn --no-transfer-progress -q -B -DskipTests package
-         mvn --no-transfer-progress test
-    - name: Archive library
-      uses: actions/upload-artifact@v1
-      with:
-        name: libuv-java-centos
-        path: target/libuv-java-1.0.0.jar
+mkdir -p install
+wget https://github.com/libuv/libuv/archive/v1.38.0.tar.gz
+tar xfz v1.38.0.tar.gz
+cd libuv-1.38.0/
+mkdir -p build
+cd build
+cmake .. -DCMAKE_C_FLAGS=-fPIC -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_INSTALL_PREFIX=../../install -DCMAKE_BUILD_TYPE=Release -GNinja
+ninja
+ninja install
+cd ..
+cd ..
+mkdir -p build
+cd build
+cmake .. -DCMAKE_INSTALL_PREFIX=../../install -DCMAKE_BUILD_TYPE=Release -GNinja
+ninja
+cd ..
+mkdir -p ../resources/META-INF
+cp build/libuv-java.so ../resources/META-INF/libuv-java.so
+cd ..
