@@ -78,8 +78,7 @@ public final class LibUV {
             }
         }
         load(libFile.toString());
-        loaded = true;
-        return true;
+        return loaded = true;
     }
 
     private LibUV() {

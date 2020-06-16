@@ -61,8 +61,13 @@ public class DNSHandleTest extends TestBase {
 
             @Override
             public void onAddress(Address address, int status) throws Exception {
-                Assert.assertEquals("::1", address.getIp());
-                Assert.assertEquals("IPv6", address.getFamily());
+            	if ("IPv4".equals(address.getFamily())) {
+                    Assert.assertEquals("127.0.0.1", address.getIp());
+                    Assert.assertEquals("IPv4", address.getFamily());            		
+            	} else {
+                    Assert.assertEquals("::1", address.getIp());
+                    Assert.assertEquals("IPv6", address.getFamily());
+            	}
                 gotCallback.compareAndSet(false, true);
                 gotClose.compareAndSet(false, true);
             }

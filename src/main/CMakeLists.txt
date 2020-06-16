@@ -7,31 +7,25 @@ set(CMAKE_SUPPRESS_REGENERATION ON)
 set(CMAKE_CXX_STANDARD 11)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 
-if(MSVC)
-  add_definitions(-D_WIN32_WINNT=0x0601)
-endif()
-
 find_package(JNI REQUIRED)
 find_package(Threads REQUIRED)
-find_package(unofficial-libuv CONFIG REQUIRED)
 
 INCLUDE_DIRECTORIES(${JAVA_INCLUDE_PATH})
 INCLUDE_DIRECTORIES(${JAVA_INCLUDE_PATH2})
 
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/install/include")
+
 file(GLOB_RECURSE sources "*native/libuv-java/private/*.h" "*native/libuv-java/jni/*.h" "native/*.cpp")
-
-if (MSVC)
-  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${PROJECT_BINARY_DIR}/../resources/META-INF)
-  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${PROJECT_BINARY_DIR}/../resources/META-INF)
-  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_BINARY_DIR}/../resources/META-INF)
-
-  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG ${PROJECT_BINARY_DIR}/../resources/META-INF)
-  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${PROJECT_BINARY_DIR}/../resources/META-INF)
-  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_BINARY_DIR}/../resources/META-INF)
-endif()
 
 add_library(uv-java SHARED ${sources})
 
-target_link_libraries(uv-java PRIVATE Threads::Threads unofficial::libuv::libuv)
+if(WIN32)
+  add_definitions(-D_WIN32_WINNT=0x0601)
+  set_target_properties(uv-java PROPERTIES PREFIX "")
+endif()
 
-set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT uv-java)
+if (CMAKE_BUILD_TYPE MATCHES Release)
+  set_target_properties(uv-java PROPERTIES LINK_FLAGS_RELEASE -s)
+endif()
+
+target_link_libraries(uv-java PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/install/lib/libuv_a.a")
