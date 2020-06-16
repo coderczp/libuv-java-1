@@ -4,6 +4,31 @@ on:
   [push]
 jobs:
   centos:
+    name: ubuntu
+    runs-on: ubuntu-latest
+    if: "contains(toJSON(github.event.commits.*.message), '[build ubuntu]')"
+    steps:
+    - uses: actions/checkout@v2
+      name: Checkout project
+    - uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+        java-package: jdk
+        architecture: x64
+    - name: Build
+      run: |
+         cd src/main
+         ./build.sh
+         cd ..
+         cd ..
+         mvn --no-transfer-progress -q -B -DskipTests package
+         mvn --no-transfer-progress test
+    - name: Archive library
+      uses: actions/upload-artifact@v1
+      with:
+        name: libuv-ubuntu
+        path: target/libuv-java-1.0.0.jar
+  centos:
     name: centos
     runs-on: ubuntu-latest
     if: "contains(toJSON(github.event.commits.*.message), '[build centos]')"
@@ -43,5 +68,5 @@ jobs:
     - name: Archive library
       uses: actions/upload-artifact@v1
       with:
-        name: libuv-java-centos
+        name: libuv-centos
         path: target/libuv-java-1.0.0.jar
