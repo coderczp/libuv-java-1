@@ -18,6 +18,10 @@ jobs:
          yum -y install wget
          yum -y install unzip
          yum -y install cmake
+         wget -q https://github.com/Kitware/CMake/releases/download/v3.17.3/cmake-3.17.3-Linux-x86_64.tar.gz
+         tar xfz cmake-3.17.3-Linux-x86_64.tar.gz
+         mv cmake-3.17.3-Linux-x86_64/ cmake/
+         export $PATH=$PWD/cmake/bin:$PATH
          wget -q https://cdn.azul.com/zulu/bin/zulu8.46.0.19-ca-jdk8.0.252-linux_x64.tar.gz
          tar xfz zulu8.46.0.19-ca-jdk8.0.252-linux_x64.tar.gz
          mv zulu8.46.0.19-ca-jdk8.0.252-linux_x64/ jdk/
@@ -28,10 +32,12 @@ jobs:
          tar xfz apache-maven-3.6.3-bin.tar.gz
          mv apache-maven-3.6.3/ maven/
          export PATH=$PATH:$PWD/maven/bin
-         mvn --no-transfer-progress -q -B -DskipTests package
-         mvn --no-transfer-progress test
          cd src/main
          ./build.sh
+         cd ..
+         cd ..
+         mvn --no-transfer-progress -q -B -DskipTests package
+         mvn --no-transfer-progress test
     - name: Archive library
       uses: actions/upload-artifact@v1
       with:
