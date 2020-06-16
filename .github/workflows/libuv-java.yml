@@ -1,0 +1,39 @@
+name: libuv-java
+
+on:
+  [push]
+jobs:
+  centos:
+    name: centos
+    runs-on: ubuntu-latest
+    if: "contains(toJSON(github.event.commits.*.message), '[build centos]')"
+    container: centos:7
+    steps:
+    - uses: actions/checkout@v2
+      name: Checkout project
+    - name: Build
+      run: |
+         yum -y update
+         yum -y group install "Development Tools"
+         yum -y install wget
+         yum -y install unzip
+         yum -y install cmake
+         wget -q https://cdn.azul.com/zulu/bin/zulu8.46.0.19-ca-jdk8.0.252-linux_x64.tar.gz
+         tar xfz zulu8.46.0.19-ca-jdk8.0.252-linux_x64.tar.gz
+         mv zulu8.46.0.19-ca-jdk8.0.252-linux_x64/ jdk/
+         rm -f zulu8.46.0.19-ca-jdk8.0.252-linux_x64.tar.gz
+         export JAVA_HOME=$PWD/jdk
+         export PATH=$PATH:$JAVA_HOME/bin
+         wget -q https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
+         tar xfz apache-maven-3.6.3-bin.tar.gz
+         mv apache-maven-3.6.3/ maven/
+         export PATH=$PATH:$PWD/maven/bin
+         mvn --no-transfer-progress -q -B -DskipTests package
+         mvn --no-transfer-progress test
+         cd src/main
+         ./build.sh
+    - name: Archive library
+      uses: actions/upload-artifact@v1
+      with:
+        name: libuv-java-centos
+        path: target/libuv-java-1.0.0.jar
