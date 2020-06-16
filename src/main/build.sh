@@ -14,6 +14,6 @@ cd build
 cmake .. -DCMAKE_INSTALL_PREFIX=../../install -DCMAKE_BUILD_TYPE=Release -GNinja
 ninja
 cd ..
-mkdir -p ../resources/META-INF
-cp build/libuv-java.so ../resources/META-INF/libuv-java.so
+mkdir -p ../main/resources/META-INF
+cp build/libuv-java.so ../main/resources/META-INF/libuv-java.so
 cd ..
