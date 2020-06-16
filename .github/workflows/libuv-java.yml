@@ -3,7 +3,7 @@ name: libuv-java
 on:
   [push]
 jobs:
-  centos:
+  ubuntu:
     name: ubuntu
     runs-on: ubuntu-latest
     if: "contains(toJSON(github.event.commits.*.message), '[build ubuntu]')"
