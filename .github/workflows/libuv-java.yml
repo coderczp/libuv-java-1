@@ -26,6 +26,7 @@ jobs:
          cd ..
          mvn --no-transfer-progress -q -B -DskipTests package
          mvn --no-transfer-progress test
+      shell:cmd
     - name: Archive library
       uses: actions/upload-artifact@v1
       with:
