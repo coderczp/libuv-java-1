@@ -1,4 +1,4 @@
-curl -L https://github.com/libuv/libuv/archive/v1.38.0.tar.gz
+curl -L https://github.com/libuv/libuv/archive/v1.38.0.tar.gz --output v1.38.0.tar.gz
 tar xfz v1.38.0.tar.gz
 cd libuv-1.38.0/
 mkdir -p build
