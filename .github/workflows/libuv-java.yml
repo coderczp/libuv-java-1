@@ -3,7 +3,7 @@ name: libuv-java
 on:
   [push]
 jobs:
-  wðhd9ws:
+  windows:
     name: windows
     runs-on: windows-latest
     if: "contains(toJSON(github.event.commits.*.message), '[build windows]')"
