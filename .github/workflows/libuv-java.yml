@@ -17,7 +17,6 @@ jobs:
         architecture: x64
     - name: Build
       run: |
-      shell: cmd
          curl -O -L https://github.com/ninja-build/ninja/releases/download/v1.10.0/ninja-win.zip
          tar xf ninja-win.zip
          set PATH=%PATH%;%cd%
@@ -27,6 +26,7 @@ jobs:
          cd ..
          mvn --no-transfer-progress -q -B -DskipTests package
          mvn --no-transfer-progress test
+      shell: cmd
     - name: Archive library
       uses: actions/upload-artifact@v1
       with:
