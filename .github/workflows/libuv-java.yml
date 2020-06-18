@@ -17,6 +17,9 @@ jobs:
         architecture: x64
     - name: Build
       run: |
+         curl -O -L https://github.com/ninja-build/ninja/releases/download/v1.10.0/ninja-win.zip
+         tar xf ninja-win.zip
+         set PATH=%PATH%;%cd%
          cd src\main
          ./build.bat
          cd ..
