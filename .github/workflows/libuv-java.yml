@@ -15,10 +15,12 @@ jobs:
         java-version: 1.8
         java-package: jdk
         architecture: x64
-    - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v1.0.0
+    - name: Add cl.exe to PATH
+      uses: ilammy/msvc-dev-cmd@v1
       with:
-        vs-version: 15.9
+        arch: x64
+        sdk: 8.1
+        toolset: 14.0
     - name: Build
       run: |
          curl -L https://github.com/ninja-build/ninja/releases/download/v1.10.0/ninja-win.zip --output ninja-win.zip
