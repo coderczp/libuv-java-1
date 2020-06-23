@@ -28,7 +28,7 @@ libuv-java is regularly tested on [github actions](https://github.com/webfolderi
 Download
 ----------------------
 
-[libuv-java-1.0.0.jar](https://github.com/webfolderio/libuv-java/releases/download/untagged-8b3399193886079e9098/libuv-java-1.0.0.jar) - 291 KB
+[libuv-java-1.0.0.jar](https://github.com/webfolderio/libuv-java/releases/download/1.0.0/libuv-java-1.0.0.jar) - 291 KB
 
 License
 -------
