@@ -7,6 +7,7 @@
   <artifactId>libuv-java</artifactId>
   <version>1.0.0</version>
   <name>libuv-java</name>
+  <description>Java binding for libuv.</description>
   <licenses>
     <license>
       <name>GNU General Public License, version 2, with the Classpath Exception</name>
@@ -14,9 +15,24 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+  <organization>
+    <name>WebFolder OÜ</name>
+    <url>https://webfolder.io</url>
+  </organization>
+  <developers>
+    <developer>
+      <name>WebFolder</name>
+      <email>support@webfolder.io</email>
+      <timezone>GMT+2</timezone>
+      <organization>WebFolder OÜ</organization>
+      <url>https://webfolder.io</url>
+      <organizationUrl>https://webfolder.io</organizationUrl>
+    </developer>
+  </developers>
   <scm>
     <url>https://github.com/webfolderio/libuv-java.git</url>
   </scm>
+  <url>https://webfolder.io</url>
   <distributionManagement>
     <snapshotRepository>
       <id>ossrh</id>

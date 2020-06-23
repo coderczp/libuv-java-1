@@ -38,3 +38,4 @@ libuv.dll
 /src/main/resources/META-INF/uv-java.ilk
 /src/main/resources/META-INF/uv-java.lib
 /src/main/resources/META-INF/uv-java.pdb
+/src/main/resources/META-INF/libuv-java.dylib
