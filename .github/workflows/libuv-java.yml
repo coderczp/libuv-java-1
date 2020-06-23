@@ -21,11 +21,13 @@ jobs:
          ./build.bat
          cd ..
          cd ..
+         mvn --no-transfer-progress -q -B -DskipTests package
+         mvn --no-transfer-progress test
     - name: Archive library
       uses: actions/upload-artifact@v1
       with:
         name: libuv-windows
-        path: .
+        path: target/libuv-java-1.0.0.jar
   ubuntu:
     name: ubuntu
     runs-on: ubuntu-latest
