@@ -14,5 +14,5 @@ cmake .. -DCMAKE_INSTALL_PREFIX=../../install -G "Visual Studio 15 2017" -A x64
 cmake --build . --target uv-java --config Release
 cd ..
 mkdir ..\main\resources\META-INF 2> NUL
-copy build\libuv-java.dll ..\main\resources\META-INF\libuv-java.dll
+copy build\Release\uv-java.dll ..\main\resources\META-INF\uv-java.dll
 cd ..
