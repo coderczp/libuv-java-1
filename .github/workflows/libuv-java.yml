@@ -3,6 +3,33 @@ name: libuv-java
 on:
   [push]
 jobs:
+  macos:
+    name: macos
+    runs-on: macos-latest
+    if: "contains(toJSON(github.event.commits.*.message), '[build macos]')"
+    steps:
+    - uses: actions/checkout@v2
+      name: Checkout project
+    - uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+        java-package: jdk
+        architecture: x64
+    - name: Build
+      run: |
+         export CC=clang
+         export CXX=clang++
+         cd src/main
+         ./build.sh
+         cd ..
+         cd ..
+         mvn --no-transfer-progress -q -B -DskipTests package
+         mvn --no-transfer-progress test
+    - name: Archive library
+      uses: actions/upload-artifact@v1
+      with:
+        name: libuv-macos
+        path: target/libuv-java-1.0.0.jar
   windows:
     name: windows
     runs-on: windows-2016
