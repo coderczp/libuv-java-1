@@ -21,10 +21,6 @@ jobs:
         vs-version: 15.9
     - name: Build
       run: |
-         call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Auxiliary\Build\vcvarsall.bat" x64
-         curl -L https://github.com/ninja-build/ninja/releases/download/v1.10.0/ninja-win.zip --output ninja-win.zip
-         tar xf ninja-win.zip
-         set PATH=%PATH%;%cd%
          cd src\main
          ./build.bat
          cd ..
