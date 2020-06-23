@@ -21,6 +21,7 @@ jobs:
         vs-version: 15.9
     - name: Build
       run: |
+         vswhere.exe
          cd src\main
          ./build.bat
          cd ..
