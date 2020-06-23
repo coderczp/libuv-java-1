@@ -15,10 +15,6 @@ jobs:
         java-version: 1.8
         java-package: jdk
         architecture: x64
-    - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v1.0.0
-      with:
-        vs-version: 15.9
     - name: Build
       run: |
          vswhere.exe
