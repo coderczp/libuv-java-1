@@ -53,6 +53,8 @@ public final class LibUV {
 
     private static final boolean WINDOWS = OS_NAME.startsWith("windows");
 
+    private static final boolean MAC = OS_NAME.contains("mac");
+
     static {
         loadJni();
     }
@@ -62,7 +64,7 @@ public final class LibUV {
             return true;
         }
         ClassLoader cl = LibUV.class.getClassLoader();
-        String name = WINDOWS ? "uv-java.dll" : "libuv-java.so";
+        String name = WINDOWS ? "uv-java.dll" : MAC ? "libuv-java.dylib" : "libuv-java.so";
         Path libFile = tmpdir.resolve("libuv-java-" + version).resolve(name);
         if (!exists(libFile)) {
             try (InputStream is = cl.getResourceAsStream("META-INF/" + name)) {
