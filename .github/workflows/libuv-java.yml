@@ -17,7 +17,6 @@ jobs:
         architecture: x64
     - name: Build
       run: |
-         vswhere.exe
          "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
          cl.exe
          cd src\main
@@ -26,7 +25,6 @@ jobs:
          cd ..
          mvn --no-transfer-progress -q -B -DskipTests package
          mvn --no-transfer-progress test
-      shell: cmd
     - name: Archive library
       uses: actions/upload-artifact@v1
       with:
