@@ -29,7 +29,7 @@ if (CMAKE_BUILD_TYPE MATCHES Release)
 endif()
 
 if(WIN32)
-  target_link_libraries(uv-java PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/install/lib/Release/uv_a.lib" wsock32 w2_s32)
+  target_link_libraries(uv-java PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/install/lib/Release/uv_a.lib" wsock32)
 else()
   target_link_libraries(uv-java PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/install/lib/libuv_a.a")
 endif()
