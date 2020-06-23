@@ -5,6 +5,7 @@ mkdir -p build
 cd build
 cmake .. -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX=../../install -G "Visual Studio 15 2017" -A x64
 cmake --build . --target uv_a --config Release
+cmake --build . --target INSTALL
 cd ..
 cd ..
 mkdir build 2> NUL
