@@ -70,7 +70,6 @@ jobs:
     - name: Build
       run: |
          sudo apt-get -y update
-         sudo apt-get -y install ninja-build
          cd src/main
          ./build.sh
          cd ..
@@ -95,11 +94,7 @@ jobs:
          yum -y update
          yum -y group install "Development Tools"
          yum -y install wget
-         yum -y install unzip
          yum -y install cmake
-         wget -q https://github.com/ninja-build/ninja/releases/download/v1.10.0/ninja-linux.zip
-         unzip ninja-linux.zip
-         PATH=$PATH:$PWD
          wget -q https://github.com/Kitware/CMake/releases/download/v3.17.3/cmake-3.17.3-Linux-x86_64.tar.gz
          tar xfz cmake-3.17.3-Linux-x86_64.tar.gz
          mv cmake-3.17.3-Linux-x86_64/ cmake/

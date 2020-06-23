@@ -4,7 +4,7 @@ tar xfz v1.38.0.tar.gz
 cd libuv-1.38.0/
 mkdir -p build
 cd build
-cmake .. -DCMAKE_C_FLAGS=-fPIC -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_INSTALL_PREFIX=../../install -DCMAKE_BUILD_TYPE=Release
+cmake .. -DBUILD_TESTING=OFF -DCMAKE_C_FLAGS=-fPIC -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_INSTALL_PREFIX=../../install -DCMAKE_BUILD_TYPE=Release
 make
 make install
 cd ..
@@ -15,5 +15,5 @@ cmake .. -DCMAKE_INSTALL_PREFIX=../../install -DCMAKE_BUILD_TYPE=Release
 make
 cd ..
 mkdir -p ../main/resources/META-INF
-cp build/libuv-java.so ../main/resources/META-INF/libuv-java.so
+cp build/libuv-java.{so,dylib} ../main/resources/META-INF
 cd ..
