@@ -2,12 +2,6 @@
 
 [![Build](https://github.com/webfolderio/libuv-java/workflows/libuv-java/badge.svg)](https://github.com/webfolderio/libuv-java/actions?query=workflow%3Alibuv-java)
 
-<<<<<<< HEAD
-### Changelog
-
-- Updated libuv version from 0.10.x to 1.x
-
-=======
 Java binding for [libuv](https://github.com/libuv/libuv).
 
 Supported Java Versions
@@ -39,4 +33,3 @@ Download
 License
 -------
 Licensed under the [GNU General Public License v2.0](https://github.com/webfolderio/libuv-java/blob/master/LICENSE).
->>>>>>> 288c4f3... bump version 1.0.0
