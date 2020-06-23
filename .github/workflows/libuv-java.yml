@@ -27,7 +27,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: libuv-windows
-        path: target/libuv-java-1.0.0.jar
+        path: .
   ubuntu:
     name: ubuntu
     runs-on: ubuntu-latest
