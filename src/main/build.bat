@@ -3,15 +3,14 @@ tar xfz v1.38.0.tar.gz
 cd libuv-1.38.0/
 mkdir -p build
 cd build
-cmake .. -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_INSTALL_PREFIX=../../install -DCMAKE_BUILD_TYPE=Release -G"Visual Studio 15 2017 Win64"
-ninja
-ninja install
+cmake .. -DCMAKE_INSTALL_PREFIX=../../install -DCMAKE_BUILD_TYPE=Release -G"Visual Studio 15 2017 Win64"
+cmake --build . --config Release
 cd ..
 cd ..
 mkdir build 2> NUL
 cd build
-cmake .. -DCMAKE_C_COMPILER=cl.exe -DCMAKE_CXX_COMPILER=cl.exe -DCMAKE_INSTALL_PREFIX=../../install -DCMAKE_BUILD_TYPE=Release -GNinja
-ninja
+cmake .. -DCMAKE_INSTALL_PREFIX=../../install -DCMAKE_BUILD_TYPE=Release -G"Visual Studio 15 2017 Win64"
+cmake --build . --config Release
 cd ..
 mkdir ..\main\resources\META-INF 2> NUL
 copy build\libuv-java.so ..\main\resources\META-INF\libuv-java.dll
