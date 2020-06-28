@@ -42,9 +42,9 @@ mvn deploy:deploy-file -DgroupId=io.webfolder -DartifactId=libuv-java -Dversion=
 Install artifacts for Nix:
 
 ```sh
-mvn deploy:deploy-file -DgroupId=io.webfolder -DartifactId=libuv-java -Dversion=1.0.0 -Dfile=libuv-java-1.0.0.jar -Dpackaging=jar -Durl=file://%HOME%\.m2
-mvn deploy:deploy-file -DgroupId=io.webfolder -DartifactId=libuv-java -Dversion=1.0.0 -Dfile=libuv-java-1.0.0-sources.jar -Dpackaging=jar -Dclassifier=sources -Durl=file://%HOME%\.m2
-mvn deploy:deploy-file -DgroupId=io.webfolder -DartifactId=libuv-java -Dversion=1.0.0 -Dfile=libuv-java-1.0.0-javadoc.jar -Dpackaging=jar -Dclassifier=javadoc -Durl=file://%HOME%\.m2
+mvn deploy:deploy-file -DgroupId=io.webfolder -DartifactId=libuv-java -Dversion=1.0.0 -Dfile=libuv-java-1.0.0.jar -Dpackaging=jar -Durl=file://$HOME/.m2
+mvn deploy:deploy-file -DgroupId=io.webfolder -DartifactId=libuv-java -Dversion=1.0.0 -Dfile=libuv-java-1.0.0-sources.jar -Dpackaging=jar -Dclassifier=sources -Durl=file://$HOME/.m2
+mvn deploy:deploy-file -DgroupId=io.webfolder -DartifactId=libuv-java -Dversion=1.0.0 -Dfile=libuv-java-1.0.0-javadoc.jar -Dpackaging=jar -Dclassifier=javadoc -Durl=file://$HOME/.m2
 ```
 
 License
