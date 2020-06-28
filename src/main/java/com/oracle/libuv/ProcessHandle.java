@@ -36,11 +36,11 @@ public class ProcessHandle extends Handle {
     public enum ProcessFlags {
         NONE(0),
         /**
-         * sets the child’s execution user ID
+         * sets the child's execution user ID
          */
         SETUID(1 << 0),
         /**
-         * sets the child’s execution group ID
+         * sets the child's execution group ID
          */
         SETGID(1 << 1),
         /**
