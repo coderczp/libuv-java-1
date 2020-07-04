@@ -28,23 +28,23 @@ libuv-java is regularly tested on [github actions](https://github.com/webfolderi
 Download
 --------
 
-[libuv-java-1.0.0.jar](https://github.com/webfolderio/libuv-java/releases/download/1.0.0/libuv-java-1.0.0.jar) - 291 KB
+[libuv-java-1.0.1.jar](https://github.com/webfolderio/libuv-java/releases/download/1.0.1/libuv-java-1.0.1.jar) - 291 KB
+[libuv-java-1.0.1-sources.jar](https://github.com/webfolderio/libuv-java/releases/download/1.0.1/libuv-java-1.0.1-sources.jar) - 302 KB
+[libuv-java-1.0.1-javadoc.jar](https://github.com/webfolderio/libuv-java/releases/download/1.0.1/libuv-java-1.0.1-javadoc.jar) - 608 KB
 
 Maven Integration
 -----------------
-Install artifacts for Windows:
-```sh
-mvn deploy:deploy-file -DgroupId=io.webfolder -DartifactId=libuv-java -Dversion=1.0.0 -Dfile=libuv-java-1.0.0.jar -Dpackaging=jar -Durl=file://%USERPROFILE%\.m2
-mvn deploy:deploy-file -DgroupId=io.webfolder -DartifactId=libuv-java -Dversion=1.0.0 -Dfile=libuv-java-1.0.0-sources.jar -Dpackaging=jar -Dclassifier=sources -Durl=file://%USERPROFILE%\.m2
-mvn deploy:deploy-file -DgroupId=io.webfolder -DartifactId=libuv-java -Dversion=1.0.0 -Dfile=libuv-java-1.0.0-javadoc.jar -Dpackaging=jar -Dclassifier=javadoc -Durl=file://%USERPROFILE%\.m2
-```
 
-Install artifacts for Nix:
+To use the official release of libuv-java, please use the following snippet in your `pom.xml` file.
 
-```sh
-mvn deploy:deploy-file -DgroupId=io.webfolder -DartifactId=libuv-java -Dversion=1.0.0 -Dfile=libuv-java-1.0.0.jar -Dpackaging=jar -Durl=file://$HOME/.m2
-mvn deploy:deploy-file -DgroupId=io.webfolder -DartifactId=libuv-java -Dversion=1.0.0 -Dfile=libuv-java-1.0.0-sources.jar -Dpackaging=jar -Dclassifier=sources -Durl=file://$HOME/.m2
-mvn deploy:deploy-file -DgroupId=io.webfolder -DartifactId=libuv-java -Dversion=1.0.0 -Dfile=libuv-java-1.0.0-javadoc.jar -Dpackaging=jar -Dclassifier=javadoc -Durl=file://$HOME/.m2
+Add the following to your POM's `<dependencies>` tag:
+
+```xml
+<dependency>
+    <groupId>io.webfolder</groupId>
+    <artifactId>libuv-java</artifactId>
+    <version>1.0.1</version>
+</dependency>
 ```
 
 License
