@@ -29,7 +29,9 @@ Download
 --------
 
 [libuv-java-1.0.1.jar](https://github.com/webfolderio/libuv-java/releases/download/1.0.1/libuv-java-1.0.1.jar) - 291 KB
+
 [libuv-java-1.0.1-sources.jar](https://github.com/webfolderio/libuv-java/releases/download/1.0.1/libuv-java-1.0.1-sources.jar) - 302 KB
+
 [libuv-java-1.0.1-javadoc.jar](https://github.com/webfolderio/libuv-java/releases/download/1.0.1/libuv-java-1.0.1-javadoc.jar) - 608 KB
 
 Maven Integration
