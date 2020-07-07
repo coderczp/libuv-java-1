@@ -68,6 +68,9 @@ public final class LibUV {
         Path libFile = tmpdir.resolve("libuv-java-" + version).resolve(name);
         if (!exists(libFile)) {
             try (InputStream is = cl.getResourceAsStream("META-INF/" + name)) {
+                if (is == null) {
+                    throw new RuntimeException("resource not found: META-INF/" + name);
+                }
                 if (!exists(libFile.getParent())) {
                     createDirectory(libFile.getParent());
                 }
