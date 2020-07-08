@@ -1,0 +1,8 @@
+{
+  "resources":[
+    {"pattern":"\\QMETA-INF/libuv-java.so\\E"},
+    {"pattern":"\\QMETA-INF/libuv-java.dylib\\E"},
+    {"pattern":"\\QMETA-INF/libuv-java.dll\\E"}
+  ],
+  "bundles":[]
+}

@@ -1,0 +1,74 @@
+[
+{
+  "name":"com.oracle.libuv.Address",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.String","int","java.lang.String"] }]
+},
+{
+  "name":"com.oracle.libuv.AsyncHandle",
+  "methods":[{"name":"callSend","parameterTypes":["int"] }]
+},
+{
+  "name":"com.oracle.libuv.CheckHandle",
+  "methods":[{"name":"callback","parameterTypes":["int","int"] }]
+},
+{
+  "name":"com.oracle.libuv.DNSHandle",
+  "methods":[{"name":"callback","parameterTypes":["com.oracle.libuv.Address","int"] }]
+},
+{
+  "name":"com.oracle.libuv.IdleHandle",
+  "methods":[{"name":"callback","parameterTypes":["int","int"] }]
+},
+{
+  "name":"com.oracle.libuv.ProcessHandle",
+  "methods":[
+    {"name":"callClose","parameterTypes":[] }, 
+    {"name":"callExit","parameterTypes":["int","int","java.lang.Exception"] }
+  ]
+},
+{
+  "name":"com.oracle.libuv.StreamHandle",
+  "methods":[
+    {"name":"callClose","parameterTypes":[] }, 
+    {"name":"callConnect","parameterTypes":["int","java.lang.Exception","java.lang.Object"] }, 
+    {"name":"callConnection","parameterTypes":["int","java.lang.Exception"] }, 
+    {"name":"callRead","parameterTypes":["java.nio.ByteBuffer"] }, 
+    {"name":"callShutdown","parameterTypes":["int","java.lang.Exception","java.lang.Object"] }, 
+    {"name":"callWrite","parameterTypes":["int","java.lang.Exception","java.lang.Object"] }
+  ]
+},
+{
+  "name":"com.oracle.libuv.TimerHandle",
+  "methods":[{"name":"callback","parameterTypes":["int","int"] }]
+},
+{
+  "name":"com.oracle.libuv.UDPHandle",
+  "methods":[
+    {"name":"callClose","parameterTypes":[] }, 
+    {"name":"callRecv","parameterTypes":["int","java.nio.ByteBuffer","com.oracle.libuv.Address"] }, 
+    {"name":"callSend","parameterTypes":["int","java.lang.Exception","java.lang.Object"] }
+  ]
+},
+{
+  "name":"java.lang.ClassLoader",
+  "methods":[
+    {"name":"getPlatformClassLoader","parameterTypes":[] }, 
+    {"name":"loadClass","parameterTypes":["java.lang.String"] }
+  ]
+},
+{
+  "name":"java.lang.ClassNotFoundException"
+},
+{
+  "name":"java.lang.NoSuchMethodError"
+},
+{
+  "name":"java.lang.OutOfMemoryError"
+},
+{
+  "name":"java.lang.String"
+},
+{
+  "name":"java.lang.String[]"
+}
+]
