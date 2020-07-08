@@ -28,11 +28,11 @@ libuv-java is regularly tested on [github actions](https://github.com/webfolderi
 Download
 --------
 
-[libuv-java-1.0.1.jar](https://github.com/webfolderio/libuv-java/releases/download/1.0.2/libuv-java-1.0.2.jar) - 293 KB
+[libuv-java-1.0.2.jar](https://github.com/webfolderio/libuv-java/releases/download/1.0.2/libuv-java-1.0.2.jar) - 293 KB
 
-[libuv-java-1.0.1-sources.jar](https://github.com/webfolderio/libuv-java/releases/download/1.0.2/libuv-java-1.0.1-sources.jar) - 304 KB
+[libuv-java-1.0.2-sources.jar](https://github.com/webfolderio/libuv-java/releases/download/1.0.2/libuv-java-1.0.2-sources.jar) - 304 KB
 
-[libuv-java-1.0.1-javadoc.jar](https://github.com/webfolderio/libuv-java/releases/download/1.0.2/libuv-java-1.0.1-javadoc.jar) - 608 KB
+[libuv-java-1.0.2-javadoc.jar](https://github.com/webfolderio/libuv-java/releases/download/1.0.2/libuv-java-1.0.2-javadoc.jar) - 608 KB
 
 Maven Integration
 -----------------
