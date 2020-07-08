@@ -54,7 +54,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: libuv-windows
-        path: target/libuv-java-1.0.0.jar
+        path: target/libuv-java-1.0.2.jar
   ubuntu:
     name: ubuntu
     runs-on: ubuntu-latest
@@ -80,7 +80,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: libuv-ubuntu
-        path: target/libuv-java-1.0.0.jar
+        path: target/libuv-java-1.0.2.jar
   centos:
     name: centos
     runs-on: ubuntu-latest
@@ -118,4 +118,4 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: libuv-centos
-        path: target/libuv-java-1.0.0.jar
+        path: target/libuv-java-1.0.2.jar
