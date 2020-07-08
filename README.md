@@ -7,7 +7,7 @@ Java binding for [libuv](https://github.com/libuv/libuv).
 Supported Java Versions
 -----------------------
 
-Oracle & OpenJDK Java 8, 11.
+Oracle & OpenJDK Java 8, 11 & GraalVM Substrate VM (native-image).
 
 Both the JRE and the JDK are suitable for use with this library.
 
