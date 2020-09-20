@@ -1,8 +1,11 @@
 # libuv-java
 
+libuv bindings for Java.
+
 [![Build](https://github.com/webfolderio/libuv-java/workflows/libuv-java/badge.svg)](https://github.com/webfolderio/libuv-java/actions?query=workflow%3Alibuv-java)
 
-Java binding for [libuv](https://github.com/libuv/libuv).
+[Libuv](https://github.com/libuv/libuv) is a cross platform asynchronous IO implementation that powers NodeJS. It supports sockets, both UDP and TCP, filesystem watch, TTY, 
+Pipes and other asynchronous primitives like timer, check, prepare and idle.
 
 Supported Java Versions
 -----------------------
