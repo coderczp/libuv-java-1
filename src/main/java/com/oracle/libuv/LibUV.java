@@ -22,7 +22,6 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-
 package com.oracle.libuv;
 
 import static java.lang.System.getProperty;
@@ -44,7 +43,7 @@ public final class LibUV {
 
     private static boolean loaded;
 
-    private static final String version = "1.0.2";
+    private static final String version = "1.0.3";
 
     private static final String OS_NAME = getProperty("os.name").toLowerCase(ENGLISH);
 
