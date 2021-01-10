@@ -128,9 +128,7 @@ void StreamCallbacks::on_read(const uv_buf_t* buf, jsize nread) {
         _call_read_callback_mid,
         NULL);
   } else if (nread > 0) {
-    jbyte* data = new jbyte[nread];
-    memcpy(data, buf->base, nread);
-    jobject arg = _env->NewDirectByteBuffer(data, nread);
+    jobject arg = _env->NewDirectByteBuffer(buf->base, nread);
     OOM(_env, arg);
     _env->CallVoidMethod(
         _instance,

@@ -89,10 +89,22 @@ public final class LoopCallbackHandler implements CallbackHandler {
     public void handleStreamReadCallback(final StreamReadCallback cb,
                                          final ByteBuffer         data) {
         try {
-            cb.onRead(data);
+        	if (data != null) {
+        		ByteBuffer buffer = clone(data);
+        		cb.onRead(buffer);
+        	} else {
+        		cb.onRead(data);
+        	}
         } catch (final Exception ex) {
             exceptionHandler.handle(ex);
         }
+    }
+
+    private ByteBuffer clone(ByteBuffer original) {
+        ByteBuffer clone = ByteBuffer.allocate(original.capacity());
+        clone.put(original);
+        clone.flip();
+        return clone;
     }
 
     @Override
