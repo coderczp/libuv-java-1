@@ -30,6 +30,8 @@ public final class LoopCallbackHandler implements CallbackHandler {
 
     private final CallbackExceptionHandler exceptionHandler;
 
+    private static final Boolean USE_DIRECT_BYTE_BUFFER = Boolean.parseBoolean(System.getProperty("libuv-java.use.directbytebuffer", "fase"));
+
     LoopCallbackHandler(final CallbackExceptionHandler exceptionHandler) {
         this.exceptionHandler = exceptionHandler;
     }
@@ -53,7 +55,6 @@ public final class LoopCallbackHandler implements CallbackHandler {
             exceptionHandler.handle(ex);
         }
     }
-
 
     @Override
     public void handleCheckCallback(CloseCallback cb, int status) {
@@ -89,19 +90,20 @@ public final class LoopCallbackHandler implements CallbackHandler {
     public void handleStreamReadCallback(final StreamReadCallback cb,
                                          final ByteBuffer         data) {
         try {
-        	if (data != null) {
-        		ByteBuffer buffer = clone(data);
-        		cb.onRead(buffer);
-        	} else {
-        		cb.onRead(data);
-        	}
+            if (data != null) {
+                ByteBuffer buffer = clone(data);
+                cb.onRead(buffer);
+            } else {
+                cb.onRead(data);
+            }
         } catch (final Exception ex) {
             exceptionHandler.handle(ex);
         }
     }
 
     private ByteBuffer clone(ByteBuffer original) {
-        ByteBuffer clone = ByteBuffer.allocate(original.capacity());
+        ByteBuffer clone = USE_DIRECT_BYTE_BUFFER ? ByteBuffer.allocateDirect(original.capacity()) :
+                            ByteBuffer.allocate(original.capacity());
         clone.put(original);
         clone.flip();
         return clone;
@@ -206,9 +208,14 @@ public final class LoopCallbackHandler implements CallbackHandler {
     public void handleUDPRecvCallback(final     UDPRecvCallback cb,
                                       final int nread,
                                       final     ByteBuffer data,
-            final Address address) {
+                                      final Address address) {
         try {
-            cb.onRecv(nread, data, address);
+            if (data != null) {
+                ByteBuffer buffer = clone(data);
+                cb.onRecv(nread, buffer, address);
+            } else {
+                cb.onRecv(nread, data, address);
+            }
         } catch (final Exception ex) {
             exceptionHandler.handle(ex);
         }

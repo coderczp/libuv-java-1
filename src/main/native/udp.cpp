@@ -87,9 +87,7 @@ void UDPCallbacks::on_recv(ssize_t nread, const uv_buf_t* buf, const struct sock
   if (nread == 0) return;
   jobject buffer_arg = NULL;
   if (nread > 0) {
-    jbyte* data = new jbyte[nread];
-    memcpy(data, buf->base, nread);
-    buffer_arg = _env->NewDirectByteBuffer(data, nread);
+    buffer_arg = _env->NewDirectByteBuffer(buf->base, nread);
     OOM(_env, buffer_arg);
   }
   jobject rinfo_arg = addr ? StreamCallbacks::_address_to_js(_env, addr) : NULL;
