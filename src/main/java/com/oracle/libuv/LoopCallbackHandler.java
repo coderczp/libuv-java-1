@@ -24,13 +24,17 @@
  */
 package com.oracle.libuv;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.parseBoolean;
+import static java.lang.System.getProperty;
+
 import java.nio.ByteBuffer;
 
 public final class LoopCallbackHandler implements CallbackHandler {
 
     private final CallbackExceptionHandler exceptionHandler;
 
-    private static final Boolean USE_DIRECT_BYTE_BUFFER = Boolean.parseBoolean(System.getProperty("libuv-java.use.directbytebuffer", "fase"));
+    private static final Boolean USE_DIRECT_BYTE_BUFFER = parseBoolean(getProperty("libuv-java.use.directbytebuffer", FALSE.toString()));
 
     LoopCallbackHandler(final CallbackExceptionHandler exceptionHandler) {
         this.exceptionHandler = exceptionHandler;
