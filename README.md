@@ -31,11 +31,11 @@ libuv-java is regularly tested on [github actions](https://github.com/webfolderi
 Download
 --------
 
-[libuv-java-1.0.2.jar](https://repo1.maven.org/maven2/io/webfolder/libuv-java/1.0.2/libuv-java-1.0.2.jar) - 293 KB
+[libuv-java-1.0.3.jar](https://repo1.maven.org/maven2/io/webfolder/libuv-java/1.0.3/libuv-java-1.0.3.jar) - 295 KB
 
-[libuv-java-1.0.2-sources.jar](https://repo1.maven.org/maven2/io/webfolder/libuv-java/1.0.2/libuv-java-1.0.2-sources.jar) - 304 KB
+[libuv-java-1.0.3-sources.jar](https://repo1.maven.org/maven2/io/webfolder/libuv-java/1.0.3/libuv-java-1.0.3-sources.jar) - 305 KB
 
-[libuv-java-1.0.2-javadoc.jar](https://repo1.maven.org/maven2/io/webfolder/libuv-java/1.0.2/libuv-java-1.0.2-javadoc.jar) - 608 KB
+[libuv-java-1.0.3-javadoc.jar](https://repo1.maven.org/maven2/io/webfolder/libuv-java/1.0.3/libuv-java-1.0.3-javadoc.jar) - 608 KB
 
 Maven Integration
 -----------------
@@ -48,7 +48,7 @@ Add the following to your POM's `<dependencies>` tag:
 <dependency>
     <groupId>io.webfolder</groupId>
     <artifactId>libuv-java</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 </dependency>
 ```
 
