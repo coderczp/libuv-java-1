@@ -206,7 +206,7 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_UDPHandle__1bind
   } else {
 	  uv_ip4_addr(h, port, &addrv4);
   }
-  unsigned flags = 0;
+  unsigned flags = (ipv6 == JNI_TRUE) ? UV_UDP_IPV6ONLY : 0;
   const sockaddr* addr = (ipv6 == JNI_TRUE) ? (const struct sockaddr*) &addrv6 : (const struct sockaddr*) &addrv4;
   int r = uv_udp_bind(handle, addr, flags);
   if (r) {

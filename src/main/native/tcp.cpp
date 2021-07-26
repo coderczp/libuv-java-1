@@ -71,7 +71,7 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_TCPHandle__1bind
   } else {
 	  uv_ip4_addr(h, port, &addrv4);
   }
-  int flags = 0;
+  int flags = (ipv6 == JNI_TRUE) ? UV_TCP_IPV6ONLY : 0;
   const sockaddr* addr = (ipv6 == JNI_TRUE) ? (const struct sockaddr*) &addrv6 : (const struct sockaddr*) &addrv4;
   int r = uv_tcp_bind(handle, addr, flags);
   if (r) {
