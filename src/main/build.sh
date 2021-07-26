@@ -15,5 +15,5 @@ cmake .. -DCMAKE_INSTALL_PREFIX=../../install -DCMAKE_BUILD_TYPE=Release
 make
 cd ..
 mkdir -p ../main/resources/META-INF
-cp build/libuv-java.{so,dylib} ../main/resources/META-INF
+cp build/libuv-java.{so,dylib} ../main/resources/META-INF | true
 cd ..
