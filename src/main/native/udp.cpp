@@ -195,7 +195,7 @@ JNIEXPORT jobject JNICALL Java_com_oracle_libuv_UDPHandle__1address
 }
 
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_UDPHandle__1bind
-  (JNIEnv *env, jobject that, jlong udp, jint port, jstring host, jboolean ipv6) {
+  (JNIEnv *env, jobject that, jlong udp, jint port, jstring host, jboolean ipv6, jint flags) {
   assert(udp);
   uv_udp_t* handle = reinterpret_cast<uv_udp_t*>(udp);
   const char* h = env->GetStringUTFChars(host, 0);
@@ -206,9 +206,8 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_UDPHandle__1bind
   } else {
 	  uv_ip4_addr(h, port, &addrv4);
   }
-  unsigned flags = (ipv6 == JNI_TRUE) ? UV_UDP_IPV6ONLY : 0;
   const sockaddr* addr = (ipv6 == JNI_TRUE) ? (const struct sockaddr*) &addrv6 : (const struct sockaddr*) &addrv4;
-  int r = uv_udp_bind(handle, addr, flags);
+  int r = uv_udp_bind(handle, addr, (unsigned int) flags);
   if (r) {
     ThrowException(env, r, "uv_udp_bind", h);
   }

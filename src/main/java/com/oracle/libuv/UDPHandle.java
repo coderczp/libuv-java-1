@@ -29,6 +29,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
+import java.util.EnumSet;
 
 public class UDPHandle extends Handle {
 
@@ -87,8 +88,20 @@ public class UDPHandle extends Handle {
     public int bind(final int     port,
                     final String  address,
                     final boolean ipv6) {
+        return bind(port, address,
+                    ipv6, EnumSet.noneOf(UdpFlags.class));
+    }
+
+    public int bind(final int     port,
+                    final String  address,
+                    final boolean ipv6,
+                    EnumSet<UdpFlags> flags) {
         requireNonNull(address);
-        return _bind(pointer, port, address, ipv6);
+        int flagValue = 0;
+        for (UdpFlags next : flags) {
+            flagValue |= next.value;
+        }
+        return _bind(pointer, port, address, ipv6, flagValue);
     }
 
     public int send(final String  str,
@@ -234,7 +247,8 @@ public class UDPHandle extends Handle {
     private native int _bind(long    ptr,
                              int     port,
                              String  host,
-                             boolean ipv6);
+                             boolean ipv6,
+                             int     flags);
 
     private native int _send(long ptr,
                              ByteBuffer buffer,

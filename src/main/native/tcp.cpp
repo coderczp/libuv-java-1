@@ -59,7 +59,7 @@ JNIEXPORT jlong JNICALL Java_com_oracle_libuv_TCPHandle__1new
 }
 
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_TCPHandle__1bind
-  (JNIEnv *env, jobject that, jlong tcp, jstring host, jint port, jboolean ipv6) {
+  (JNIEnv *env, jobject that, jlong tcp, jstring host, jint port, jboolean ipv6, jint flags) {
 
   assert(tcp);
   uv_tcp_t* handle = reinterpret_cast<uv_tcp_t*>(tcp);
@@ -71,9 +71,8 @@ JNIEXPORT jint JNICALL Java_com_oracle_libuv_TCPHandle__1bind
   } else {
 	  uv_ip4_addr(h, port, &addrv4);
   }
-  int flags = (ipv6 == JNI_TRUE) ? UV_TCP_IPV6ONLY : 0;
   const sockaddr* addr = (ipv6 == JNI_TRUE) ? (const struct sockaddr*) &addrv6 : (const struct sockaddr*) &addrv4;
-  int r = uv_tcp_bind(handle, addr, flags);
+  int r = uv_tcp_bind(handle, addr, (unsigned int) flags);
   if (r) {
     ThrowException(env, r, "uv_tcp_bind", h);
   }

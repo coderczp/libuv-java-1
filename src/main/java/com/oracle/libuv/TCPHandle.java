@@ -26,6 +26,8 @@ package com.oracle.libuv;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.EnumSet;
+
 public class TCPHandle extends StreamHandle {
 
     TCPHandle(final LoopHandle loop) {
@@ -35,9 +37,21 @@ public class TCPHandle extends StreamHandle {
     public int bind(final String  address,
                     final int     port,
                     final boolean ipv6) {
+        return bind(address, port,
+                    ipv6, EnumSet.noneOf(TcpFlags.class));
+    }
+
+    public int bind(final String  address,
+                    final int     port,
+                    final boolean ipv6,
+                    EnumSet<TcpFlags> flags) {
         requireNonNull(address);
+        int flagValue = 0;
+        for (TcpFlags next : flags) {
+            flagValue |= next.value;
+        }
         return _bind(pointer, address,
-                     port, ipv6);
+                     port, ipv6, flagValue);
     }
 
     public int connect(final String  address,
@@ -91,7 +105,8 @@ public class TCPHandle extends StreamHandle {
     private native int _bind(final long    ptr,
                              final String  address,
                              final int     port,
-                             final boolean ipv6);
+                             final boolean ipv6,
+                             final int     flags);
 
     private native int _connect(final long    ptr,
                                 final String  address,
