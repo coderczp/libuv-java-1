@@ -26,6 +26,7 @@
 package com.oracle.libuv;
 
 import java.nio.ByteBuffer;
+import java.util.EnumSet;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -134,7 +135,8 @@ public class TCPHandleTest extends TestBase {
             }
         });
 
-        server.bind(ipv6 ? ADDRESS6 : ADDRESS, ipv6 ? PORT6 : PORT, ipv6);
+        EnumSet<TcpFlags> flags = ipv6 ? EnumSet.of(TcpFlags.UV_TCP_IPV6ONLY) : EnumSet.noneOf(TcpFlags.class);
+        server.bind(ipv6 ? ADDRESS6 : ADDRESS, ipv6 ? PORT6 : PORT, ipv6, flags);
         server.listen(1);
 
         Thread.sleep((long) (random.nextDouble() * 100));

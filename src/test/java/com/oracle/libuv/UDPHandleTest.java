@@ -27,6 +27,7 @@ package com.oracle.libuv;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.EnumSet;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -78,7 +79,8 @@ public class UDPHandleTest extends TestBase {
             }
         });
 
-        server.bind(PORT, ipv6 ? HOST6 : HOST, ipv6);
+        EnumSet<UdpFlags> flags = ipv6 ? EnumSet.of(UdpFlags.UV_UDP_IPV6ONLY) : EnumSet.noneOf(UdpFlags.class);
+        server.bind(PORT, ipv6 ? HOST6 : HOST, ipv6, flags);
         server.recvStart();
 
         for (int i = 0; i < TIMES; i++) {

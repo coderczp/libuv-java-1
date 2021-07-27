@@ -45,7 +45,7 @@ JNIEXPORT jobject JNICALL Java_com_oracle_libuv_UDPHandle__1address
  * Signature: (JILjava/lang/String;Z)I
  */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_UDPHandle__1bind
-  (JNIEnv *, jobject, jlong, jint, jstring, jboolean);
+  (JNIEnv *, jobject, jlong, jint, jstring, jboolean, jint);
 
 /*
  * Class:     com_oracle_libuv_UDPHandle

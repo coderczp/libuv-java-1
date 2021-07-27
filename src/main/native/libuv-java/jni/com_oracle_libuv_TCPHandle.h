@@ -21,7 +21,7 @@ JNIEXPORT jlong JNICALL Java_com_oracle_libuv_TCPHandle__1new
  * Signature: (JLjava/lang/String;IZ)I
  */
 JNIEXPORT jint JNICALL Java_com_oracle_libuv_TCPHandle__1bind
-  (JNIEnv *, jobject, jlong, jstring, jint, jboolean);
+  (JNIEnv *, jobject, jlong, jstring, jint, jboolean, jint);
 
 /*
  * Class:     com_oracle_libuv_TCPHandle
