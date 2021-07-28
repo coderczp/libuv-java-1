@@ -10,7 +10,7 @@ Pipes and other asynchronous primitives like timer, check, prepare and idle.
 Supported Java Versions
 -----------------------
 
-Oracle & OpenJDK Java 8, 11, GraalVM & Substrate VM (native-image).
+Oracle & OpenJDK Java 8, 11, & GraalVM native-image.
 
 Both the JRE and the JDK are suitable for use with this library.
 
@@ -31,11 +31,11 @@ libuv-java is regularly tested on [github actions](https://github.com/webfolderi
 Download
 --------
 
-[libuv-java-1.0.4.jar](https://repo1.maven.org/maven2/io/webfolder/libuv-java/1.0.4/libuv-java-1.0.4.jar) - 295 KB
+[libuv-java-1.1.0.jar](https://repo1.maven.org/maven2/io/webfolder/libuv-java/1.1.0/libuv-java-1.1.0.jar) - 299 KB
 
-[libuv-java-1.0.4-sources.jar](https://repo1.maven.org/maven2/io/webfolder/libuv-java/1.0.4/libuv-java-1.0.4-sources.jar) - 305 KB
+[libuv-java-1.1.0-sources.jar](https://repo1.maven.org/maven2/io/webfolder/libuv-java/1.1.0/libuv-java-1.1.0-sources.jar) - 309 KB
 
-[libuv-java-1.0.4-javadoc.jar](https://repo1.maven.org/maven2/io/webfolder/libuv-java/1.0.4/libuv-java-1.0.4-javadoc.jar) - 608 KB
+[libuv-java-1.1.0-javadoc.jar](https://repo1.maven.org/maven2/io/webfolder/libuv-java/1.1.0/libuv-java-1.1.0-javadoc.jar) - 550 KB
 
 Maven Integration
 -----------------
@@ -48,7 +48,7 @@ Add the following to your POM's `<dependencies>` tag:
 <dependency>
     <groupId>io.webfolder</groupId>
     <artifactId>libuv-java</artifactId>
-    <version>1.0.4</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
