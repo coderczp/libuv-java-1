@@ -41,17 +41,25 @@ public class TCPHandle extends StreamHandle {
                     ipv6, EnumSet.noneOf(TcpFlags.class));
     }
 
-    public int bind(final String  address,
-                    final int     port,
-                    final boolean ipv6,
+    public int bind(final String      address,
+                    final int         port,
+                    final boolean     ipv6,
                     EnumSet<TcpFlags> flags) {
         requireNonNull(address);
         int flagValue = 0;
         for (TcpFlags next : flags) {
             flagValue |= next.value;
         }
+        return bind(address, port,
+                    ipv6, flagValue);
+    }
+
+    public int bind(final String  address,
+                    final int     port,
+                    final boolean ipv6,
+                    final int     flags) {
         return _bind(pointer, address,
-                     port, ipv6, flagValue);
+                     port, ipv6, flags);
     }
 
     public int connect(final String  address,

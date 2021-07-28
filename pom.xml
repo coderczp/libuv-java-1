@@ -16,15 +16,15 @@
     </license>
   </licenses>
   <organization>
-    <name>WebFolder OÜ</name>
+    <name>WebFolder</name>
     <url>https://webfolder.io</url>
   </organization>
   <developers>
     <developer>
       <name>WebFolder</name>
       <email>support@webfolder.io</email>
-      <timezone>GMT+2</timezone>
-      <organization>WebFolder OÜ</organization>
+      <timezone>GMT+3</timezone>
+      <organization>WebFolder</organization>
       <url>https://webfolder.io</url>
       <organizationUrl>https://webfolder.io</organizationUrl>
     </developer>

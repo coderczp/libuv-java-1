@@ -101,7 +101,16 @@ public class UDPHandle extends Handle {
         for (UdpFlags next : flags) {
             flagValue |= next.value;
         }
-        return _bind(pointer, port, address, ipv6, flagValue);
+        return bind(port, address,
+                    ipv6, flagValue);
+    }
+
+    public int bind(final int     port,
+                    final String  address,
+                    final boolean ipv6,
+                    final int     flags) {
+        return _bind(pointer, port,
+                     address, ipv6, flags);
     }
 
     public int send(final String  str,
