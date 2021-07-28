@@ -1,6 +1,6 @@
-curl -L https://github.com/libuv/libuv/archive/v1.40.0.tar.gz --output v1.40.0.tar.gz
-tar xfz v1.40.0.tar.gz
-cd libuv-1.40.0/
+curl -L https://github.com/libuv/libuv/archive/refs/tags/v1.42.0.tar.gz --output v1.42.0.tar.gz
+tar xfz v1.42.0.tar.gz
+cd libuv-1.42.0/
 mkdir -p build
 cd build
 cmake .. -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX=../../install -G "Visual Studio 15 2017" -A x64

@@ -1,7 +1,7 @@
 mkdir -p install
-wget https://github.com/libuv/libuv/archive/v1.40.0.tar.gz
-tar xfz v1.40.0.tar.gz
-cd libuv-1.40.0/
+wget https://github.com/libuv/libuv/archive/refs/tags/v1.42.0.tar.gz
+tar xfz v1.42.0.tar.gz
+cd libuv-1.42.0/
 mkdir -p build
 cd build
 cmake .. -DBUILD_TESTING=OFF -DCMAKE_C_FLAGS=-fPIC -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_INSTALL_PREFIX=../../install -DCMAKE_BUILD_TYPE=Release
