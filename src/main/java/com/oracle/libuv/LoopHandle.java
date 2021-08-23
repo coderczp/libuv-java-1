@@ -80,6 +80,10 @@ public class LoopHandle implements Closeable {
     }
 
     public LoopHandle() {
+        this(LibUVConfiguration.builder().build());
+    }
+
+    public LoopHandle(LibUVConfiguration configuration) {
         newLoop();
         this.pointer = _new();
         assert pointer != 0;
@@ -95,7 +99,7 @@ public class LoopHandle implements Closeable {
             }
         };
 
-        this.callbackHandlerFactory = new LoopCallbackHandlerFactory(this.exceptionHandler);
+        this.callbackHandlerFactory = new LoopCallbackHandlerFactory(this.exceptionHandler, configuration);
 
         this.contextProvider = new ContextProvider() {
             @Override

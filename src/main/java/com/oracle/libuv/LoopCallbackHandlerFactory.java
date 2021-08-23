@@ -28,8 +28,8 @@ public final class LoopCallbackHandlerFactory implements CallbackHandlerFactory 
 
     private final LoopCallbackHandler defaultHandler;
 
-    LoopCallbackHandlerFactory(final CallbackExceptionHandler exceptionHandler) {
-        defaultHandler = new LoopCallbackHandler(exceptionHandler);
+    LoopCallbackHandlerFactory(final CallbackExceptionHandler exceptionHandler, LibUVConfiguration configuration) {
+        defaultHandler = new LoopCallbackHandler(exceptionHandler, configuration);
     }
 
     @Override

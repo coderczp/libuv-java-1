@@ -24,9 +24,7 @@
  */
 package com.oracle.libuv;
 
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.parseBoolean;
-import static java.lang.System.getProperty;
+import static java.lang.Boolean.TRUE;
 
 import java.nio.ByteBuffer;
 
@@ -34,10 +32,11 @@ public final class LoopCallbackHandler implements CallbackHandler {
 
     private final CallbackExceptionHandler exceptionHandler;
 
-    private static final Boolean USE_DIRECT_BYTE_BUFFER = parseBoolean(getProperty("libuv-java.use.directbytebuffer", FALSE.toString()));
+	private final LibUVConfiguration configuration;
 
-    LoopCallbackHandler(final CallbackExceptionHandler exceptionHandler) {
+    LoopCallbackHandler(final CallbackExceptionHandler exceptionHandler, LibUVConfiguration configuration) {
         this.exceptionHandler = exceptionHandler;
+        this.configuration = configuration;
     }
 
     @Override
@@ -106,11 +105,15 @@ public final class LoopCallbackHandler implements CallbackHandler {
     }
 
     private ByteBuffer clone(ByteBuffer original) {
-        ByteBuffer clone = USE_DIRECT_BYTE_BUFFER ? ByteBuffer.allocateDirect(original.capacity()) :
-                            ByteBuffer.allocate(original.capacity());
-        clone.put(original);
-        clone.flip();
-        return clone;
+    	if (configuration.copyBuffer()) {
+    		ByteBuffer clone = TRUE.equals(configuration.useDirectByteBuffer()) ? ByteBuffer.allocateDirect(original.capacity()) :
+    																			  ByteBuffer.allocate(original.capacity());
+    		clone.put(original);
+    		clone.flip();
+    		return clone;
+    	} else {
+    		return original;
+    	}
     }
 
     @Override

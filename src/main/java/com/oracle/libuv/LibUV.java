@@ -43,7 +43,7 @@ public final class LibUV {
 
     private static boolean loaded;
 
-    private static final String version = "1.1.0";
+    private static final String version = "1.2.0";
 
     private static final String OS_NAME = getProperty("os.name").toLowerCase(ENGLISH);
 
