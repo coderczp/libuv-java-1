@@ -51,10 +51,6 @@ public class LibUVConfiguration {
         return copyBuffer;
     }
 
-    public void setCopyBuffer(Boolean copyBuffer) {
-        this.copyBuffer = copyBuffer;
-    }
-
     @Override
     public String toString() {
         return "LibUVConfiguration [useDirectByteBuffer=" + useDirectByteBuffer + ", copyBuffer=" + copyBuffer + "]";
