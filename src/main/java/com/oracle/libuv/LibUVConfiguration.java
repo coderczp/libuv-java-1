@@ -1,5 +1,8 @@
 package com.oracle.libuv;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
 public class LibUVConfiguration {
 
     private Boolean useDirectByteBuffer;
@@ -24,6 +27,12 @@ public class LibUVConfiguration {
 
         public LibUVConfiguration build() {
             LibUVConfiguration configuration = new LibUVConfiguration();
+            if (copyBuffer == null) {
+            	copyBuffer = TRUE;
+            }
+            if (useDirectByteBuffer == null) {
+            	useDirectByteBuffer = FALSE;
+            }
             configuration.useDirectByteBuffer = useDirectByteBuffer;
             configuration.copyBuffer = copyBuffer;
             return configuration;
